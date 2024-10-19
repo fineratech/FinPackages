@@ -1,34 +1,46 @@
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:merchant_registration/app_colors.dart';
+import 'package:merchant_registration/enums/address_category.dart';
 import 'package:merchant_registration/enums/merchant_type.dart';
+import 'package:merchant_registration/merchant_registration.dart';
 import 'package:merchant_registration/screens/business_details/business_details_view.dart';
 import 'package:merchant_registration/screens/company_details/company_details_view_model.dart';
 import 'package:merchant_registration/widgets/custom_button.dart';
+import 'package:merchant_registration/widgets/custom_dropdown_field.dart';
 import 'package:merchant_registration/widgets/custom_text_field.dart';
 import 'package:merchant_registration/widgets/upload_image.dart';
 import 'package:provider/provider.dart';
 
 class CompanyDetailsView extends StatelessWidget {
-  const CompanyDetailsView(
-      {super.key, required this.merchantType, required this.onDone});
+  const CompanyDetailsView({
+    super.key,
+    required this.merchantType,
+    required this.onDone,
+    required this.payFacs,
+  });
   final MerchantType merchantType;
-  final VoidCallback onDone;
+  final List<PayFacsResult> payFacs;
+  final Future<void> Function(Merchant) onDone;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => CompanyDetailsViewModel(),
-        builder: (context, _) {
-          return Consumer<CompanyDetailsViewModel>(
-            builder: (context, viewModel, _) {
-              return Scaffold(
-                appBar: AppBar(
-                  title: const Text('Company Details'),
-                ),
-                body: SingleChildScrollView(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      create: (context) => CompanyDetailsViewModel(),
+      builder: (context, _) {
+        return Consumer<CompanyDetailsViewModel>(
+          builder: (context, viewModel, _) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('Company Details'),
+              ),
+              body: SingleChildScrollView(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: FormBuilder(
+                  key: viewModel.formKey,
                   child: Column(
                     children: [
                       UploadImage(
@@ -71,41 +83,69 @@ class CompanyDetailsView extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const CustomTextField(
+                      CustomTextField(
                         name: 'merchantName',
                         hintText: 'Merchant Name',
                         label: "Merchant Name",
+                        controller: viewModel.merchantName,
+                        validator: FormBuilderValidators.required(),
                       ),
                       const SizedBox(height: 10),
-                      const CustomTextField(
-                        name: 'Address Category',
-                        hintText: 'Address Category',
-                        label: "Address Category",
-                        suffix: Icon(Icons.keyboard_arrow_down_rounded),
-                      ),
-                      const SizedBox(height: 10),
-                      const CustomTextField(
-                        name: 'Address Sub-Category',
-                        hintText: 'Address Sub-Category',
+                      CustomDropdownField(
+                        name: 'addressCategory',
+                        hintText: "Address Category",
                         label: "Address Sub-Category",
-                        suffix: Icon(Icons.keyboard_arrow_down_rounded),
+                        onChanged: (category) {
+                          viewModel.addressCategory = category;
+                        },
+                        items: AddressCategory.values
+                            .map(
+                              (category) => DropdownMenuItem(
+                                value: category,
+                                child: Text(category.getName()),
+                              ),
+                            )
+                            .toList(),
+                        validator: FormBuilderValidators.required(),
                       ),
                       const SizedBox(height: 10),
-                      const Row(
+                      CustomDropdownField(
+                        name: 'addressSubCategory',
+                        hintText: "Address Sub-Category",
+                        label: "Address Sub-Category",
+                        onChanged: (category) {
+                          viewModel.addressSubCategory = category;
+                        },
+                        items: AddressSubCategory.values
+                            .map(
+                              (category) => DropdownMenuItem(
+                                value: category,
+                                child: Text(category.getName()),
+                              ),
+                            )
+                            .toList(),
+                        validator: FormBuilderValidators.required(),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
                         children: [
                           Expanded(
                             child: CustomTextField(
                               name: 'Street Line 1',
                               hintText: 'Street Line 1',
                               label: "Street Line 1",
+                              controller: viewModel.streetLine1,
+                              validator: FormBuilderValidators.required(),
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: CustomTextField(
                               name: 'Apartment or Suite',
                               hintText: 'Apartment or Suite',
                               label: "Apartment or Suite",
+                              controller: viewModel.apartmentOrSuite,
+                              validator: FormBuilderValidators.required(),
                             ),
                           ),
                         ],
@@ -146,10 +186,15 @@ class CompanyDetailsView extends StatelessWidget {
                       //   suffix: Icon(Icons.keyboard_arrow_down_rounded),
                       // ),
                       const SizedBox(height: 10),
-                      const CustomTextField(
+                      CustomTextField(
                         name: 'Zip',
                         hintText: 'Zip',
                         label: "Zip",
+                        controller: viewModel.zipCode,
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                          FormBuilderValidators.zipCode(),
+                        ]),
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
@@ -157,15 +202,41 @@ class CompanyDetailsView extends StatelessWidget {
                         child: CustomButton(
                           child: const Text('Next'),
                           onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => BusinessDetailsView(
-                                  merchantType: merchantType,
-                                  onDone: onDone,
-                                  isIndividual: viewModel.isIndividual,
+                            if (viewModel.formKey.currentState
+                                    ?.saveAndValidate() ??
+                                false) {
+                              final Address address = Address(
+                                addressCategory:
+                                    viewModel.addressCategory.getName(),
+                                addressSubcategory:
+                                    viewModel.addressSubCategory.getName(),
+                                streetline1: viewModel.streetLine1.text,
+                                apartmentOrSuite:
+                                    viewModel.apartmentOrSuite.text,
+                                city: viewModel.city ?? "",
+                                state: viewModel.state ?? "",
+                                zip: viewModel.zipCode.text,
+                                country: viewModel.country ?? "",
+                              );
+                              Merchant merchant = Merchant.empty();
+                              merchant = merchant.copyWith(
+                                address: address,
+                                image: viewModel.image,
+                                isIndividual: viewModel.isIndividual,
+                                merchantName: viewModel.merchantName.text,
+                              );
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => BusinessDetailsView(
+                                    merchantType: merchantType,
+                                    onDone: onDone,
+                                    isIndividual: viewModel.isIndividual,
+                                    merchant: merchant,
+                                    payFacs: payFacs,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           },
                         ),
                       ),
@@ -173,10 +244,12 @@ class CompanyDetailsView extends StatelessWidget {
                     ],
                   ),
                 ),
-              );
-            },
-          );
-        });
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   Widget _buildCharacterButton(

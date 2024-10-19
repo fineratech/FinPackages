@@ -6,7 +6,7 @@ import '../constants/app_colors.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController? controller;
-  final String? hintText;
+  final String hintText;
   final TextInputType? textInputType;
   final String? Function(String?)? validator;
   final Widget? prefix;
@@ -30,14 +30,12 @@ class CustomTextField extends StatefulWidget {
   final Color? fillColor;
   final Color? focusColor;
   final EdgeInsets? suffixPadding;
-  final String name;
   final bool isReadOnly;
 
   const CustomTextField({
     super.key,
     this.controller,
-    this.hintText,
-    required this.name,
+    required this.hintText,
     this.textInputType,
     this.obscure = false,
     this.enabled = true,
@@ -113,13 +111,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
         return GestureDetector(
           onTap: widget.onTap,
           child: FormBuilderTextField(
-            name: widget.name,
+            name: widget.hintText,
             focusNode: myFocusNode,
             onChanged: (value) {
               showErrorMessage = true;
               widget.onChanged?.call(value);
             },
             onTap: widget.onTap,
+            onTapOutside: (event) {
+              myFocusNode.unfocus();
+            },
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             onSaved: widget.onSaved,
             cursorColor: AppColors.primaryColor,
             enabled: widget.enabled,

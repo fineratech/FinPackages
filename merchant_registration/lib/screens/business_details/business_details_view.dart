@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:merchant_registration/enums/merchant_type.dart';
+import 'package:merchant_registration/merchant_registration.dart';
 import 'package:merchant_registration/screens/business_details/business_details_view_model.dart';
 import 'package:merchant_registration/widgets/custom_button.dart';
+import 'package:merchant_registration/widgets/custom_dropdown_field.dart';
 import 'package:merchant_registration/widgets/custom_text_field.dart';
 import 'package:provider/provider.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class BusinessDetailsView extends StatelessWidget {
   const BusinessDetailsView({
@@ -11,116 +16,209 @@ class BusinessDetailsView extends StatelessWidget {
     required this.merchantType,
     required this.onDone,
     required this.isIndividual,
+    required this.merchant,
+    required this.payFacs,
   });
   final MerchantType merchantType;
-  final VoidCallback onDone;
+  final Future<void> Function(Merchant) onDone;
   final bool isIndividual;
+  final Merchant merchant;
+  final List<PayFacsResult> payFacs;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => BusinessDetailsViewModel(),
+      create: (context) => BusinessDetailsViewModel(type: merchantType),
       builder: (context, _) {
         return Consumer<BusinessDetailsViewModel>(
           builder: (context, viewModel, _) {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text('${merchantType.name.toUpperCase()} Details'),
-              ),
-              body: SingleChildScrollView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Column(
-                  children: [
-                    const CustomTextField(
-                      name: 'payfacName',
-                      hintText: 'Payfac Name',
-                      label: 'Payfac Name',
-                    ),
-                    const SizedBox(height: 10),
-                    const CustomTextField(
-                      name: 'payfacId',
-                      hintText: 'Payfac ID',
-                      label: 'Payfac ID',
-                    ),
-                    const SizedBox(height: 10),
-                    const CustomTextField(
-                      name: 'dbaName',
-                      hintText: 'DBA Name',
-                      label: 'DBA Name',
-                    ),
-                    const SizedBox(height: 10),
-                    if (isIndividual)
-                      const CustomTextField(
-                        name: 'ssn',
-                        hintText: 'SSN',
-                        label: 'SSN',
-                      )
-                    else
-                      const CustomTextField(
-                        name: 'taxId',
-                        hintText: 'Federal Tax ID',
-                        label: 'Federal Tax ID',
-                      ),
-                    const SizedBox(height: 10),
-                    const Row(
+            return ModalProgressHUD(
+              inAsyncCall: viewModel.isBusy,
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text('${merchantType.name.toUpperCase()} Details'),
+                ),
+                body: SingleChildScrollView(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: FormBuilder(
+                    key: viewModel.formKey,
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: CustomTextField(
-                            name: 'merchantCategory',
-                            hintText: 'Merchant Category',
-                            label: 'Merchant Category',
+                        if (payFacs.isNotEmpty) ...[
+                          CustomDropdownField(
+                            name: 'payfacName',
+                            hintText: 'Payfac Name',
+                            label: 'Payfac Name',
+                            onChanged: (value) {
+                              viewModel.selectedPayFac = value;
+                            },
+                            items: payFacs
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e.id,
+                                    child: Text(e.name),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                          const SizedBox(height: 10),
+                          CustomTextField(
+                            name: 'payfacId',
+                            hintText:
+                                viewModel.selectedPayFac?.id ?? 'Payfac ID',
+                            // label: 'Payfac ID',
+                            isReadOnly: true,
+                          ),
+                          const SizedBox(height: 10),
+                        ],
+                        CustomTextField(
+                          name: 'dbaName',
+                          hintText: 'DBA Name',
+                          label: 'DBA Name',
+                          controller: viewModel.dbaName,
+                          validator: FormBuilderValidators.required(),
+                        ),
+                        const SizedBox(height: 10),
+                        if (isIndividual)
+                          CustomTextField(
+                            name: 'ssn',
+                            hintText: 'SSN',
+                            label: 'SSN',
+                            controller: viewModel.ssnOrTaxId,
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(),
+                              FormBuilderValidators.ssn(),
+                            ]),
+                          )
+                        else
+                          CustomTextField(
+                            name: 'taxId',
+                            hintText: 'Federal Tax ID',
+                            label: 'Federal Tax ID',
+                            controller: viewModel.ssnOrTaxId,
+                            validator: FormBuilderValidators.required(),
+                          ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomTextField(
+                                name: 'merchantCategory',
+                                hintText: viewModel.merchantCategory ??
+                                    'Merchant Category',
+                                // label: 'Merchant Category',
+                                isReadOnly: true,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: CustomTextField(
+                                name: 'mcc',
+                                hintText:
+                                    viewModel.selectedPayFac?.mcc ?? 'MCC',
+                                label: 'MCC',
+                                isReadOnly: true,
+                              ),
+                            ),
+                          ],
+                        ),
+                        CustomTextField(
+                          name: 'merchantType',
+                          hintText: merchantType.name,
+                          label: merchantType.name,
+                          isReadOnly: true,
+                        ),
+                        const SizedBox(height: 10),
+                        CustomTextField(
+                          name: 'billingDisc',
+                          hintText: 'Billing Disc',
+                          label: 'Billing Disc',
+                          controller: viewModel.billingDescriptor,
+                          validator: FormBuilderValidators.compose(
+                            [
+                              FormBuilderValidators.required(),
+                            ],
                           ),
                         ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: CustomTextField(
-                            name: 'mcc',
-                            hintText: 'MCC',
-                            label: 'MCC',
+                        const SizedBox(height: 10),
+                        CustomTextField(
+                          name: 'contactPerson',
+                          hintText: 'Contact Person',
+                          label: 'Contact Person',
+                          controller: viewModel.contactPerson,
+                          validator: FormBuilderValidators.compose(
+                            [
+                              FormBuilderValidators.required(),
+                            ],
                           ),
                         ),
+                        const SizedBox(height: 10),
+                        CustomTextField(
+                          name: 'serviceEmail',
+                          hintText: 'Customer Service Email',
+                          label: 'Customer Service Email',
+                          controller: viewModel.serviceEmail,
+                          textInputType: TextInputType.emailAddress,
+                          validator: FormBuilderValidators.compose(
+                            [
+                              FormBuilderValidators.required(),
+                              FormBuilderValidators.email(),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        CustomTextField(
+                          name: 'servicePhone',
+                          hintText: 'Customer Service Phone',
+                          label: 'Customer Service Phone',
+                          controller: viewModel.servicePhone,
+                          textInputType: TextInputType.phone,
+                          validator: FormBuilderValidators.compose(
+                            [
+                              FormBuilderValidators.required(),
+                              FormBuilderValidators.phoneNumber(),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          width: double.infinity,
+                          child: CustomButton(
+                            onPressed: () async {
+                              if (viewModel.formKey.currentState
+                                      ?.saveAndValidate() ??
+                                  false) {
+                                var newMerchant = merchant.copyWith(
+                                  payFacName: viewModel.selectedPayFac?.name,
+                                  payFacId: viewModel.selectedPayFac?.id,
+                                  payFacTendencyId:
+                                      viewModel.selectedPayFac?.payFacTenancyId,
+                                  dbaName: viewModel.dbaName.text,
+                                  ssn: viewModel.ssnOrTaxId.text,
+                                  federalTaxId: viewModel.ssnOrTaxId.text,
+                                  merchantCategory: viewModel.merchantCategory,
+                                  mcc: viewModel.selectedPayFac?.mcc,
+                                  type: merchantType,
+                                  billingDisc: viewModel.billingDescriptor.text,
+                                  contactPerson: viewModel.contactPerson.text,
+                                  customerServiceEmail:
+                                      viewModel.serviceEmail.text,
+                                  customerServicePhone:
+                                      viewModel.servicePhone.text,
+                                );
+                                viewModel.isLoading = true;
+                                await onDone(newMerchant);
+                                viewModel.isLoading = false;
+                              }
+                            },
+                            child: const Text('Add'),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
                       ],
                     ),
-                    const CustomTextField(
-                      name: 'merchantType',
-                      hintText: 'Merchant Type',
-                      label: 'Merchant Type',
-                    ),
-                    const SizedBox(height: 10),
-                    const CustomTextField(
-                      name: 'billingDisc',
-                      hintText: 'Billing Disc',
-                      label: 'Billing Disc',
-                    ),
-                    const SizedBox(height: 10),
-                    const CustomTextField(
-                      name: 'contactPerson',
-                      hintText: 'Contact Person',
-                      label: 'Contact Person',
-                    ),
-                    const SizedBox(height: 10),
-                    const CustomTextField(
-                      name: 'serviceEmail',
-                      hintText: 'Customer Service Email',
-                      label: 'Customer Service Email',
-                    ),
-                    const SizedBox(height: 10),
-                    const CustomTextField(
-                      name: 'servicePhone',
-                      hintText: 'Customer Service Phone',
-                      label: 'Customer Service Phone',
-                    ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      width: double.infinity,
-                      child: CustomButton(
-                        onPressed: onDone,
-                        child: const Text('Add'),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
+                  ),
                 ),
               ),
             );

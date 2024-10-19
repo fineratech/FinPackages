@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
       ),
       home: CompanyDetailsView(
         merchantType: MerchantType.hospital,
-        onDone: () {},
+        onDone: (merchant) async {},
+        payFacs: const [],
       ),
     );
   }
