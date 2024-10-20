@@ -16,7 +16,7 @@ class BusinessDetailsViewModel extends ChangeNotifier {
   bool _isLoading = false;
 
   PayFacsResult? get selectedPayFac => _selectedPayFac;
-  bool get isBusy => _isLoading;
+  bool get isLoading => _isLoading;
   String? get merchantCategory => {
         MerchantType.hospital: 'Healthcare',
         MerchantType.other: 'Other',

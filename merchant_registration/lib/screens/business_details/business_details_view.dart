@@ -29,7 +29,7 @@ class BusinessDetailsView extends StatelessWidget {
         return Consumer<BusinessDetailsViewModel>(
           builder: (context, viewModel, _) {
             return ModalProgressHUD(
-              inAsyncCall: viewModel.isBusy,
+              inAsyncCall: viewModel.isLoading,
               child: Scaffold(
                 appBar: AppBar(
                   title: Text('${merchantType.name.toUpperCase()} Details'),
