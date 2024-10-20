@@ -22,6 +22,8 @@ class ApiEndPoints {
       "$serviceReferencePathCustomer/AcceptOTPChallenge";
   static const String addLocationDetailed =
       "$serviceReferencePathResource/AddLocationDetailed";
+  static const String addLocationDetailedWithCategorySubCategory =
+      "$serviceReferencePathResource/AddLocationDetailedWithCategory-SubCategory";
   static const String registerMerchant =
       "$serviceReferencePathResource/RegisterMerchant";
   static const String getAllPayFacs =

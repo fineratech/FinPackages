@@ -147,6 +147,7 @@ class CompanyDetailsView extends StatelessWidget {
                       const SizedBox(height: 10),
                       CSCPicker(
                         layout: Layout.horizontal,
+                        flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
                         currentCountry: viewModel.country,
                         currentState: viewModel.state,
                         currentCity: viewModel.city,

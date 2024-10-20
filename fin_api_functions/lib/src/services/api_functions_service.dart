@@ -156,7 +156,7 @@ class ApiFunctionsService {
     String locationPurpose,
   ) async {
     final url =
-        '${ApiEndPoints.addLocationDetailed}/$locationType/$locationCategory/$locationSubCategory/$friendlyName/$address/$apt/$city/$state/$zip/$country/$latitude/$longitude';
+        '${ApiEndPoints.addLocationDetailedWithCategorySubCategory}/$locationType/$locationCategory/$locationSubCategory/$friendlyName/$address/$apt/$city/$state/$zip/$country/$latitude/$longitude';
     var response = await apiService.get(endPoint: url);
     if (response.success) {
       //final dynamic responseData = response.data;
