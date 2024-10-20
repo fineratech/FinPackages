@@ -53,8 +53,8 @@ class ApiService {
   Future<RequestResponse> get({required String endPoint, params}) async {
     Dio dio = await launchDio();
     try {
-      final response = await dio.get('${AppConfig.baseUrl}/$endPoint',
-          queryParameters: params);
+      var url = sanitizeUrl('${AppConfig.baseUrl}/$endPoint');
+      final response = await dio.get(url, queryParameters: params);
 
       if (response.statusCode == 200) {
         return RequestResponse.fromJson(response.data);
@@ -132,6 +132,28 @@ class ApiService {
       return RequestResponse(false, message: 'Unknown Error');
     }
   }
+}
+
+String sanitizeUrl(String url) {
+  url = url
+      .replaceAll(":", "__cln__")
+      . // replace the : with __cln__
+      replaceAll("/", "__fwd__")
+      . // replace the / with __fwd__
+      replaceAll("?", "__qs__")
+      . // replace the ? with __qs__
+      replaceAll(".", "__dot__")
+      . // replace the . with __dot__
+      replaceAll("=", "__eql__")
+      . // replace the = with __eql__
+      replaceAll(",", "__cma__")
+      . // replace the , with __cma__
+      replaceAll(";", "__scln__")
+      . // replace the ; with __scln__
+      replaceAll("&", "__amp__")
+      . // replace the & with __amp__
+      replaceAll("%2F", "");
+  return url;
 }
 
 class DioErrorHandle {

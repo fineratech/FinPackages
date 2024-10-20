@@ -23,7 +23,7 @@ class ApiEndPoints {
   static const String addLocationDetailed =
       "$serviceReferencePathResource/AddLocationDetailed";
   static const String addLocationDetailedWithCategorySubCategory =
-      "$serviceReferencePathResource/AddLocationDetailedWithCategory-SubCategory";
+      "$serviceReferencePathResource/AddLocationDetailedWithCategorySubCategory";
   static const String registerMerchant =
       "$serviceReferencePathResource/RegisterMerchant";
   static const String getAllPayFacs =
