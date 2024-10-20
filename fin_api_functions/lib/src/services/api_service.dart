@@ -53,8 +53,8 @@ class ApiService {
   Future<RequestResponse> get({required String endPoint, params}) async {
     Dio dio = await launchDio();
     try {
-      var url = sanitizeUrl('${AppConfig.baseUrl}/$endPoint');
-      final response = await dio.get(url, queryParameters: params);
+      final response = await dio.get('${AppConfig.baseUrl}/$endPoint',
+          queryParameters: params);
 
       if (response.statusCode == 200) {
         return RequestResponse.fromJson(response.data);
