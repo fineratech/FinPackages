@@ -119,6 +119,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               showErrorMessage = true;
               widget.onChanged?.call(value);
             },
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             onTap: widget.onTap,
             onSaved: widget.onSaved,
             cursorColor: AppColors.primaryColor,
