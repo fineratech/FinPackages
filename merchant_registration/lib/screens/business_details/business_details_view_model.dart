@@ -24,7 +24,8 @@ class BusinessDetailsViewModel extends ChangeNotifier {
 
   set selectedPayFac(PayFacsResult? value) {
     _selectedPayFac = value;
-    print("Selected PayFac: $value");
+    payFacId.text = value?.id.toString() ?? '';
+    mcc.text = value?.mcc ?? '';
     notifyListeners();
   }
 
@@ -40,6 +41,10 @@ class BusinessDetailsViewModel extends ChangeNotifier {
   late TextEditingController contactPerson;
   late TextEditingController serviceEmail;
   late TextEditingController servicePhone;
+  late TextEditingController payFacId;
+  late TextEditingController merchantCategoryController;
+  late TextEditingController mcc;
+  late TextEditingController merchantTypeController;
 
   void initialize() {
     dbaName = TextEditingController();
@@ -48,6 +53,10 @@ class BusinessDetailsViewModel extends ChangeNotifier {
     contactPerson = TextEditingController();
     serviceEmail = TextEditingController();
     servicePhone = TextEditingController();
+    payFacId = TextEditingController();
+    merchantCategoryController = TextEditingController(text: merchantCategory);
+    mcc = TextEditingController();
+    merchantTypeController = TextEditingController(text: type.name);
   }
 
   @override
@@ -58,6 +67,10 @@ class BusinessDetailsViewModel extends ChangeNotifier {
     contactPerson.dispose();
     serviceEmail.dispose();
     servicePhone.dispose();
+    payFacId.dispose();
+    merchantCategoryController.dispose();
+    mcc.dispose();
+    merchantTypeController.dispose();
     super.dispose();
   }
 }

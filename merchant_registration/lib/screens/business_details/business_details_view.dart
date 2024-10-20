@@ -61,9 +61,9 @@ class BusinessDetailsView extends StatelessWidget {
                           const SizedBox(height: 10),
                           CustomTextField(
                             name: 'payfacId',
-                            hintText:
-                                viewModel.selectedPayFac?.id ?? 'Payfac ID',
-                            // label: 'Payfac ID',
+                            hintText: 'Payfac ID',
+                            label: 'Payfac ID',
+                            controller: viewModel.payFacId,
                             isReadOnly: true,
                           ),
                           const SizedBox(height: 10),
@@ -101,9 +101,10 @@ class BusinessDetailsView extends StatelessWidget {
                             Expanded(
                               child: CustomTextField(
                                 name: 'merchantCategory',
-                                hintText: viewModel.merchantCategory ??
-                                    'Merchant Category',
-                                // label: 'Merchant Category',
+                                hintText: 'Merchant Category',
+                                label: 'Merchant Category',
+                                controller:
+                                    viewModel.merchantCategoryController,
                                 isReadOnly: true,
                               ),
                             ),
@@ -111,9 +112,9 @@ class BusinessDetailsView extends StatelessWidget {
                             Expanded(
                               child: CustomTextField(
                                 name: 'mcc',
-                                hintText:
-                                    viewModel.selectedPayFac?.mcc ?? 'MCC',
+                                hintText: 'MCC',
                                 label: 'MCC',
+                                controller: viewModel.mcc,
                                 isReadOnly: true,
                               ),
                             ),
@@ -121,8 +122,9 @@ class BusinessDetailsView extends StatelessWidget {
                         ),
                         CustomTextField(
                           name: 'merchantType',
-                          hintText: merchantType.name,
-                          label: merchantType.name,
+                          hintText: "Merchant Type",
+                          label: "Merchant Type",
+                          controller: viewModel.merchantTypeController,
                           isReadOnly: true,
                         ),
                         const SizedBox(height: 10),
