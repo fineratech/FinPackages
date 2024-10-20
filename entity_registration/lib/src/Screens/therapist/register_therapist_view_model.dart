@@ -1,9 +1,7 @@
 import 'package:entity_registration/src/constants/app_strings.dart';
+import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-
-import '../../enums/gender.dart';
-import '../../models/service.dart';
 
 class RegisterTherapistViewModel extends ChangeNotifier {
   RegisterTherapistViewModel() {

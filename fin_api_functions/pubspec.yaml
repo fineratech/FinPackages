@@ -1,7 +1,7 @@
 name: fin_api_functions
 description: "A new Flutter project."
 version: 0.0.1
-homepage: "www.example.com"
+publish_to: none
 
 environment:
   sdk: '>=3.3.3 <4.0.0'
@@ -19,6 +19,10 @@ dependencies:
   talker_dio_logger: ^4.4.1
   talker_flutter: ^4.4.0
   talker: ^4.4.1
+  fin_commons:
+    git:
+      url: https://github.com/fineratech/FinPackages.git
+      path: fin_commons
 
 dev_dependencies:
   flutter_test:

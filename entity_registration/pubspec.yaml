@@ -2,6 +2,7 @@ name: entity_registration
 description: "A new Flutter project."
 version: 0.0.1
 homepage: 'www.finera.com'
+publish_to: none
 
 environment:
   sdk: '>=3.3.3 <4.0.0'
@@ -16,6 +17,10 @@ dependencies:
   provider: ^6.1.2
   csc_picker: ^0.2.7
   flutter_svg: ^2.0.10+1
+  fin_commons:
+    git:
+      url: https://github.com/fineratech/FinPackages.git
+      path: fin_commons
 
 dev_dependencies:
   flutter_test:

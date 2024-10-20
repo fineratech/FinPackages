@@ -1,10 +1,8 @@
 import 'package:bank_details/src/add_account_details/add_bank_details/add_bank_details_view.dart';
 import 'package:bank_details/src/add_account_details/add_card_details/add_card_details_view.dart';
-import 'package:bank_details/src/models/bank_details.dart';
+import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
-
-import '../../widgets/custom_appbar.dart';
 
 class AddBankAccount extends StatelessWidget {
   const AddBankAccount({

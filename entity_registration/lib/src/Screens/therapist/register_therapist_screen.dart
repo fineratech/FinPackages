@@ -1,16 +1,12 @@
 import 'package:csc_picker/csc_picker.dart';
 import 'package:entity_registration/src/Screens/therapist/register_therapist_view_model.dart';
-import 'package:entity_registration/src/models/entity_model.dart';
+import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/app_colors.dart';
-import '../../enums/gender.dart';
-import '../../widgets/custom_date_picker.dart';
-import '../../widgets/custom_dropdown_field.dart';
-import '../../widgets/custom_text_field.dart';
 import '../../widgets/image_with_title.dart';
 
 class RegisterTherapistScreen extends StatelessWidget {
@@ -34,6 +30,7 @@ class RegisterTherapistScreen extends StatelessWidget {
                       height: 20,
                     ),
                     CustomTextField(
+                      name: "therapistName",
                       label: "Therapist Name",
                       hintText: "Therapist Name",
                       controller: viewModel.therapistNameController,
@@ -43,6 +40,7 @@ class RegisterTherapistScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     CustomTextField(
+                      name: "therapistQualification",
                       label: "Therapist Qualification",
                       hintText: "Therapist Qualification",
                       controller: viewModel.therapistQualificationController,
@@ -100,6 +98,7 @@ class RegisterTherapistScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     CustomTextField(
+                      name: "certification",
                       label: "Certification",
                       hintText: "Certification",
                       controller: viewModel.certificationController,
@@ -142,16 +141,19 @@ class RegisterTherapistScreen extends StatelessWidget {
                       )
                     else ...[
                       const CustomTextField(
+                        name: "issuingAuthority",
                         label: "Issuing Authority",
                         hintText: "Issuing Authority",
                       ),
                       const SizedBox(height: 10),
                       const CustomTextField(
+                        name: "firstName",
                         label: "First Name",
                         hintText: "First Name",
                       ),
                       const SizedBox(height: 10),
                       const CustomTextField(
+                        name: "lastName",
                         label: "Last Name",
                         hintText: "Last Name",
                       ),
@@ -184,11 +186,13 @@ class RegisterTherapistScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       const CustomTextField(
+                        name: "licenseNumber",
                         label: "License Number",
                         hintText: "License Number",
                       ),
                       const SizedBox(height: 10),
                       const CustomTextField(
+                        name: "licenseIssueDate",
                         label: "License Issue Date",
                         hintText: "License Issue Date",
                         suffix: Icon(
@@ -198,6 +202,7 @@ class RegisterTherapistScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       const CustomTextField(
+                        name: "licenseExpiryDate",
                         label: "License Expiry Date",
                         hintText: "License Expiry Date",
                         suffix: Icon(

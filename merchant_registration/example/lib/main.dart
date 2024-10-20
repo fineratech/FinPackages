@@ -1,5 +1,5 @@
+import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
-import 'package:merchant_registration/enums/merchant_type.dart';
 import 'package:merchant_registration/merchant_registration.dart';
 
 void main() {

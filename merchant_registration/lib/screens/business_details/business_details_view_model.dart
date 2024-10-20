@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:merchant_registration/enums/merchant_type.dart';
-import 'package:merchant_registration/merchant_registration.dart';
 
 class BusinessDetailsViewModel extends ChangeNotifier {
   BusinessDetailsViewModel({

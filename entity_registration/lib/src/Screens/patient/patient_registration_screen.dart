@@ -1,10 +1,5 @@
 import 'package:entity_registration/src/Screens/patient/patient_registration_view_model.dart';
-import 'package:entity_registration/src/enums/gender.dart';
-import 'package:entity_registration/src/models/entity_model.dart';
-import 'package:entity_registration/src/widgets/custom_button.dart';
-import 'package:entity_registration/src/widgets/custom_date_picker.dart';
-import 'package:entity_registration/src/widgets/custom_dropdown_field.dart';
-import 'package:entity_registration/src/widgets/custom_text_field.dart';
+import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -28,6 +23,7 @@ class PatientRegistrationScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomTextField(
+                      name: 'patientName',
                       hintText: 'Patient Name',
                       label: 'Patient Name',
                       controller: viewModel.patientNameController,
@@ -100,6 +96,7 @@ class PatientRegistrationScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     CustomTextField(
+                      name: 'location',
                       hintText: 'Location',
                       label: 'Location',
                       controller: viewModel.locationController,

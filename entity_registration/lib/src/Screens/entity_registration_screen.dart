@@ -2,8 +2,7 @@ import 'package:entity_registration/src/Screens/entity_registration_view_model.d
 import 'package:entity_registration/src/Screens/patient/patient_registration_screen.dart';
 import 'package:entity_registration/src/Screens/therapist/register_therapist_screen.dart';
 import 'package:entity_registration/src/constants/app_colors.dart';
-import 'package:entity_registration/src/enums/entity.dart';
-import 'package:entity_registration/src/models/entity_model.dart';
+import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,12 +1,8 @@
+import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:merchant_registration/enums/merchant_type.dart';
-import 'package:merchant_registration/merchant_registration.dart';
 import 'package:merchant_registration/screens/business_details/business_details_view_model.dart';
-import 'package:merchant_registration/widgets/custom_button.dart';
-import 'package:merchant_registration/widgets/custom_dropdown_field.dart';
-import 'package:merchant_registration/widgets/custom_text_field.dart';
 import 'package:provider/provider.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 

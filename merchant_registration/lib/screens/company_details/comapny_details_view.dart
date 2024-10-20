@@ -1,17 +1,11 @@
 import 'package:csc_picker/csc_picker.dart';
+import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:merchant_registration/app_colors.dart';
-import 'package:merchant_registration/enums/address_category.dart';
-import 'package:merchant_registration/enums/merchant_type.dart';
-import 'package:merchant_registration/merchant_registration.dart';
 import 'package:merchant_registration/screens/business_details/business_details_view.dart';
 import 'package:merchant_registration/screens/company_details/company_details_view_model.dart';
-import 'package:merchant_registration/widgets/custom_button.dart';
-import 'package:merchant_registration/widgets/custom_dropdown_field.dart';
-import 'package:merchant_registration/widgets/custom_text_field.dart';
-import 'package:merchant_registration/widgets/upload_image.dart';
 import 'package:provider/provider.dart';
 
 class CompanyDetailsView extends StatelessWidget {

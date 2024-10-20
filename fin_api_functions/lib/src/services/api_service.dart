@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:talker_dio_logger/talker_dio_logger_interceptor.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 import '../common/app_config.dart';
-import '../models/responses/request_response.dart';
 
 class ApiService {
   final Logger? logger;

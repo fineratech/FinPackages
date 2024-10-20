@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -37,6 +38,10 @@ dependencies:
   cupertino_icons: ^1.0.6
   merchant_registration:
     path: ../
+  fin_commons:
+    git:
+      url: https://github.com/fineratech/FinPackages.git
+      path: fin_commons
 
 
 dev_dependencies:
