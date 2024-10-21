@@ -204,17 +204,13 @@ class ApiFunctionsService {
   //   return null;
   // }
 
-  Future<RequestResponse> registerMerchantInPayFacDbGolden(
-      var resourceid) async {
+  Future<int> registerMerchantInPayFacDbGolden(var resourceid) async {
     // Replace with your API base URL
     final String apiUrl =
         '${ApiEndPoints.registerMerchantInPayFacDb}/$resourceid';
     var response = await apiService.get(endPoint: apiUrl);
-    if (response.success) {
-      // final dynamic responseData = response.data;
-      // loggedIn_Merchent.registerMerchantInPayFacDbId = responseData;
-    }
-    return response;
+    int merchantId = int.tryParse(response.data.toString()) ?? -1;
+    return merchantId;
   }
 
   Future<User?> getUserById(String userId) async {
