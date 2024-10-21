@@ -7,20 +7,27 @@ class AddBankDetailsViewModel extends ChangeNotifier {
   }
 
   bool _isDefault = false;
-  String? _type;
+  String? _ddaType;
+  String? _achType;
 
   GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
   bool get isDefault => _isDefault;
-  String? get type => _type;
+  String? get ddaType => _ddaType;
+  String? get achType => _achType;
 
   set isDefault(bool val) {
     _isDefault = val;
     notifyListeners();
   }
 
-  set type(String? val) {
-    _type = val;
+  set ddaType(String? val) {
+    _ddaType = val;
+    notifyListeners();
+  }
+
+  set achType(String? val) {
+    _achType = val;
     notifyListeners();
   }
 

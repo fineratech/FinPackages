@@ -129,7 +129,7 @@ class AddCardDetailsView extends StatelessWidget {
                                               viewModel.cvvCode,
                                               viewModel.isCvvFocused,
                                             );
-                                            onAddCardDetails(cardModel);
+                                            // onAddCardDetails(cardModel);
                                           }
                                         },
                                         child: const Text(

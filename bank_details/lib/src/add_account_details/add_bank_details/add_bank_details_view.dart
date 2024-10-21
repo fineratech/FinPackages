@@ -12,9 +12,10 @@ class AddBankDetailsView extends StatelessWidget {
   const AddBankDetailsView({
     super.key,
     required this.onDone,
+    required this.onAddBankDetails,
   });
   final VoidCallback onDone;
-  // final Function(BankDetails) onAddBankDetails;
+  final Function(BankDetails) onAddBankDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +69,11 @@ class AddBankDetailsView extends StatelessWidget {
                       ),
                       Expanded(
                         child: CustomDropdownField(
-                          name: "type",
-                          hintText: "Type",
+                          name: "ddaType",
+                          hintText: "DDA Type",
                           validator: FormBuilderValidators.required(),
                           onChanged: (value) {
-                            viewModel.type = value;
+                            viewModel.ddaType = value;
                           },
                           items: [
                             "Checking",
@@ -88,6 +89,25 @@ class AddBankDetailsView extends StatelessWidget {
                         ),
                       )
                     ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomDropdownField(
+                    name: "achType",
+                    hintText: "Ach Type",
+                    validator: FormBuilderValidators.required(),
+                    onChanged: (value) {
+                      viewModel.achType = value;
+                    },
+                    items: ["CommercialChecking", "PrivateChecking"]
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(e),
+                          ),
+                        )
+                        .toList(),
                   ),
                   const SizedBox(
                     height: 10,
@@ -132,18 +152,21 @@ class AddBankDetailsView extends StatelessWidget {
                         ),
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (viewModel.formKey.currentState?.validate() ??
                                   false) {
                                 BankDetails bankDetails = BankDetails(
                                   bankName: viewModel.bankName.text,
                                   account: viewModel.account.text,
                                   nameOnAccount: viewModel.nameOnAccount.text,
-                                  type: viewModel.type ?? "Checking",
+                                  ddaType: viewModel.ddaType ?? "Checking",
                                   routingNumber: viewModel.routingNumber.text,
                                   isDefault: viewModel.isDefault,
+                                  achType:
+                                      viewModel.achType ?? "CommercialChecking",
                                 );
-                                onAddBankDetails(bankDetails);
+                                await onAddBankDetails(bankDetails);
+                                onDone();
                               }
                             },
                             child: const Text(

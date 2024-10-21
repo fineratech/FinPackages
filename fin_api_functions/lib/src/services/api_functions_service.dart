@@ -246,15 +246,14 @@ class ApiFunctionsService {
     return response.data.toString();
   }
 
-  //TODO: add bankname before this
   Future<RequestResponse> addBankAccountDetailedGolden(
     String bankID,
     String ddaType, // Checking, Savings
     String achType, //CommercialChecking, PrivateChecking
     String accountNumber,
     String routingNumber,
-    int mID,
-    int id,
+    int mID, //Get from registerMerchantInPayFacDbGolden
+    int id, // Get from registerUserWithPhoneNumberGolden
   ) async {
     final String url =
         '${ApiEndPoints.addBankAccountDetailed}/$bankID/$ddaType/$achType/$accountNumber/$routingNumber/$mID/$id'; //UserregsirationID1 is merchantId sent from the previous screen
