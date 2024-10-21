@@ -65,6 +65,7 @@ class BusinessDetailsView extends StatelessWidget {
                             label: 'Payfac ID',
                             controller: viewModel.payFacId,
                             // isReadOnly: true,
+                            validator: FormBuilderValidators.required(),
                             enabled: false,
                           ),
                           const SizedBox(height: 10),
@@ -116,6 +117,7 @@ class BusinessDetailsView extends StatelessWidget {
                                 hintText: 'MCC',
                                 label: 'MCC',
                                 controller: viewModel.mcc,
+                                validator: FormBuilderValidators.required(),
                                 // isReadOnly: true,
                                 enabled: false,
                               ),
@@ -191,14 +193,15 @@ class BusinessDetailsView extends StatelessWidget {
                                   false) {
                                 var newMerchant = merchant.copyWith(
                                   payFacName: viewModel.selectedPayFac?.name,
-                                  payFacId: viewModel.selectedPayFac?.id,
-                                  payFacTendencyId:
-                                      viewModel.selectedPayFac?.payFacTenancyId,
+                                  payFacId: viewModel.payFacId.text,
+                                  payFacTendencyId: viewModel
+                                          .selectedPayFac?.payFacTenancyId ??
+                                      "-1",
                                   dbaName: viewModel.dbaName.text,
                                   ssn: viewModel.ssnOrTaxId.text,
                                   federalTaxId: viewModel.ssnOrTaxId.text,
                                   merchantCategory: viewModel.merchantCategory,
-                                  mcc: viewModel.selectedPayFac?.mcc,
+                                  mcc: viewModel.mcc.text,
                                   type: merchantType,
                                   billingDisc: viewModel.billingDescriptor.text,
                                   contactPerson: viewModel.contactPerson.text,
