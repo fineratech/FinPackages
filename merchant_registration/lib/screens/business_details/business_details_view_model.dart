@@ -2,6 +2,7 @@
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:logger/logger.dart';
 
 class BusinessDetailsViewModel extends ChangeNotifier {
   BusinessDetailsViewModel({
@@ -9,6 +10,8 @@ class BusinessDetailsViewModel extends ChangeNotifier {
   }) {
     initialize();
   }
+
+  final Logger logger = Logger();
 
   PayFacsResult? _selectedPayFac;
   final MerchantType type;
@@ -22,11 +25,19 @@ class BusinessDetailsViewModel extends ChangeNotifier {
         MerchantType.other: 'Other',
       }[type];
 
-  set selectedPayFac(PayFacsResult? value) {
+  // set selectedPayFac(PayFacsResult? value) {
+  //   _selectedPayFac = value;
+  //   payFacId.text = value?.id.toString() ?? '-1';
+  //   mcc.text = value?.mcc ?? '-1';
+  //   print("Selected PayFac: ${value.toString()}");
+  //   notifyListeners();
+  // }
+
+  void setSelectedPayFac(PayFacsResult value) {
     _selectedPayFac = value;
-    payFacId.text = value?.id.toString() ?? '-1';
-    mcc.text = value?.mcc ?? '-1';
-    print("Selected PayFac: ${value.toString()}");
+    payFacId.text = value.id.toString();
+    mcc.text = value.mcc;
+    logger.d("Selected PayFac: ${value.toString()}");
     notifyListeners();
   }
 

@@ -47,7 +47,9 @@ class BusinessDetailsView extends StatelessWidget {
                             hintText: 'Payfac Name',
                             label: 'Payfac Name',
                             onChanged: (value) {
-                              viewModel.selectedPayFac = value;
+                              viewModel.setSelectedPayFac(
+                                value as PayFacsResult,
+                              );
                             },
                             items: payFacs
                                 .map(
