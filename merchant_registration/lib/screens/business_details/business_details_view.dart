@@ -54,7 +54,7 @@ class BusinessDetailsView extends StatelessWidget {
                             items: payFacs
                                 .map(
                                   (e) => DropdownMenuItem(
-                                    value: e.id,
+                                    value: e,
                                     child: Text(e.name),
                                   ),
                                 )
