@@ -9,10 +9,12 @@ import '../../../app_colors.dart';
 import '../../widgets/header.dart';
 
 class AddBankDetailsView extends StatelessWidget {
-  const AddBankDetailsView(
-      {super.key, required this.onSkip, required this.onAddBankDetails});
-  final VoidCallback onSkip;
-  final Function(BankDetails) onAddBankDetails;
+  const AddBankDetailsView({
+    super.key,
+    required this.onDone,
+  });
+  final VoidCallback onDone;
+  // final Function(BankDetails) onAddBankDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -20,123 +22,140 @@ class AddBankDetailsView extends StatelessWidget {
       create: (context) => AddBankDetailsViewModel(),
       child: Consumer<AddBankDetailsViewModel>(
         builder: (context, viewModel, _) {
-          return FormBuilder(
-            key: viewModel.formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                const Header(),
-                const SizedBox(
-                  height: 20,
-                ),
-                CustomTextField(
-                  name: 'bankName',
-                  hintText: "Bank Name",
-                  controller: viewModel.bankName,
-                  validator: FormBuilderValidators.required(),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                CustomTextField(
-                  name: 'account',
-                  hintText: "Account",
-                  controller: viewModel.account,
-                  validator: FormBuilderValidators.required(),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: CustomTextField(
-                        name: "nameOnAccount",
-                        hintText: "Name on Account",
-                        controller: viewModel.nameOnAccount,
-                        validator: FormBuilderValidators.required(),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: CustomTextField(
-                        name: "type",
-                        hintText: "Type",
-                        controller: viewModel.type,
-                        validator: FormBuilderValidators.required(),
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                CustomTextField(
-                  name: "routingNumber",
-                  hintText: "Routing Number",
-                  controller: viewModel.routingNumber,
-                  validator: FormBuilderValidators.required(),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SwitchListTile(
-                  value: viewModel.isDefault,
-                  onChanged: (val) {
-                    viewModel.isDefault = val;
-                  },
-                  title: const Text("Set as default"),
-                ),
-                const Spacer(),
-                SafeArea(
-                  top: false,
-                  child: Row(
+          return SingleChildScrollView(
+            child: FormBuilder(
+              key: viewModel.formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Header(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomTextField(
+                    name: 'bankName',
+                    hintText: "Bank Name",
+                    controller: viewModel.bankName,
+                    validator: FormBuilderValidators.required(),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextField(
+                    name: 'account',
+                    hintText: "Account",
+                    controller: viewModel.account,
+                    validator: FormBuilderValidators.required(),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
                     children: [
                       Expanded(
-                        child: OutlinedButton(
-                          onPressed: onSkip,
-                          child: const Text(
-                            "Skip",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: AppColors.primaryColor,
-                            ),
-                          ),
+                        child: CustomTextField(
+                          name: "nameOnAccount",
+                          hintText: "Name on Account",
+                          controller: viewModel.nameOnAccount,
+                          validator: FormBuilderValidators.required(),
                         ),
                       ),
                       const SizedBox(
                         width: 10,
                       ),
                       Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (viewModel.formKey.currentState?.validate() ??
-                                false) {
-                              BankDetails bankDetails = BankDetails(
-                                bankName: viewModel.bankName.text,
-                                account: viewModel.account.text,
-                                nameOnAccount: viewModel.nameOnAccount.text,
-                                type: viewModel.type.text,
-                                routingNumber: viewModel.routingNumber.text,
-                                isDefault: viewModel.isDefault,
-                              );
-                              onAddBankDetails(bankDetails);
-                            }
+                        child: CustomDropdownField(
+                          name: "type",
+                          hintText: "Type",
+                          validator: FormBuilderValidators.required(),
+                          onChanged: (value) {
+                            viewModel.type = value;
                           },
-                          child: const Text(
-                            "Next",
-                          ),
+                          items: [
+                            "Checking",
+                            "Savings",
+                          ]
+                              .map(
+                                (e) => DropdownMenuItem(
+                                  value: e,
+                                  child: Text(e),
+                                ),
+                              )
+                              .toList(),
                         ),
                       )
                     ],
                   ),
-                )
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextField(
+                    name: "routingNumber",
+                    hintText: "Routing Number",
+                    controller: viewModel.routingNumber,
+                    validator: FormBuilderValidators.required(),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SwitchListTile(
+                    value: viewModel.isDefault,
+                    onChanged: (val) {
+                      viewModel.isDefault = val;
+                    },
+                    title: const Text("Set as default"),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SafeArea(
+                    top: false,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: onDone,
+                            child: const Text(
+                              "Skip",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (viewModel.formKey.currentState?.validate() ??
+                                  false) {
+                                BankDetails bankDetails = BankDetails(
+                                  bankName: viewModel.bankName.text,
+                                  account: viewModel.account.text,
+                                  nameOnAccount: viewModel.nameOnAccount.text,
+                                  type: viewModel.type ?? "Checking",
+                                  routingNumber: viewModel.routingNumber.text,
+                                  isDefault: viewModel.isDefault,
+                                );
+                                onAddBankDetails(bankDetails);
+                              }
+                            },
+                            child: const Text(
+                              "Next",
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         },

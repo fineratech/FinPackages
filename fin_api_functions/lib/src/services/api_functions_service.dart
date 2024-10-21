@@ -239,11 +239,18 @@ class ApiFunctionsService {
     return null;
   }
 
+  ///Returns bankId
+  Future<String> addBankNamesDetailedGolden(String bankName) async {
+    final String url = '${ApiEndPoints.addBankNamesDetailed}/$bankName';
+    var response = await apiService.get(endPoint: url);
+    return response.data.toString();
+  }
+
   //TODO: add bankname before this
   Future<RequestResponse> addBankAccountDetailedGolden(
     String bankID,
-    String ddaType,
-    String achType,
+    String ddaType, // Checking, Savings
+    String achType, //CommercialChecking, PrivateChecking
     String accountNumber,
     String routingNumber,
     int mID,

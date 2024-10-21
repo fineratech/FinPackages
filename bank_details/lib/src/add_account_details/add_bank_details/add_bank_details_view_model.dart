@@ -7,27 +7,32 @@ class AddBankDetailsViewModel extends ChangeNotifier {
   }
 
   bool _isDefault = false;
+  String? _type;
 
   GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 
   bool get isDefault => _isDefault;
+  String? get type => _type;
 
   set isDefault(bool val) {
     _isDefault = val;
     notifyListeners();
   }
 
+  set type(String? val) {
+    _type = val;
+    notifyListeners();
+  }
+
   late TextEditingController bankName;
   late TextEditingController account;
   late TextEditingController nameOnAccount;
-  late TextEditingController type;
   late TextEditingController routingNumber;
 
   void initialize() {
     bankName = TextEditingController();
     account = TextEditingController();
     nameOnAccount = TextEditingController();
-    type = TextEditingController();
     routingNumber = TextEditingController();
   }
 
@@ -36,7 +41,6 @@ class AddBankDetailsViewModel extends ChangeNotifier {
     bankName.dispose();
     account.dispose();
     nameOnAccount.dispose();
-    type.dispose();
     routingNumber.dispose();
     super.dispose();
   }

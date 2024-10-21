@@ -6,10 +6,13 @@ import 'package:provider/provider.dart';
 import '../../../app_colors.dart';
 
 class AddCardDetailsView extends StatelessWidget {
-  const AddCardDetailsView(
-      {super.key, required this.onSkip, required this.onAddCardDetails});
-  final VoidCallback onSkip;
-  final Function(CreditCardModel) onAddCardDetails;
+  const AddCardDetailsView({
+    super.key,
+    required this.onDone,
+    // required this.onAddCardDetails,
+  });
+  final VoidCallback onDone;
+  // final Function(CreditCardModel) onAddCardDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +103,7 @@ class AddCardDetailsView extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: OutlinedButton(
-                                        onPressed: onSkip,
+                                        onPressed: onDone,
                                         child: const Text(
                                           "Skip",
                                           style: TextStyle(
