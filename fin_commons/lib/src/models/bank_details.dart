@@ -2,14 +2,16 @@ class BankDetails {
   final String bankName;
   final String account;
   final String nameOnAccount;
-  final String type;
+  final String ddaType;
+  final String achType;
   final String routingNumber;
   final bool isDefault;
   BankDetails({
     required this.bankName,
     required this.account,
     required this.nameOnAccount,
-    required this.type,
+    required this.ddaType,
+    required this.achType,
     required this.routingNumber,
     required this.isDefault,
   });
@@ -18,15 +20,17 @@ class BankDetails {
     String? bankName,
     String? account,
     String? nameOnAccount,
-    String? type,
+    String? ddaType,
     String? routingNumber,
     bool? isDefault,
+    String? achType,
   }) {
     return BankDetails(
       bankName: bankName ?? this.bankName,
       account: account ?? this.account,
       nameOnAccount: nameOnAccount ?? this.nameOnAccount,
-      type: type ?? this.type,
+      ddaType: ddaType ?? this.ddaType,
+      achType: achType ?? this.achType,
       routingNumber: routingNumber ?? this.routingNumber,
       isDefault: isDefault ?? this.isDefault,
     );
@@ -37,7 +41,8 @@ class BankDetails {
       'bankName': bankName,
       'account': account,
       'nameOnAccount': nameOnAccount,
-      'type': type,
+      'ddaType': ddaType,
+      'achType': achType,
       'routingNumber': routingNumber,
       'isDefault': isDefault,
     };
@@ -48,7 +53,8 @@ class BankDetails {
       bankName: map['bankName'] as String,
       account: map['account'] as String,
       nameOnAccount: map['nameOnAccount'] as String,
-      type: map['type'] as String,
+      ddaType: map['ddaType'] as String,
+      achType: map['achType'] as String,
       routingNumber: map['routingNumber'] as String,
       isDefault: map['isDefault'] as bool,
     );
@@ -56,7 +62,7 @@ class BankDetails {
 
   @override
   String toString() {
-    return 'BankDetails(bankName: $bankName, account: $account, nameOnAccount: $nameOnAccount, type: $type, routingNumber: $routingNumber, isDefault: $isDefault)';
+    return 'BankDetails(bankName: $bankName, account: $account, nameOnAccount: $nameOnAccount, ddaType: $ddaType, routingNumber: $routingNumber, isDefault: $isDefault, achType: $achType)';
   }
 
   @override
@@ -66,7 +72,8 @@ class BankDetails {
     return other.bankName == bankName &&
         other.account == account &&
         other.nameOnAccount == nameOnAccount &&
-        other.type == type &&
+        other.ddaType == ddaType &&
+        other.achType == achType &&
         other.routingNumber == routingNumber &&
         other.isDefault == isDefault;
   }
@@ -76,7 +83,8 @@ class BankDetails {
     return bankName.hashCode ^
         account.hashCode ^
         nameOnAccount.hashCode ^
-        type.hashCode ^
+        ddaType.hashCode ^
+        achType.hashCode ^
         routingNumber.hashCode ^
         isDefault.hashCode;
   }
