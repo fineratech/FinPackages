@@ -118,4 +118,42 @@ class ApiEndPoints {
 
   static const String instrumentScenario =
       "$serviceReferencePathResource/InstrumentScenario";
+
+  static const String registerProfessional =
+      "$serviceReferencePathResource/RegisterProfessional";
+  static const String addNewService =
+      "$serviceReferencePathResource/AddNewService";
+
+  static const String getServiceByProviderId =
+      "$serviceReferencePathResource/GetServiceByProviderId";
+
+  static const String requestSpecificService =
+      "$serviceReferencePathResource/RequestSpecificService";
+
+  static const String getProfessionalsOfACompany =
+      "$serviceReferencePathResource/GetProfessionalsOfACompany";
+
+  static const String getIndependentProfessionals =
+      "$serviceReferencePathResource/GetIndependentProfessionals";
+
+  static const String getDriversOfACompany =
+      "$serviceReferencePathResource/GetDriversOfACompany";
+
+  static const String getIndependentDrivers =
+      "$serviceReferencePathResource/GetIndependentDrivers";
+
+  static const String registerUserDetailed =
+      "$serviceReferencePathCustomer/RegisterUserDetailed";
+  static const String registerDriver =
+      "$serviceReferencePathResource/RegisterDriver";
+  static const String getVehiclesOfACompany =
+      "$serviceReferencePathResource/GetVehiclesOfACompany";
+  static const String getTransactionByTransactionRefIDProcessor =
+      "$serviceReferencePathResource/GetTransactionByTransactionRefIDProcessor";
+
+  static const String getResourceHistory =
+      "$serviceReferencePathResource/GetResourceHistory";
+
+  static const String registerTruck =
+      "$serviceReferencePathResource/RegisterTruck";
 }

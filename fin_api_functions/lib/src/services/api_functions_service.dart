@@ -292,4 +292,301 @@ class ApiFunctionsService {
     }
     return [];
   }
+
+  Future<int> registerProfessional(
+    String ownerID,
+    String category,
+    String type,
+    String companyId,
+    String idType,
+    String idNumber,
+    String idExpiryDate,
+    String idIssuingState,
+    String idIssuingCountry,
+    String licenseNumber,
+    String licenseType,
+    String licenseExpiryDate,
+    String licenseIssuingState,
+    String licenseIssuingCountry,
+    String gender,
+    String dob,
+  ) async {
+    final String url =
+        '${ApiEndPoints.registerProfessional}/$ownerID/$category/$type/$companyId/$idType/$idNumber/$idExpiryDate/$idIssuingState/$idIssuingCountry/$licenseType/$licenseNumber/$licenseExpiryDate/$licenseIssuingState/$licenseIssuingCountry/$gender/$dob'; //UserregsirationID1 is merchantId sent from the previous screen
+
+    var response = await apiService.get(endPoint: url);
+
+    int professionalId = int.tryParse(response.data.toString()) ?? -1;
+    return professionalId;
+  }
+
+  /// For merchant services, Provider is the merchantId, Customer and Resource /Schedule  / Location IDs are all -1
+  /// For professional services (under a merchant), the providerid will be the professional ID while customer /Resource and schedule id will be -1
+  Future<int> addNewService(
+    String name,
+    String type,
+    String resourceID,
+    String serviceLocationId,
+    String pickupLocationId,
+    String dropoffLocationId,
+    String cost,
+    String customerId,
+    String providerId,
+    String scheduleId,
+  ) async {
+    final String url =
+        '${ApiEndPoints.addNewService}/$name/$type/$resourceID/$serviceLocationId/$pickupLocationId/$dropoffLocationId/$cost/$customerId/$providerId/$scheduleId';
+    var response = await apiService.get(endPoint: url);
+    int serviceId = int.tryParse(response.data.toString()) ?? -1;
+    return serviceId;
+  }
+
+  Future<List<Map<String, dynamic>>> getServiceByProviderId(
+    String serviceProviderId,
+  ) async {
+    final String url =
+        '${ApiEndPoints.getServiceByProviderId}/$serviceProviderId';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> services = response.data;
+      List<Map<String, dynamic>> serviceList =
+          services.map((e) => e as Map<String, dynamic>).toList();
+      return serviceList;
+    }
+    return [];
+  }
+
+  /// For now get currency from your resource valueation
+  /// where resourceid is the professional Id for which you are adding rate.
+  Future<String> addRate(
+    String resourceId,
+    String timeUnit,
+    String minUnits,
+    String maxUnits,
+    String rate,
+  ) async {
+    final String url =
+        '${ApiEndPoints.addRate}/$resourceId/$timeUnit/$minUnits/$maxUnits/$rate';
+    var response = await apiService.get(endPoint: url);
+    return response.data.toString();
+  }
+
+  Future<String> requestSpecificService(
+    String serviceId,
+    String resourceId,
+    String serviceLocationId,
+    String requestorId,
+    String yearStart,
+    String monthStart,
+    String dayStart,
+    String hourStart,
+    String minuteStart,
+    String secondStart,
+    String millisecondStart,
+    String yearEnd,
+    String monthEnd,
+    String dayEnd,
+    String hourEnd,
+    String minuteEnd,
+    String secondEnd,
+    String millisecondEnd,
+  ) async {
+    final String url =
+        '${ApiEndPoints.requestSpecificService}/$serviceId/$resourceId/$serviceLocationId/$requestorId/$yearStart/$monthStart/$dayStart/$hourStart/$minuteStart/$secondStart/$millisecondStart/$yearEnd/$monthEnd/$dayEnd/$hourEnd/$minuteEnd/$secondEnd/$millisecondEnd';
+    var response = await apiService.get(endPoint: url);
+    return response.data.toString();
+  }
+
+  Future<List<Map<String, dynamic>>> getProfessionalsOfACompany(
+    String companyId,
+    String category,
+    String type,
+  ) async {
+    final String url =
+        '${ApiEndPoints.getProfessionalsOfACompany}/$companyId/$category/$type';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> professionals = response.data;
+      List<Map<String, dynamic>> professionalList =
+          professionals.map((e) => e as Map<String, dynamic>).toList();
+      return professionalList;
+    }
+    return [];
+  }
+
+  Future<List<Map<String, dynamic>>> getIndependentProfessionals(
+    String type,
+  ) async {
+    final String url = '${ApiEndPoints.getIndependentProfessionals}/$type';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> professionals = response.data;
+      List<Map<String, dynamic>> professionalList =
+          professionals.map((e) => e as Map<String, dynamic>).toList();
+      return professionalList;
+    }
+    return [];
+  }
+
+  Future<List<Map<String, dynamic>>> getDriversOfACompany(
+    String companyId,
+  ) async {
+    final String url = '${ApiEndPoints.getDriversOfACompany}/$companyId';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> drivers = response.data;
+      List<Map<String, dynamic>> driverList =
+          drivers.map((e) => e as Map<String, dynamic>).toList();
+      return driverList;
+    }
+    return [];
+  }
+
+  Future<List<Map<String, dynamic>>> getIndependentDrivers(
+    String type,
+  ) async {
+    final String url = '${ApiEndPoints.getIndependentDrivers}/$type';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> drivers = response.data;
+      List<Map<String, dynamic>> driverList =
+          drivers.map((e) => e as Map<String, dynamic>).toList();
+      return driverList;
+    }
+    return [];
+  }
+
+  Future<String> registerUserDetailed(
+    String firstName,
+    String lastName,
+    String userName,
+    String emailAddress,
+    String cellPhoneNumber,
+    String city,
+    String state,
+    String country,
+    String password,
+    String isActive,
+  ) async {
+    final String url =
+        '${ApiEndPoints.registerUserDetailed}/$firstName/$lastName/$userName/$emailAddress/$cellPhoneNumber/$city/$state/$country/$password/$isActive';
+    var response = await apiService.get(endPoint: url);
+    return response.data.toString();
+  }
+
+  Future<int> registerDriver(
+      String ownerID,
+      String category,
+      String type,
+      String truckingCompanyID,
+      String idType,
+      String idNumber,
+      String idExpiryDate,
+      String idIssuingState,
+      String idIssuingCountry,
+      String drivingLicenseType,
+      String drivingLicenseNumber,
+      String drivingLicenseExpiryDate,
+      String drivingLicenseIssuingState,
+      String drivingLicenseIssuingCountry) async {
+    final String url =
+        '${ApiEndPoints.registerDriver}/$ownerID/$category/$type/$truckingCompanyID/$idType/$idNumber/$idExpiryDate/$idIssuingState/$idIssuingCountry/$drivingLicenseType/$drivingLicenseNumber/$drivingLicenseExpiryDate/$drivingLicenseIssuingState/$drivingLicenseIssuingCountry';
+    var response = await apiService.get(endPoint: url);
+    int driverId = int.tryParse(response.data.toString()) ?? -1;
+    return driverId;
+  }
+
+  Future<String> setResourceProperty(
+    String propertyName,
+    String propertyValue,
+    String resourceID,
+  ) async {
+    final String url =
+        '${ApiEndPoints.setResourceProperty}/$propertyName/$propertyValue/$resourceID';
+    var response = await apiService.get(endPoint: url);
+    return response.data.toString();
+  }
+
+  Future<List<Map<String, dynamic>>> getVehiclesOfACompany(
+    String companyId,
+  ) async {
+    final String url = '${ApiEndPoints.getVehiclesOfACompany}/$companyId';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> vehicles = response.data;
+      List<Map<String, dynamic>> vehicleList =
+          vehicles.map((e) => e as Map<String, dynamic>).toList();
+      return vehicleList;
+    }
+    return [];
+  }
+
+  Future<String> registerTransaction(
+    String orderNumber,
+    String transactionType,
+    String transactionRefId,
+    String processor,
+    String environment,
+    String gatewayResponse,
+  ) async {
+    final String url =
+        '${ApiEndPoints.registerTransaction}/$orderNumber/$transactionType/$transactionRefId/$processor/$environment/$gatewayResponse';
+    var response = await apiService.get(endPoint: url);
+    return response.data.toString();
+  }
+
+  Future<List<Map<String, dynamic>>> getTransactionByTransactionRefIDProcessor(
+    String transactionRefIdProcessor,
+  ) async {
+    final String url =
+        '${ApiEndPoints.getTransactionByTransactionRefIDProcessor}/$transactionRefIdProcessor';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> transactions = response.data;
+      List<Map<String, dynamic>> transactionList =
+          transactions.map((e) => e as Map<String, dynamic>).toList();
+      return transactionList;
+    }
+    return [];
+  }
+
+  Future<List<Map<String, dynamic>>> getResourceHistory(
+    String resourceID,
+  ) async {
+    final String url = '${ApiEndPoints.getResourceHistory}/$resourceID';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> history = response.data;
+      List<Map<String, dynamic>> historyList =
+          history.map((e) => e as Map<String, dynamic>).toList();
+      return historyList;
+    }
+    return [];
+  }
+
+  Future<int> registerTruck(
+    String ownerID,
+    String category,
+    String type,
+    String truckingCompanyID,
+    String idType,
+    String make,
+    String model,
+    String year,
+    String vin,
+    String length,
+    String registrationNumber,
+    String registrationValiditiy,
+    String plateNumber,
+    String insuranceValidityDate,
+    String portName,
+    String permitNumber,
+    String permitExpiryDate,
+  ) async {
+    final String url =
+        '${ApiEndPoints.registerTruck}/$ownerID/$category/$type/$truckingCompanyID/$idType/$make/$model/$year/$vin/$length/$registrationNumber/$registrationValiditiy/$plateNumber/$insuranceValidityDate/$portName/$permitNumber/$permitExpiryDate';
+    var response = await apiService.get(endPoint: url);
+    int truckId = int.tryParse(response.data.toString()) ?? -1;
+    return truckId;
+  }
 }
