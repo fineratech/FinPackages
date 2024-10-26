@@ -591,4 +591,21 @@ class ApiFunctionsService {
     int truckId = int.tryParse(response.data.toString()) ?? -1;
     return truckId;
   }
+
+  Future<int> addBankCardDetailed(
+    String customerId,
+    String cardType, // Visa, MasterCard, AmericanExpress, Discover
+    String cardNumber,
+    String expiryMonth,
+    String expiryYear,
+    String cvv,
+    String nameOnCard,
+    String locationId,
+  ) async {
+    final String url =
+        '${ApiEndPoints.addBankCardDetailed}/$customerId/$cardType/$cardNumber/$expiryMonth/$expiryYear/$cvv/$nameOnCard/$locationId';
+    var response = await apiService.get(endPoint: url);
+    int cardId = int.tryParse(response.data.toString()) ?? -1;
+    return cardId;
+  }
 }
