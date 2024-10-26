@@ -35,7 +35,7 @@ class BusinessDetailsViewModel extends ChangeNotifier {
 
   void setSelectedPayFac(PayFacsResult value) {
     _selectedPayFac = value;
-    payFacId.text = value.id.toString();
+    payFacId.text = value.payFacTenancyId.toString();
     mcc.text = value.mcc;
     logger.d("Selected PayFac: ${value.toString()}");
     notifyListeners();
