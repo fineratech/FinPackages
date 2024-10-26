@@ -6,6 +6,7 @@ class AddCardDetailsViewModel extends ChangeNotifier {
   String _expiryDate = '';
   String _cardHolderName = '';
   String _cvvCode = '';
+  CardType? _cardType = CardType.otherBrand;
   bool _isCvvFocused = false;
   bool _useGlassMorphism = false;
   bool _useBackgroundImage = true;
@@ -21,6 +22,12 @@ class AddCardDetailsViewModel extends ChangeNotifier {
   bool get useGlassMorphism => _useGlassMorphism;
   bool get useBackgroundImage => _useBackgroundImage;
   bool get useFloatingAnimation => _useFloatingAnimation;
+  CardType? get cardType => _cardType;
+
+  set cardType(CardType? value) {
+    _cardType = value;
+    notifyListeners();
+  }
 
   void setUseGlassMorphism(bool value) {
     _useGlassMorphism = value;

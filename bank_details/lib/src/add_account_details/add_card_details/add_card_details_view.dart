@@ -9,10 +9,10 @@ class AddCardDetailsView extends StatelessWidget {
   const AddCardDetailsView({
     super.key,
     required this.onDone,
-    // required this.onAddCardDetails,
+    required this.onAddCardDetails,
   });
   final VoidCallback onDone;
-  // final Function(CreditCardModel) onAddCardDetails;
+  final Function(CreditCardModel, CardType?) onAddCardDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,9 @@ class AddCardDetailsView extends StatelessWidget {
                         //     : null,
                         isSwipeGestureEnabled: true,
                         onCreditCardWidgetChange:
-                            (CreditCardBrand creditCardBrand) {},
+                            (CreditCardBrand creditCardBrand) {
+                          viewModel.cardType = creditCardBrand.brandName;
+                        },
                       ),
                       Expanded(
                         child: SingleChildScrollView(
@@ -117,7 +119,7 @@ class AddCardDetailsView extends StatelessWidget {
                                     ),
                                     Expanded(
                                       child: ElevatedButton(
-                                        onPressed: () {
+                                        onPressed: () async {
                                           if (viewModel.formKey.currentState
                                                   ?.validate() ??
                                               false) {
@@ -129,7 +131,11 @@ class AddCardDetailsView extends StatelessWidget {
                                               viewModel.cvvCode,
                                               viewModel.isCvvFocused,
                                             );
-                                            // onAddCardDetails(cardModel);
+                                            await onAddCardDetails(
+                                              cardModel,
+                                              viewModel.cardType,
+                                            );
+                                            onDone();
                                           }
                                         },
                                         child: const Text(
