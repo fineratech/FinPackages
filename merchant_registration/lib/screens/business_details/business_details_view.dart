@@ -193,6 +193,7 @@ class BusinessDetailsView extends StatelessWidget {
                               if (viewModel.formKey.currentState
                                       ?.saveAndValidate() ??
                                   false) {
+                                viewModel.isLoading = true;
                                 var newMerchant = merchant.copyWith(
                                   payFacName: viewModel.selectedPayFac?.name,
                                   payFacId: viewModel.payFacId.text,
@@ -212,9 +213,9 @@ class BusinessDetailsView extends StatelessWidget {
                                   customerServicePhone:
                                       viewModel.servicePhone.text,
                                 );
-                                viewModel.isLoading = true;
-                                await onDone(newMerchant);
-                                viewModel.isLoading = false;
+                                onDone(newMerchant).then((_) {
+                                  viewModel.isLoading = false;
+                                });
                               }
                             },
                             child: const Text('Add'),
