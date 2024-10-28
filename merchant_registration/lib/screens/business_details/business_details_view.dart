@@ -14,12 +14,14 @@ class BusinessDetailsView extends StatelessWidget {
     required this.isIndividual,
     required this.merchant,
     required this.payFacs,
+    required this.userId,
   });
   final MerchantType merchantType;
   final Future<void> Function(Merchant) onDone;
   final bool isIndividual;
   final Merchant merchant;
   final List<PayFacsResult> payFacs;
+  final int userId;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,42 @@ class BusinessDetailsView extends StatelessWidget {
                             enabled: false,
                           ),
                           const SizedBox(height: 10),
-                        ],
+                        ] else
+                          FutureBuilder(
+                            future: viewModel.getPayFacs(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator
+                                    .adaptive();
+                              } else if (snapshot.hasError) {
+                                return const Text("Failed to load payfacs");
+                              } else if (snapshot.connectionState ==
+                                      ConnectionState.done &&
+                                  snapshot.hasData) {
+                                return CustomDropdownField(
+                                  name: 'payfacName',
+                                  hintText: 'Payfac Name',
+                                  label: 'Payfac Name',
+                                  onChanged: (value) {
+                                    viewModel.setSelectedPayFac(
+                                      value as PayFacsResult,
+                                    );
+                                  },
+                                  items: snapshot.data!
+                                      .map(
+                                        (e) => DropdownMenuItem(
+                                          value: e,
+                                          child: Text(e.name),
+                                        ),
+                                      )
+                                      .toList(),
+                                );
+                              } else {
+                                return const Text("Failed to load payfacs");
+                              }
+                            },
+                          ),
                         CustomTextField(
                           name: 'dbaName',
                           hintText: 'DBA Name',
@@ -189,36 +226,54 @@ class BusinessDetailsView extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: CustomButton(
-                            onPressed: () async {
-                              if (viewModel.formKey.currentState
-                                      ?.saveAndValidate() ??
-                                  false) {
-                                viewModel.isLoading = true;
-                                var newMerchant = merchant.copyWith(
-                                  payFacName: viewModel.selectedPayFac?.name,
-                                  payFacId: viewModel.payFacId.text,
-                                  payFacTendencyId: viewModel
-                                          .selectedPayFac?.payFacTenancyId ??
-                                      "-1",
-                                  dbaName: viewModel.dbaName.text,
-                                  ssn: viewModel.ssnOrTaxId.text,
-                                  federalTaxId: viewModel.ssnOrTaxId.text,
-                                  merchantCategory: viewModel.merchantCategory,
-                                  mcc: viewModel.mcc.text,
-                                  type: merchantType,
-                                  billingDisc: viewModel.billingDescriptor.text,
-                                  contactPerson: viewModel.contactPerson.text,
-                                  customerServiceEmail:
-                                      viewModel.serviceEmail.text,
-                                  customerServicePhone:
-                                      viewModel.servicePhone.text,
-                                );
-                                onDone(newMerchant).then((_) {
-                                  viewModel.isLoading = false;
-                                });
-                              }
-                            },
-                            child: const Text('Add'),
+                            onPressed: viewModel.isLoading
+                                ? () {}
+                                : () async {
+                                    if (viewModel.formKey.currentState
+                                            ?.saveAndValidate() ??
+                                        false) {
+                                      viewModel.isLoading = true;
+                                      var newMerchant = merchant.copyWith(
+                                        payFacName:
+                                            viewModel.selectedPayFac?.name,
+                                        payFacId: viewModel.payFacId.text,
+                                        payFacTendencyId: viewModel
+                                                .selectedPayFac
+                                                ?.payFacTenancyId ??
+                                            "-1",
+                                        dbaName: viewModel.dbaName.text,
+                                        ssn: viewModel.ssnOrTaxId.text,
+                                        federalTaxId: viewModel.ssnOrTaxId.text,
+                                        merchantCategory:
+                                            viewModel.merchantCategory,
+                                        mcc: viewModel.mcc.text,
+                                        type: merchantType,
+                                        billingDisc:
+                                            viewModel.billingDescriptor.text,
+                                        contactPerson:
+                                            viewModel.contactPerson.text,
+                                        customerServiceEmail:
+                                            viewModel.serviceEmail.text,
+                                        customerServicePhone:
+                                            viewModel.servicePhone.text,
+                                      );
+
+                                      viewModel.registerMerchant(
+                                        merchant: merchant,
+                                        userId: userId,
+                                        context: context,
+                                      );
+
+                                      //TODO: Do something about onDone
+
+                                      // onDone(newMerchant).then((_) {
+                                      //   viewModel.isLoading = false;
+                                      // });
+                                    }
+                                  },
+                            child: viewModel.isLoading
+                                ? const CircularProgressIndicator.adaptive()
+                                : const Text('Add'),
                           ),
                         ),
                         const SizedBox(height: 20),

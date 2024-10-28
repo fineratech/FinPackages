@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fin_api_functions/fin_api_functions.dart';
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:logger/logger.dart';
+
+import '../add_services/add_services_view.dart';
 
 class BusinessDetailsViewModel extends ChangeNotifier {
   BusinessDetailsViewModel({
@@ -12,6 +15,9 @@ class BusinessDetailsViewModel extends ChangeNotifier {
   }
 
   final Logger logger = Logger();
+  late ApiFunctionsService apiFunctionsService;
+
+  String locationType = "merchantLocation";
 
   PayFacsResult? _selectedPayFac;
   final MerchantType type;
@@ -59,6 +65,9 @@ class BusinessDetailsViewModel extends ChangeNotifier {
   late TextEditingController merchantTypeController;
 
   void initialize() {
+    apiFunctionsService = ApiFunctionsService(
+      logger: logger,
+    );
     dbaName = TextEditingController();
     ssnOrTaxId = TextEditingController();
     billingDescriptor = TextEditingController();
@@ -69,6 +78,100 @@ class BusinessDetailsViewModel extends ChangeNotifier {
     merchantCategoryController = TextEditingController(text: merchantCategory);
     mcc = TextEditingController();
     merchantTypeController = TextEditingController(text: type.name);
+  }
+
+  Future<void> registerMerchant({
+    required Merchant merchant,
+    required int userId,
+    required BuildContext context,
+  }) async {
+    isLoading = true;
+    // Add Merchant Address
+    int? locationId = await apiFunctionsService.addLocationWithCategory(
+      merchant.address.addressCategory,
+      merchant.address.streetline1,
+      merchant.address.apartmentOrSuite,
+      merchant.address.city,
+      merchant.address.state,
+      merchant.address.zip,
+      merchant.address.country,
+      "-1",
+      "-1",
+      locationType,
+      merchant.address.addressCategory,
+      merchant.address.addressSubcategory,
+      "",
+    );
+    if (locationId != null && locationId != -1) {
+      // Register Merchant
+      int? merchantId = await apiFunctionsService.registerMerchantGolden(
+        userId.toString(),
+        merchant.merchantCategory,
+        merchant.type.name,
+        merchant.dbaName,
+        merchant.mcc,
+        merchant.billingDisc,
+        merchant.payFacTendencyId,
+        merchant.payFacId,
+        merchant.customerServiceEmail,
+        merchant.customerServicePhone,
+        locationId.toString(),
+      );
+      if (merchantId != null && merchantId != -1) {
+        if (context.mounted) {
+          Utils.showSuccessToast(
+            context: context,
+            message: "Merchant Registered Successfully",
+          );
+        }
+
+        int payFacMerchId = await apiFunctionsService
+            .registerMerchantInPayFacDbGolden(merchantId.toString());
+        isLoading = false;
+
+        if (context.mounted) {
+          // TODO : Navigate to Service addition screen
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => AddServicesView()),
+          );
+          // Navigator.of(context).push(
+          //   MaterialPageRoute(
+          //     builder: (context) => AddBankAccount(
+          //       onDone: () {
+          //         Navigator.of(context).push(
+          //           MaterialPageRoute(
+          //             builder: (context) => EntityRegistrationScreen(
+          //               entityType: EntityType.therapist,
+          //               onDone: (entity) {
+          //                 // TODO : Register Professional
+          //               },
+          //             ),
+          //           ),
+          //         );
+          //       },
+          //       userId: userId,
+          //       mID: payFacMerchId,
+          //     ),
+          //   ),
+          // );
+        }
+      } else {
+        if (context.mounted) {
+          Utils.showErrorToast(
+            context: context,
+            message: "Merchant Registration Failed",
+          );
+        }
+      }
+    }
+
+    // Naviagte to next screen
+
+    isLoading = false;
+  }
+
+  Future<List<PayFacsResult>> getPayFacs() async {
+    return await apiFunctionsService.getPayFacsGolden();
   }
 
   @override

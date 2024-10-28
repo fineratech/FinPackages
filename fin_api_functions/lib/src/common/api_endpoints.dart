@@ -156,4 +156,7 @@ class ApiEndPoints {
 
   static const String registerTruck =
       "$serviceReferencePathResource/RegisterTruck";
+
+  static const String getAllAvailableServicesByCategory =
+      "$serviceReferencePathResource/GetAllAvailableServicesByCategory";
 }

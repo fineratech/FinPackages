@@ -296,17 +296,19 @@ class ApiFunctionsService {
   }
 
   Future<int> registerProfessional(
-    String ownerID,
-    String category,
-    String type,
-    String companyId,
-    String idType,
+    String ownerID, //UserId
+    String
+        category, //healthCare, trucking, realEstate, resturants, b2b, professionalServices, travelAndEntertainment, government, education.
+    String
+        type, //doctor, nurse, driver, realEstateAgent, realEstateBroker, realEstateManager, realEstateOwner, realEstateTenant, realEstateVendor, realEstateBuyer, realEstateSeller, realEstateLender, realEstateLandlord, realEstateTenantRep, realEstateLandlordRep, realEstateTenantRepBroker, realEstateLandlordRepBroker, realEstateTenantRepAgent, realEstateLandlordRepAgent, realEstateTenantRepManager, realEstateLandlordRepManager, realEstateTenantRepOwner, realEstateLandlordRepOwner, realEstateTenantRepVendor, realEstateLandlordRepVendor, realEstateTenantRepBuyer, realEstateLandlordRepBuyer, realEstateTenantRepSeller, realEstateLandlordRepSeller
+    String companyId, //MerchantId
+    String idType, //Passport, CNIC, StateID
     String idNumber,
     String idExpiryDate,
     String idIssuingState,
     String idIssuingCountry,
     String licenseNumber,
-    String licenseType,
+    String licenseType, //Free text
     String licenseExpiryDate,
     String licenseIssuingState,
     String licenseIssuingCountry,
@@ -326,15 +328,15 @@ class ApiFunctionsService {
   /// For professional services (under a merchant), the providerid will be the professional ID while customer /Resource and schedule id will be -1
   Future<int> addNewService(
     String name,
-    String type,
-    String resourceID,
-    String serviceLocationId,
-    String pickupLocationId,
-    String dropoffLocationId,
-    String cost,
-    String customerId,
-    String providerId,
-    String scheduleId,
+    String type, // Free form
+    String resourceID, //-1
+    String serviceLocationId, //-1
+    String pickupLocationId, //-1
+    String dropoffLocationId, //-1
+    String cost, // Free form number
+    String customerId, //-1
+    String providerId, //Professional Id or Merchant Id
+    String scheduleId, //-1
   ) async {
     final String url =
         '${ApiEndPoints.addNewService}/$name/$type/$resourceID/$serviceLocationId/$pickupLocationId/$dropoffLocationId/$cost/$customerId/$providerId/$scheduleId';
@@ -607,5 +609,13 @@ class ApiFunctionsService {
     var response = await apiService.get(endPoint: url);
     int cardId = int.tryParse(response.data.toString()) ?? -1;
     return cardId;
+  }
+
+  Future<List<Map<String, dynamic>>> getAllAvailableServicesByCategory(
+      String category) async {
+    final String url =
+        '${ApiEndPoints.getAllAvailableServicesByCategory}/$category';
+    var response = await apiService.get(endPoint: url);
+    return response.data;
   }
 }

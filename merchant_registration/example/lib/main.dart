@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
         merchantType: MerchantType.hospital,
         onDone: (merchant) async {},
         payFacs: const [],
+        userId: -1,
       ),
     );
   }

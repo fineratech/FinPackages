@@ -14,10 +14,12 @@ class CompanyDetailsView extends StatelessWidget {
     required this.merchantType,
     required this.onDone,
     required this.payFacs,
+    required this.userId,
   });
   final MerchantType merchantType;
   final List<PayFacsResult> payFacs;
   final Future<void> Function(Merchant) onDone;
+  final int userId;
 
   @override
   Widget build(BuildContext context) {
@@ -228,6 +230,7 @@ class CompanyDetailsView extends StatelessWidget {
                                     isIndividual: viewModel.isIndividual,
                                     merchant: merchant,
                                     payFacs: payFacs,
+                                    userId: userId,
                                   ),
                                 ),
                               );

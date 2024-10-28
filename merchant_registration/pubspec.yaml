@@ -26,6 +26,10 @@ dependencies:
     git:
       url: https://github.com/fineratech/FinPackages.git
       path: fin_commons
+  fin_api_functions:
+    git:
+      url: https://github.com/fineratech/FinPackages.git
+      path: fin_api_functions
 
 dev_dependencies:
   flutter_test:
