@@ -16,5 +16,7 @@ class AddServicesViewModel extends ChangeNotifier {
     );
   }
 
-  Future<void> getServices() async {}
+  Future<void> getServices() async {
+    await apiFunctionsService.getAllAvailableServicesByCategory('Healthcare');
+  }
 }
