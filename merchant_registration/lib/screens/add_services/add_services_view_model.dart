@@ -14,6 +14,7 @@ class AddServicesViewModel extends ChangeNotifier {
     apiFunctionsService = ApiFunctionsService(
       logger: logger,
     );
+    getServices();
   }
 
   Future<void> getServices() async {
