@@ -163,6 +163,7 @@ class BusinessDetailsView extends StatelessWidget {
                             ),
                           ],
                         ),
+                        const SizedBox(height: 10),
                         CustomTextField(
                           name: 'merchantType',
                           hintText: "Merchant Type",
@@ -259,7 +260,7 @@ class BusinessDetailsView extends StatelessWidget {
                                       );
 
                                       viewModel.registerMerchant(
-                                        merchant: merchant,
+                                        merchant: newMerchant,
                                         userId: userId,
                                         context: context,
                                       );
