@@ -237,7 +237,7 @@ class BusinessDetailsView extends StatelessWidget {
                                       var newMerchant = merchant.copyWith(
                                         payFacName:
                                             viewModel.selectedPayFac?.name,
-                                        payFacId: viewModel.payFacId.text,
+                                        payFacId: viewModel.selectedPayFac?.id,
                                         payFacTendencyId: viewModel
                                                 .selectedPayFac
                                                 ?.payFacTenancyId ??
