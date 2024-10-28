@@ -17,10 +17,15 @@ dependencies:
   provider: ^6.1.2
   csc_picker: ^0.2.7
   flutter_svg: ^2.0.10+1
+  logger: ^2.2.0
   fin_commons:
     git:
       url: https://github.com/fineratech/FinPackages.git
       path: fin_commons
+  fin_api_functions:
+    git:
+      url: https://github.com/fineratech/FinPackages.git
+      path: fin_api_functions
 
 dev_dependencies:
   flutter_test:

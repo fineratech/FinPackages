@@ -10,8 +10,13 @@ import '../../constants/app_colors.dart';
 import '../../widgets/image_with_title.dart';
 
 class RegisterTherapistScreen extends StatelessWidget {
-  const RegisterTherapistScreen({super.key, required this.onDone});
-  final void Function(EntityModal) onDone;
+  const RegisterTherapistScreen({
+    super.key,
+    required this.onDone,
+    required this.onAddTherapist,
+  });
+  final VoidCallback onDone;
+  final Future<void> Function(EntityModal) onAddTherapist;
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +111,28 @@ class RegisterTherapistScreen extends StatelessWidget {
                         FormBuilderValidators.required(),
                       ]),
                     ),
+                    // const SizedBox(height: 10),
+                    // CustomTextField(
+                    //   name: "licenseNumber",
+                    //   label: "License Number",
+                    //   hintText: "License Number",
+                    //   controller: viewModel.licenseNumberController,
+                    //   validator: FormBuilderValidators.compose([
+                    //     FormBuilderValidators.required(),
+                    //   ]),
+                    // ),
+                    const SizedBox(height: 10),
+                    CustomTextField(
+                      name: "contactNumber",
+                      label: "Contact Number",
+                      hintText: "Contact Number",
+                      controller: viewModel.contactNumberController,
+                      textInputType: TextInputType.phone,
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.phoneNumber(),
+                        FormBuilderValidators.required(),
+                      ]),
+                    ),
                     const SizedBox(height: 10),
                     const Text("What services do you provide?"),
                     const SizedBox(
@@ -116,16 +143,14 @@ class RegisterTherapistScreen extends StatelessWidget {
                         spacing: 10,
                         children: viewModel.services
                             .map(
-                              (service) => GestureDetector(
+                              (service) => ImageWithTitle(
+                                pngPath: service.pngPath!,
+                                title: service.name,
+                                isSelected: viewModel.selectedServices
+                                    .contains(service),
                                 onTap: () {
                                   viewModel.toggleService(service);
                                 },
-                                child: ImageWithTitle(
-                                  pngPath: service.pngPath!,
-                                  title: service.name,
-                                  isSelected: viewModel.selectedServices
-                                      .contains(service),
-                                ),
                               ),
                             )
                             .toList()),
@@ -140,37 +165,53 @@ class RegisterTherapistScreen extends StatelessWidget {
                         },
                       )
                     else ...[
-                      const CustomTextField(
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CustomTextField(
                         name: "issuingAuthority",
                         label: "Issuing Authority",
                         hintText: "Issuing Authority",
+                        controller: viewModel.issuingAuthorityController,
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                        ]),
                       ),
                       const SizedBox(height: 10),
-                      const CustomTextField(
+                      CustomTextField(
                         name: "firstName",
                         label: "First Name",
                         hintText: "First Name",
+                        controller: viewModel.firstNameController,
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                        ]),
                       ),
                       const SizedBox(height: 10),
-                      const CustomTextField(
+                      CustomTextField(
                         name: "lastName",
                         label: "Last Name",
                         hintText: "Last Name",
+                        controller: viewModel.lastNameController,
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                        ]),
                       ),
                       const SizedBox(height: 10),
                       CSCPicker(
                         layout: Layout.horizontal,
                         showCities: false,
-                        // currentCountry: viewModel.country,
-                        // currentState: viewModel.state,
+                        flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
+                        currentCountry: viewModel.country,
+                        currentState: viewModel.state,
                         // currentCity: viewModel.city,
-                        // countryDropdownLabel: viewModel.country ?? 'Country',
+                        countryDropdownLabel: viewModel.country ?? "Country",
                         defaultCountry: CscCountry.United_States,
                         onCountryChanged: (value) {
-                          // viewModel.country = value;
+                          viewModel.country = value;
                         },
                         onStateChanged: (value) {
-                          // viewModel.state = value;
+                          viewModel.state = value;
                         },
                         selectedItemStyle: const TextStyle(
                           color: AppColors.primaryColor,
@@ -185,53 +226,89 @@ class RegisterTherapistScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      const CustomTextField(
+                      CustomTextField(
                         name: "licenseNumber",
                         label: "License Number",
                         hintText: "License Number",
+                        controller: viewModel.licenseNumberController,
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                        ]),
                       ),
                       const SizedBox(height: 10),
-                      const CustomTextField(
-                        name: "licenseIssueDate",
-                        label: "License Issue Date",
-                        hintText: "License Issue Date",
-                        suffix: Icon(
-                          Icons.date_range,
-                          color: AppColors.primaryColor,
+                      CustomDatePicker(
+                        name: 'licenseIssueDate',
+                        label: 'License Issue Date',
+                        inputType: InputType.date,
+                        firstDate: DateTime(1900),
+                        initialDate: DateTime.now().subtract(
+                          const Duration(days: 2),
                         ),
+                        lastDate: DateTime.now(),
+                        onChanged: (value) {
+                          viewModel.licenseIssueDate = value;
+                        },
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                          FormBuilderValidators.dateTime()
+                        ]),
                       ),
                       const SizedBox(height: 10),
-                      const CustomTextField(
-                        name: "licenseExpiryDate",
-                        label: "License Expiry Date",
-                        hintText: "License Expiry Date",
-                        suffix: Icon(
-                          Icons.date_range,
-                          color: AppColors.primaryColor,
+                      CustomDatePicker(
+                        name: 'licenseExpiryDate',
+                        label: 'License Expiry Date',
+                        inputType: InputType.date,
+                        firstDate: DateTime.now().add(
+                          const Duration(days: 1),
                         ),
+                        initialDate: DateTime.now().add(
+                          const Duration(days: 1),
+                        ),
+                        onChanged: (value) {
+                          viewModel.licenseExpiryDate = value;
+                        },
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                          FormBuilderValidators.dateTime()
+                        ]),
                       ),
                       const SizedBox(height: 10),
                       const Text("Add Images"),
                       const SizedBox(height: 10),
-                      const Row(
+                      Row(
                         children: [
                           Expanded(
                             child: ImageWithTitle(
                               svgPath: "assets/images/upload.svg",
                               title: "Front Image",
+                              onTap: viewModel.pickFrontImage,
+                              isSelected: viewModel.licenseFrontImage != null,
                             ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: ImageWithTitle(
                               svgPath: "assets/images/upload.svg",
                               title: "Back Image",
+                              onTap: viewModel.pickBackImage,
+                              isSelected: viewModel.licenseBackImage != null,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
-                    ]
+                    ],
+                    const SizedBox(height: 20),
+                    CustomButton(
+                      child: const Text("Submit"),
+                      onPressed: () {
+                        if (viewModel.formKey.currentState?.validate() ??
+                            false) {
+                          // EntityModal entityModal = EntityModal.empty();
+                          // onAddTherapist()
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
