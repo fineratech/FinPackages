@@ -50,40 +50,31 @@ class ServiceModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'name': name,
-      'type': type,
-      'resourceId': resourceId,
-      'serviceLocationId': serviceLocationId,
-      'pickupLocationId': pickupLocationId,
-      'dropoffLocationId': dropoffLocationId,
-      'cost': cost,
-      'customerId': customerId,
-      'providerId': providerId,
-      'scheduleId': scheduleId,
+      'Name': name,
+      'Type': type,
+      'ResourceId': resourceId,
+      'ServiceLocationId': serviceLocationId,
+      'PickupLocationId': pickupLocationId,
+      'DropoffLocationId': dropoffLocationId,
+      'Cost': cost,
+      'CustomerId': customerId,
+      'ProviderId': providerId,
+      'ScheduleId': scheduleId,
     };
   }
 
   factory ServiceModel.fromMap(Map<String, dynamic> map) {
     return ServiceModel(
-      name: map['name'] as String,
-      type: map['type'] as String,
-      resourceId:
-          map['resourceId'] != null ? map['resourceId'] as String : null,
-      serviceLocationId: map['serviceLocationId'] != null
-          ? map['serviceLocationId'] as String
-          : null,
-      pickupLocationId: map['pickupLocationId'] != null
-          ? map['pickupLocationId'] as String
-          : null,
-      dropoffLocationId: map['dropoffLocationId'] != null
-          ? map['dropoffLocationId'] as String
-          : null,
-      cost: map['cost'] as String,
-      customerId:
-          map['customerId'] != null ? map['customerId'] as String : null,
-      providerId: map['providerId'] as String,
-      scheduleId:
-          map['scheduleId'] != null ? map['scheduleId'] as String : null,
+      name: map['Name'] ?? '',
+      type: map['Type'] ?? '',
+      resourceId: map['ResourceId'] ?? '-1',
+      serviceLocationId: map['ServiceLocationId'] ?? '-1',
+      pickupLocationId: map['PickupLocationId'] ?? '-1',
+      dropoffLocationId: map['DropoffLocationId'] ?? '-1',
+      cost: map['Cost'] ?? '',
+      customerId: map['CustomerId'] ?? '-1',
+      providerId: map['ProviderId'] ?? '-1',
+      scheduleId: map['ScheduleId'] ?? '-1',
     );
   }
 

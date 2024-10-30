@@ -611,11 +611,19 @@ class ApiFunctionsService {
     return cardId;
   }
 
-  Future<List<Map<String, dynamic>>> getAllAvailableServicesByCategory(
+  Future<List<ServiceModel>?> getAllAvailableServicesByCategory(
       String category) async {
     final String url =
         '${ApiEndPoints.getAllAvailableServicesByCategory}/$category';
     var response = await apiService.get(endPoint: url);
-    return response.data;
+    List<Map<String, dynamic>>? data =
+        response.data['GetAllAvailableServicesByCategoryResult'];
+
+    if (data != null) {
+      List<ServiceModel> services =
+          data.map((item) => ServiceModel.fromMap(item)).toList();
+      return services;
+    }
+    return null;
   }
 }
