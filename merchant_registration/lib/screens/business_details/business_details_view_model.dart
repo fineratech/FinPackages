@@ -130,30 +130,16 @@ class BusinessDetailsViewModel extends ChangeNotifier {
         isLoading = false;
 
         if (context.mounted) {
-          // TODO : Navigate to Service addition screen
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => AddServicesView()),
+            MaterialPageRoute(
+              builder: (context) => AddServicesView(
+                type: type,
+                merchantId: merchantId,
+                userId: userId,
+                locationId: locationId,
+              ),
+            ),
           );
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) => AddBankAccount(
-          //       onDone: () {
-          //         Navigator.of(context).push(
-          //           MaterialPageRoute(
-          //             builder: (context) => EntityRegistrationScreen(
-          //               entityType: EntityType.therapist,
-          //               onDone: (entity) {
-          //                 // TODO : Register Professional
-          //               },
-          //             ),
-          //           ),
-          //         );
-          //       },
-          //       userId: userId,
-          //       mID: payFacMerchId,
-          //     ),
-          //   ),
-          // );
         }
       } else {
         if (context.mounted) {

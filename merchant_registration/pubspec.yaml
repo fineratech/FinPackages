@@ -30,6 +30,14 @@ dependencies:
     git:
       url: https://github.com/fineratech/FinPackages.git
       path: fin_api_functions
+  bank_details:
+    git:
+      url: https://github.com/fineratech/FinPackages.git
+      path: bank_details
+  entity_registration:
+    git:
+      url: https://github.com/fineratech/FinPackages.git
+      path: entity_registration
 
 dev_dependencies:
   flutter_test:
