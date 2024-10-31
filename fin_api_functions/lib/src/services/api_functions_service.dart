@@ -616,7 +616,7 @@ class ApiFunctionsService {
     final String url =
         '${ApiEndPoints.getAllAvailableServicesByCategory}/$category';
     var response = await apiService.get(endPoint: url);
-    List<Map<String, dynamic>>? data =
+    List<dynamic>? data =
         response.data['GetAllAvailableServicesByCategoryResult'];
 
     if (data != null) {
