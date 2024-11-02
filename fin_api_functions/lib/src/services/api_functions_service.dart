@@ -342,7 +342,8 @@ class ApiFunctionsService {
     final String url =
         '${ApiEndPoints.addNewService}/$name/$type/$resourceID/$serviceLocationId/$pickupLocationId/$dropoffLocationId/$cost/$customerId/$providerId/$scheduleId';
     var response = await apiService.get(endPoint: url);
-    int serviceId = int.tryParse(response.data.toString()) ?? -1;
+    var data = response.data['AddNewServiceResult'];
+    int serviceId = int.tryParse(data.toString()) ?? -1;
     return serviceId;
   }
 
@@ -626,7 +627,7 @@ class ApiFunctionsService {
     if (data != null) {
       List<ServiceModel> services =
           data.map((item) => ServiceModel.fromMap(item)).toList();
-      return services;
+      return services.where((service) => service.providerId == "-1").toList();
     }
     return null;
   }
