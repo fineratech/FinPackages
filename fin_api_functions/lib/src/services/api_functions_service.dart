@@ -627,7 +627,7 @@ class ApiFunctionsService {
     if (data != null) {
       List<ServiceModel> services =
           data.map((item) => ServiceModel.fromMap(item)).toList();
-      return services.where((service) => service.providerId == "-1").toList();
+      return services;
     }
     return null;
   }
