@@ -64,9 +64,16 @@ class AddServicesViewModel extends ChangeNotifier {
 
   Future<void> getServices(BuildContext context) async {
     isLoading = true;
-    allServices = await apiFunctionsService
+    List<ServiceModel>? services = await apiFunctionsService
         .getAllAvailableServicesByCategory('Healthcare');
-    if (allServices != null) {
+
+    if (services != null) {
+      allServices = services.where((service) {
+        return service.providerId == "-1";
+      }).toList();
+      addedServices = services.where((service) {
+        return service.providerId == merchantId.toString();
+      }).toList();
       isError = false;
       notifyListeners();
     } else {

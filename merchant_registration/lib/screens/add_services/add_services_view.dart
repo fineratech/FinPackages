@@ -117,12 +117,9 @@ class AddServicesView extends StatelessWidget {
                                           viewModel.addedServices[index];
                                       return ListTile(
                                         title: Text(service.name),
+                                        subtitle: Text("Cost : $service.cost"),
                                         trailing: Row(
                                           children: [
-                                            Text(service.cost),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
                                             IconButton(
                                               icon: const Icon(Icons.delete),
                                               onPressed: () {
