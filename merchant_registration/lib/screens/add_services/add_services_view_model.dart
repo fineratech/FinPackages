@@ -110,7 +110,7 @@ class AddServicesViewModel extends ChangeNotifier {
         '-1',
         '-1',
         '-1',
-        costController.text,
+        service.cost,
         '-1',
         merchantId.toString(),
         '-1',
