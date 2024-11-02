@@ -14,11 +14,13 @@ class RegisterTherapistScreen extends StatelessWidget {
     required this.merchantId,
     required this.userId,
     required this.type,
+    required this.locationId,
   });
   final void Function(dynamic) onDone;
   final String merchantId;
   final String userId;
   final EntityType type;
+  final String locationId;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class RegisterTherapistScreen extends StatelessWidget {
         merchantId: merchantId,
         userId: userId,
         onDone: onDone,
+        locationId: locationId,
         context: context,
         onError: (message) {
           Utils.showErrorToast(

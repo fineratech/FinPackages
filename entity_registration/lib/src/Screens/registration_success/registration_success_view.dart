@@ -10,12 +10,14 @@ class RegistrationSuccessView extends StatelessWidget {
     required this.entityType,
     required this.merchantId,
     required this.userID,
+    required this.locationId,
     this.data,
   });
   final void Function(dynamic) onDone;
   final EntityType entityType;
   final String merchantId;
   final String userID;
+  final String locationId;
   final dynamic data;
 
   @override
@@ -30,6 +32,7 @@ class RegistrationSuccessView extends StatelessWidget {
                 onDone: onDone,
                 merchantId: merchantId,
                 userID: userID,
+                locationId: locationId,
               ),
             ),
           );

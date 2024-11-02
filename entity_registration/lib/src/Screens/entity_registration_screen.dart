@@ -13,11 +13,13 @@ class EntityRegistrationScreen extends StatelessWidget {
     required this.onDone,
     required this.userID,
     required this.merchantId,
+    required this.locationId,
   });
   final EntityType entityType;
   final void Function(dynamic) onDone;
   final String userID;
   final String merchantId;
+  final String locationId;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +55,7 @@ class EntityRegistrationScreen extends StatelessWidget {
           merchantId: merchantId,
           userId: userID,
           type: type,
+          locationId: locationId,
         );
       case EntityType.other:
         return Container();

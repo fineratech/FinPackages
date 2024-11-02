@@ -12,6 +12,7 @@ class RegisterTherapistViewModel extends ChangeNotifier {
     required this.onError,
     required this.onDone,
     required this.context,
+    required this.locationId,
   }) {
     initialize();
   }
@@ -22,6 +23,7 @@ class RegisterTherapistViewModel extends ChangeNotifier {
   late ApiFunctionsService _apiFunctionsService;
   final String merchantId;
   final String userId;
+  final String locationId;
   final BuildContext context;
   final Function(String message) onError;
   void Function(dynamic) onDone;
@@ -73,7 +75,7 @@ class RegisterTherapistViewModel extends ChangeNotifier {
       therapistModel?.licenseIssuingCountry ?? "",
       therapistModel?.gender.name ?? "",
       therapistModel?.dateOfBirth.toString() ?? "",
-      "-1",
+      locationId,
     );
     if (professionalId != -1) {
       for (ServiceModel service in therapistModel?.services ?? []) {
@@ -103,6 +105,7 @@ class RegisterTherapistViewModel extends ChangeNotifier {
               entityType: EntityType.therapist,
               merchantId: merchantId,
               userID: userId,
+              locationId: locationId,
               data: therapistModel,
             ),
           ),
