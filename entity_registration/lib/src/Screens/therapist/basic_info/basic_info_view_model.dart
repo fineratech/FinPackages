@@ -78,6 +78,7 @@ class BasicInfoViewModel extends ChangeNotifier {
     therapistQualificationController = TextEditingController();
     certificationController = TextEditingController();
     contactNumberController = TextEditingController();
+    getServices();
   }
 
   Future<void> getServices() async {
