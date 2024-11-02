@@ -73,6 +73,7 @@ class RegisterTherapistViewModel extends ChangeNotifier {
       therapistModel?.licenseIssuingCountry ?? "",
       therapistModel?.gender.name ?? "",
       therapistModel?.dateOfBirth.toString() ?? "",
+      "-1",
     );
     if (professionalId != -1) {
       for (ServiceModel service in therapistModel?.services ?? []) {
