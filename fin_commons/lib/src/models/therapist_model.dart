@@ -21,6 +21,7 @@ class TherapistModel {
   final String idIssuingState;
   final String idIssuingCountry;
 
+  final String licenseType;
   final String licenseIssuingAuthority;
   final String licenseFirstName;
   final String licenseLastName;
@@ -52,6 +53,7 @@ class TherapistModel {
     required this.licenseNumber,
     required this.licenseExpiryDate,
     required this.licenseIssueDate,
+    required this.licenseType,
     this.licenseFrontImage,
     this.licenseBackImage,
   });
@@ -79,6 +81,7 @@ class TherapistModel {
     DateTime? licenseIssueDate,
     File? licenseFrontImage,
     File? licenseBackImage,
+    String? licenseType,
   }) {
     return TherapistModel(
       therapistName: therapistName ?? this.therapistName,
@@ -106,6 +109,7 @@ class TherapistModel {
       licenseIssueDate: licenseIssueDate ?? this.licenseIssueDate,
       licenseFrontImage: licenseFrontImage ?? this.licenseFrontImage,
       licenseBackImage: licenseBackImage ?? this.licenseBackImage,
+      licenseType: licenseType ?? this.licenseType,
     );
   }
 
@@ -131,6 +135,7 @@ class TherapistModel {
       'licenseNumber': licenseNumber,
       'licenseExpiryDate': licenseExpiryDate.millisecondsSinceEpoch,
       'licenseIssueDate': licenseIssueDate.millisecondsSinceEpoch,
+      'licenseType': licenseType,
     };
   }
 
@@ -163,6 +168,7 @@ class TherapistModel {
           DateTime.fromMillisecondsSinceEpoch(map['licenseExpiryDate'] as int),
       licenseIssueDate:
           DateTime.fromMillisecondsSinceEpoch(map['licenseIssueDate'] as int),
+      licenseType: map['licenseType'] as String,
     );
   }
 
