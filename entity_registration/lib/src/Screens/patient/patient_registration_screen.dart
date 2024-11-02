@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class PatientRegistrationScreen extends StatelessWidget {
   const PatientRegistrationScreen({super.key, required this.onDone});
-  final VoidCallback onDone;
+  final void Function(dynamic) onDone;
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,7 @@ class PatientRegistrationScreen extends StatelessWidget {
                               registrationDate: viewModel.registrationDate,
                               location: viewModel.locationController.text,
                             );
-                            onDone();
+                            onDone(entity);
                           }
                         },
                         child: const Text('Submit'),

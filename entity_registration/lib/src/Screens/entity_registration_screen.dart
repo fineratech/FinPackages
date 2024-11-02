@@ -11,11 +11,13 @@ class EntityRegistrationScreen extends StatelessWidget {
     super.key,
     required this.entityType,
     required this.onDone,
-    required this.ownerId,
+    required this.userID,
+    required this.merchantId,
   });
   final EntityType entityType;
-  final VoidCallback onDone;
-  final String ownerId;
+  final void Function(dynamic) onDone;
+  final String userID;
+  final String merchantId;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,9 @@ class EntityRegistrationScreen extends StatelessWidget {
       case EntityType.therapist:
         return RegisterTherapistScreen(
           onDone: onDone,
-          onAddTherapist: (p0) async {},
+          merchantId: merchantId,
+          userId: userID,
+          type: type,
         );
       case EntityType.other:
         return Container();

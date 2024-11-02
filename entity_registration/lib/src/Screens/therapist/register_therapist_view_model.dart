@@ -1,175 +1,159 @@
-import 'dart:io';
-
-import 'package:entity_registration/src/constants/app_strings.dart';
+import 'package:entity_registration/src/Screens/registration_success/registration_success_view.dart';
+import 'package:fin_api_functions/fin_api_functions.dart';
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:logger/logger.dart';
 
 class RegisterTherapistViewModel extends ChangeNotifier {
-  RegisterTherapistViewModel() {
+  RegisterTherapistViewModel({
+    required this.merchantId,
+    required this.userId,
+    required this.onError,
+    required this.onDone,
+    required this.context,
+  }) {
     initialize();
   }
 
-  //Form Key
-  final formKey = GlobalKey<FormBuilderState>();
+  TherapistModel? _therapistModel;
+  int currentPage = 0;
+  late PageController pageController;
+  late ApiFunctionsService _apiFunctionsService;
+  final String merchantId;
+  final String userId;
+  final BuildContext context;
+  final Function(String message) onError;
+  void Function(dynamic) onDone;
+  final logger = Logger();
 
-  // Fields
-  Gender? _selectedGender;
-  DateTime? _dateOfBirth;
-  DateTime? _licenseIssueDate;
-  DateTime? _licenseExpiryDate;
-  bool _showLicenseFields = false;
-  List<Service> _selectedServices = [];
-  File? _licenseFrontImage;
-  File? _licenseBackImage;
+  //Form Keys
+  final basicFormKey = GlobalKey<FormBuilderState>();
+  final licenseFormKey = GlobalKey<FormBuilderState>();
+  final idFormKey = GlobalKey<FormBuilderState>();
 
-  // Getters
-  Gender? get selectedGender => _selectedGender;
-  DateTime? get dateOfBirth => _dateOfBirth;
-  DateTime? get licenseIssueDate => _licenseIssueDate;
-  DateTime? get licenseExpiryDate => _licenseExpiryDate;
-  bool get showLicenseFields => _showLicenseFields;
-  List<Service> get selectedServices => _selectedServices;
-  File? get licenseFrontImage => _licenseFrontImage;
-  File? get licenseBackImage => _licenseBackImage;
+  bool _isLoading = false;
 
-  // Setters
-  set selectedGender(Gender? gender) {
-    _selectedGender = gender;
+  TherapistModel? get therapistModel => _therapistModel;
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
     notifyListeners();
   }
 
-  set dateOfBirth(DateTime? date) {
-    _dateOfBirth = date;
-    notifyListeners();
-  }
-
-  set licenseIssueDate(DateTime? date) {
-    _licenseIssueDate = date;
-    notifyListeners();
-  }
-
-  set licenseExpiryDate(DateTime? date) {
-    _licenseExpiryDate = date;
-    notifyListeners();
-  }
-
-  set showLicenseFields(bool value) {
-    _showLicenseFields = value;
-    notifyListeners();
-  }
-
-  set selectedServices(List<Service> services) {
-    _selectedServices = services;
-    notifyListeners();
-  }
-
-  set licenseFrontImage(File? image) {
-    _licenseFrontImage = image;
-    notifyListeners();
-  }
-
-  set licenseBackImage(File? image) {
-    _licenseBackImage = image;
-    notifyListeners();
-  }
-
-  //TextEditingControllers
-  late TextEditingController therapistNameController;
-  late TextEditingController therapistQualificationController;
-  late TextEditingController certificationController;
-  late TextEditingController licenseNumberController;
-  late TextEditingController contactNumberController;
-
-  //License Fields
-  late TextEditingController issuingAuthorityController;
-  late TextEditingController firstNameController;
-  late TextEditingController lastNameController;
-  String? _country;
-  String? _state;
-
-  // Getters
-  String? get country => _country;
-  String? get state => _state;
-
-  // Setters
-  set country(String? value) {
-    _country = value;
-    notifyListeners();
-  }
-
-  set state(String? value) {
-    _state = value;
+  set therapistModel(TherapistModel? therapist) {
+    therapistModel = therapist;
     notifyListeners();
   }
 
   void initialize() {
-    therapistNameController = TextEditingController();
-    therapistQualificationController = TextEditingController();
-    certificationController = TextEditingController();
-    licenseNumberController = TextEditingController();
-    contactNumberController = TextEditingController();
-    issuingAuthorityController = TextEditingController();
-    firstNameController = TextEditingController();
-    lastNameController = TextEditingController();
+    pageController = PageController(initialPage: currentPage);
+    _apiFunctionsService = ApiFunctionsService(
+      logger: logger,
+    );
   }
 
-  void toggleService(Service service) {
-    if (_selectedServices.contains(service)) {
-      _selectedServices.remove(service);
+  Future<void> registerProfessional() async {
+    isLoading = true;
+    int professionalId = await _apiFunctionsService.registerProfessional(
+      userId,
+      "Healthcare",
+      "Therapist",
+      merchantId,
+      therapistModel?.idType.name ?? "",
+      therapistModel?.idNumber ?? "",
+      therapistModel?.idExpiryDate.toString() ?? "",
+      therapistModel?.idIssuingState ?? "",
+      therapistModel?.idIssuingCountry ?? "",
+      therapistModel?.licenseNumber ?? "",
+      therapistModel?.licenseType ?? "",
+      therapistModel?.licenseExpiryDate.toString() ?? "",
+      therapistModel?.licenseIssuingState ?? "",
+      therapistModel?.licenseIssuingCountry ?? "",
+      therapistModel?.gender.name ?? "",
+      therapistModel?.dateOfBirth.toString() ?? "",
+    );
+    if (professionalId != -1) {
+      for (ServiceModel service in therapistModel?.services ?? []) {
+        int serviceID = await _apiFunctionsService.addNewService(
+          service.name,
+          service.type,
+          "-1",
+          "-1",
+          "-1",
+          "-1",
+          service.cost,
+          "-1",
+          professionalId.toString(),
+          "-1",
+        );
+        if (serviceID == -1) {
+          onError("Failed to register professional");
+          isLoading = false;
+          return;
+        }
+      }
+      if (context.mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => RegistrationSuccessView(
+              onDone: onDone,
+              entityType: EntityType.therapist,
+              merchantId: merchantId,
+              userID: userId,
+              data: therapistModel,
+            ),
+          ),
+        );
+      }
     } else {
-      _selectedServices.add(service);
+      isLoading = false;
+      onError("Failed to register professional");
     }
+    isLoading = false;
+  }
+
+  Future<void> saveTherapist(TherapistModel therapist) async {
+    if (currentPage == 0) {
+      therapistModel = therapist;
+    } else {
+      if (currentPage == 1) {
+        therapistModel = therapistModel?.copyWith(
+          licenseNumber: therapist.licenseNumber,
+          licenseBackImage: therapist.licenseBackImage,
+          licenseFrontImage: therapist.licenseFrontImage,
+          licenseExpiryDate: therapist.licenseExpiryDate,
+          licenseIssueDate: therapist.licenseIssueDate,
+          licenseFirstName: therapist.licenseFirstName,
+          licenseIssuingAuthority: therapist.licenseIssuingAuthority,
+          licenseLastName: therapist.licenseLastName,
+          licenseIssuingCountry: therapist.licenseIssuingCountry,
+          licenseIssuingState: therapist.licenseIssuingState,
+          licenseType: therapist.licenseType,
+        );
+      } else {
+        therapistModel = therapistModel?.copyWith(
+          idExpiryDate: therapist.idExpiryDate,
+          idIssuingCountry: therapist.idIssuingCountry,
+          idIssuingState: therapist.idIssuingState,
+          idNumber: therapist.idNumber,
+          idType: therapist.idType,
+        );
+        registerProfessional();
+      }
+    }
+  }
+
+  void jumpToPage(int page) {
+    pageController.jumpToPage(page);
+    currentPage = page;
     notifyListeners();
   }
 
-  List<Service> services = [
-    Service(
-      name: AppStrings.therapistOnSite,
-      pngPath: 'lib/assets/images/therapist.png',
-    ),
-    Service(
-        name: AppStrings.onCallNurse,
-        pngPath: 'lib/assets/images/call_icon.png'),
-    Service(
-        name: AppStrings.physicalTherapy,
-        pngPath: 'lib/assets/images/psychologist.png'),
-    Service(
-      name: AppStrings.rehabilitation,
-      pngPath: 'lib/assets/images/rehabilitation.png',
-    ),
-    Service(
-      name: AppStrings.hospicare,
-      pngPath: 'lib/assets/images/doc.png',
-    ),
-  ];
-
-  void pickFrontImage() async {
-    var pickedFile = await FilePickerService.selectAndCropImage();
-    if (pickedFile != null) {
-      licenseFrontImage = pickedFile;
-    }
-  }
-
-  void pickBackImage() async {
-    var pickedFile = await FilePickerService.selectAndCropImage();
-    if (pickedFile != null) {
-      licenseBackImage = pickedFile;
-    }
-  }
-
-  void registerProfessional() {}
-
   @override
   void dispose() {
-    therapistNameController.dispose();
-    therapistQualificationController.dispose();
-    certificationController.dispose();
-    licenseNumberController.dispose();
-    contactNumberController.dispose();
-    issuingAuthorityController.dispose();
-    firstNameController.dispose();
-    lastNameController.dispose();
+    pageController.dispose();
     super.dispose();
   }
 }

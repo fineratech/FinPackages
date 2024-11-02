@@ -8,11 +8,15 @@ class RegistrationSuccessView extends StatelessWidget {
     super.key,
     required this.onDone,
     required this.entityType,
-    required this.ownerId,
+    required this.merchantId,
+    required this.userID,
+    this.data,
   });
-  final VoidCallback onDone;
+  final void Function(dynamic) onDone;
   final EntityType entityType;
-  final String ownerId;
+  final String merchantId;
+  final String userID;
+  final dynamic data;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,8 @@ class RegistrationSuccessView extends StatelessWidget {
               builder: (context) => EntityRegistrationScreen(
                 entityType: entityType,
                 onDone: onDone,
-                ownerId: ownerId,
+                merchantId: merchantId,
+                userID: userID,
               ),
             ),
           );
@@ -54,7 +59,9 @@ class RegistrationSuccessView extends StatelessWidget {
           ),
           const Spacer(),
           CustomButton(
-            onPressed: onDone,
+            onPressed: () {
+              onDone(data);
+            },
             child: const Text("Next"),
           ),
           const SizedBox(

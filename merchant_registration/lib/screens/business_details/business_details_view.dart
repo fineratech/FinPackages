@@ -259,17 +259,15 @@ class BusinessDetailsView extends StatelessWidget {
                                             viewModel.servicePhone.text,
                                       );
 
-                                      viewModel.registerMerchant(
+                                      viewModel
+                                          .registerMerchant(
                                         merchant: newMerchant,
                                         userId: userId,
                                         context: context,
-                                      );
-
-                                      //TODO: Do something about onDone
-
-                                      // onDone(newMerchant).then((_) {
-                                      //   viewModel.isLoading = false;
-                                      // });
+                                      )
+                                          .then((_) {
+                                        onDone(newMerchant);
+                                      });
                                     }
                                   },
                             child: viewModel.isLoading
