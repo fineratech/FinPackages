@@ -345,19 +345,22 @@ class ApiFunctionsService {
     return serviceId;
   }
 
-  Future<List<Map<String, dynamic>>> getServiceByProviderId(
+  Future<List<ServiceModel>?> getServiceByProviderId(
     String serviceProviderId,
   ) async {
     final String url =
         '${ApiEndPoints.getServiceByProviderId}/$serviceProviderId';
     var response = await apiService.get(endPoint: url);
     if (response.success) {
-      final List<dynamic> services = response.data;
-      List<Map<String, dynamic>> serviceList =
-          services.map((e) => e as Map<String, dynamic>).toList();
-      return serviceList;
+      final List<dynamic>? services =
+          response.data['GetServiceByProviderIdResult'];
+      if (services != null) {
+        List<ServiceModel> serviceList =
+            services.map((e) => ServiceModel.fromMap(e)).toList();
+        return serviceList;
+      }
     }
-    return [];
+    return null;
   }
 
   /// For now get currency from your resource valueation
