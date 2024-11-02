@@ -118,15 +118,11 @@ class AddServicesView extends StatelessWidget {
                                       return ListTile(
                                         title: Text(service.name),
                                         subtitle: Text("Cost : $service.cost"),
-                                        trailing: Row(
-                                          children: [
-                                            IconButton(
-                                              icon: const Icon(Icons.delete),
-                                              onPressed: () {
-                                                viewModel.deleteService(index);
-                                              },
-                                            ),
-                                          ],
+                                        trailing: IconButton(
+                                          icon: const Icon(Icons.delete),
+                                          onPressed: () {
+                                            viewModel.deleteService(index);
+                                          },
                                         ),
                                       );
                                     },
