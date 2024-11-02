@@ -18,6 +18,7 @@ dependencies:
   csc_picker: ^0.2.7
   flutter_svg: ^2.0.10+1
   logger: ^2.2.0
+  modal_progress_hud_nsn: ^0.5.1
   fin_commons:
     git:
       url: https://github.com/fineratech/FinPackages.git

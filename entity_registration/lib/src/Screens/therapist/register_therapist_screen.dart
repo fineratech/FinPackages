@@ -4,6 +4,7 @@ import 'package:entity_registration/src/Screens/therapist/license_info/license_i
 import 'package:entity_registration/src/Screens/therapist/register_therapist_view_model.dart';
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
 
 class RegisterTherapistScreen extends StatelessWidget {
@@ -37,29 +38,32 @@ class RegisterTherapistScreen extends StatelessWidget {
       builder: (context, _) {
         return Consumer<RegisterTherapistViewModel>(
           builder: (context, viewModel, _) {
-            return Column(
-              children: [
-                Expanded(
-                  child: PageView(
-                    controller: viewModel.pageController,
-                    children: [
-                      BasicInfoView(
-                        onJumpToPage: viewModel.jumpToPage,
-                        saveTherapist: viewModel.saveTherapist,
-                        merchantId: merchantId,
-                      ),
-                      LicenseInfoView(
-                        onJumpToPage: viewModel.jumpToPage,
-                        saveTherapist: viewModel.saveTherapist,
-                      ),
-                      IdInfoView(
-                        onJumpToPage: viewModel.jumpToPage,
-                        saveTherapist: viewModel.saveTherapist,
-                      ),
-                    ],
+            return ModalProgressHUD(
+              inAsyncCall: viewModel.isLoading,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: PageView(
+                      controller: viewModel.pageController,
+                      children: [
+                        BasicInfoView(
+                          onJumpToPage: viewModel.jumpToPage,
+                          saveTherapist: viewModel.saveTherapist,
+                          merchantId: merchantId,
+                        ),
+                        LicenseInfoView(
+                          onJumpToPage: viewModel.jumpToPage,
+                          saveTherapist: viewModel.saveTherapist,
+                        ),
+                        IdInfoView(
+                          onJumpToPage: viewModel.jumpToPage,
+                          saveTherapist: viewModel.saveTherapist,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         );
