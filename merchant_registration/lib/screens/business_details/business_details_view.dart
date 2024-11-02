@@ -26,7 +26,12 @@ class BusinessDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => BusinessDetailsViewModel(type: merchantType),
+      create: (context) => BusinessDetailsViewModel(
+        type: merchantType,
+        onDone: () {
+          onDone(merchant);
+        },
+      ),
       builder: (context, _) {
         return Consumer<BusinessDetailsViewModel>(
           builder: (context, viewModel, _) {
@@ -259,15 +264,11 @@ class BusinessDetailsView extends StatelessWidget {
                                             viewModel.servicePhone.text,
                                       );
 
-                                      viewModel
-                                          .registerMerchant(
+                                      viewModel.registerMerchant(
                                         merchant: newMerchant,
                                         userId: userId,
                                         context: context,
-                                      )
-                                          .then((_) {
-                                        onDone(newMerchant);
-                                      });
+                                      );
                                     }
                                   },
                             child: viewModel.isLoading

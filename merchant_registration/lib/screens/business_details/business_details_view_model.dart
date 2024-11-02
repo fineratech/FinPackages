@@ -10,6 +10,7 @@ import '../add_services/add_services_view.dart';
 class BusinessDetailsViewModel extends ChangeNotifier {
   BusinessDetailsViewModel({
     required this.type,
+    required this.onDone,
   }) {
     initialize();
   }
@@ -23,6 +24,7 @@ class BusinessDetailsViewModel extends ChangeNotifier {
   final MerchantType type;
   final formKey = GlobalKey<FormBuilderState>();
   bool _isLoading = false;
+  final VoidCallback onDone;
 
   PayFacsResult? get selectedPayFac => _selectedPayFac;
   bool get isLoading => _isLoading;
@@ -137,6 +139,7 @@ class BusinessDetailsViewModel extends ChangeNotifier {
                 merchantId: merchantId,
                 userId: userId,
                 locationId: locationId,
+                onDone: onDone,
               ),
             ),
           );

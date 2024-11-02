@@ -13,10 +13,12 @@ class AddServicesViewModel extends ChangeNotifier {
     required this.merchantId,
     required this.userId,
     required this.locationId,
+    required this.onDone,
   }) {
     initialize(context);
   }
   final logger = Logger();
+  final VoidCallback onDone;
   final MerchantType type;
   final int merchantId;
   final int userId;
@@ -137,8 +139,11 @@ class AddServicesViewModel extends ChangeNotifier {
                   MaterialPageRoute(
                     builder: (context) => EntityRegistrationScreen(
                       entityType: EntityType.therapist,
-                      onDone: () {},
-                      ownerId: userId.toString(),
+                      onDone: (_) {
+                        onDone();
+                      },
+                      userID: userId.toString(),
+                      merchantId: merchantId.toString(),
                     ),
                   ),
                 );

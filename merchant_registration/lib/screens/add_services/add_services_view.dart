@@ -13,11 +13,13 @@ class AddServicesView extends StatelessWidget {
     required this.merchantId,
     required this.userId,
     required this.locationId,
+    required this.onDone,
   });
   final MerchantType type;
   final int merchantId;
   final int userId;
   final int locationId;
+  final VoidCallback onDone;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class AddServicesView extends StatelessWidget {
         merchantId: merchantId,
         userId: userId,
         locationId: locationId,
+        onDone: onDone,
       ),
       child: Consumer<AddServicesViewModel>(
         builder: (context, viewModel, _) {
