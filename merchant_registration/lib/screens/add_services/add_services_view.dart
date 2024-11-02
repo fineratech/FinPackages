@@ -52,7 +52,7 @@ class AddServicesView extends StatelessWidget {
                     )
                   : FormBuilder(
                       key: viewModel.formKey,
-                      child: SingleChildScrollView(
+                      child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: Column(
                           children: [
