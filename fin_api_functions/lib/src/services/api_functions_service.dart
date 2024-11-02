@@ -314,9 +314,10 @@ class ApiFunctionsService {
     String licenseIssuingCountry,
     String gender,
     String dob,
+    String locationId, //-1 if not available
   ) async {
     final String url =
-        '${ApiEndPoints.registerProfessional}/$ownerID/$category/$type/$companyId/$idType/$idNumber/$idExpiryDate/$idIssuingState/$idIssuingCountry/$licenseType/$licenseNumber/$licenseExpiryDate/$licenseIssuingState/$licenseIssuingCountry/$gender/$dob'; //UserregsirationID1 is merchantId sent from the previous screen
+        '${ApiEndPoints.registerProfessional}/$ownerID/$category/$type/$companyId/$idType/$idNumber/$idExpiryDate/$idIssuingState/$idIssuingCountry/$licenseType/$licenseNumber/$licenseExpiryDate/$licenseIssuingState/$licenseIssuingCountry/$gender/$dob/$locationId'; //UserregsirationID1 is merchantId sent from the previous screen
 
     var response = await apiService.get(endPoint: url);
 
