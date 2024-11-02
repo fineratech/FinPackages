@@ -150,6 +150,7 @@ class AddServicesViewModel extends ChangeNotifier {
                         onDone();
                       },
                       userID: userId.toString(),
+                      locationId: locationId.toString(),
                       merchantId: merchantId.toString(),
                     ),
                   ),
