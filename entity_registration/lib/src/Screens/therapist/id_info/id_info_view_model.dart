@@ -24,10 +24,12 @@ class IdInfoViewModel extends ChangeNotifier {
   late TextEditingController idNumberController;
   String? _country;
   String? _state;
+  String? _city;
 
   // Getters
   String? get country => _country;
   String? get state => _state;
+  String? get city => _city;
   DateTime? get idIssueDate => _idIssueDate;
   DateTime? get idExpiryDate => _idExpiryDate;
   File? get idFrontImage => _idFrontImage;
@@ -42,6 +44,11 @@ class IdInfoViewModel extends ChangeNotifier {
 
   set state(String? value) {
     _state = value;
+    notifyListeners();
+  }
+
+  set city(String? value) {
+    _city = value;
     notifyListeners();
   }
 

@@ -75,7 +75,7 @@ class LicenseInfoView extends StatelessWidget {
                     flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
                     currentCountry: viewModel.country,
                     currentState: viewModel.state,
-                    // currentCity: viewModel.city,
+                    currentCity: viewModel.city,
                     countryDropdownLabel: viewModel.country ?? "Country",
                     defaultCountry: CscCountry.United_States,
                     onCountryChanged: (value) {
@@ -89,6 +89,9 @@ class LicenseInfoView extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
+                    onCityChanged: (value) {
+                      viewModel.city = value;
+                    },
                     dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(

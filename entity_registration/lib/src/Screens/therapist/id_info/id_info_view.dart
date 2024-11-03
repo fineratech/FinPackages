@@ -134,7 +134,7 @@ class IdInfoView extends StatelessWidget {
                     flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
                     currentCountry: viewModel.country,
                     currentState: viewModel.state,
-                    // currentCity: viewModel.city,
+                    currentCity: viewModel.city,
                     countryDropdownLabel: viewModel.country ?? "Country",
                     defaultCountry: CscCountry.United_States,
                     onCountryChanged: (value) {
@@ -142,6 +142,9 @@ class IdInfoView extends StatelessWidget {
                     },
                     onStateChanged: (value) {
                       viewModel.state = value;
+                    },
+                    onCityChanged: (value) {
+                      viewModel.city = value;
                     },
                     selectedItemStyle: const TextStyle(
                       color: AppColors.primaryColor,

@@ -24,10 +24,12 @@ class LicenseInfoViewModel extends ChangeNotifier {
   late TextEditingController licenseTypeController;
   String? _country;
   String? _state;
+  String? _city;
 
   // Getters
   String? get country => _country;
   String? get state => _state;
+  String? get city => _city;
   DateTime? get licenseIssueDate => _licenseIssueDate;
   DateTime? get licenseExpiryDate => _licenseExpiryDate;
   File? get licenseFrontImage => _licenseFrontImage;
@@ -41,6 +43,11 @@ class LicenseInfoViewModel extends ChangeNotifier {
 
   set state(String? value) {
     _state = value;
+    notifyListeners();
+  }
+
+  set city(String? value) {
+    _city = value;
     notifyListeners();
   }
 
