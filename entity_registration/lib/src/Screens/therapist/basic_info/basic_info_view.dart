@@ -145,7 +145,9 @@ class BasicInfoView extends StatelessWidget {
                             ),
                             ...viewModel.allServices!.map(
                               (service) => Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10,
+                                ),
                                 child: ListTile(
                                   title: Text(service.name),
                                   leading: Checkbox(
@@ -161,47 +163,47 @@ class BasicInfoView extends StatelessWidget {
                             const SizedBox(
                               height: 10,
                             ),
-                            CustomButton(
-                              child: const Text("Next"),
-                              onPressed: () {
-                                if (viewModel.formKey.currentState
-                                        ?.validate() ??
-                                    false) {
-                                  TherapistModel therapistModel =
-                                      TherapistModel(
-                                    therapistName:
-                                        viewModel.therapistNameController.text,
-                                    therapistQualification: viewModel
-                                        .therapistQualificationController.text,
-                                    gender: viewModel.selectedGender!,
-                                    dateOfBirth: viewModel.dateOfBirth!,
-                                    certification:
-                                        viewModel.certificationController.text,
-                                    contactNumber:
-                                        viewModel.contactNumberController.text,
-                                    services: viewModel.selectedServices,
-                                    idType: IdType.other,
-                                    idNumber: "",
-                                    idExpiryDate: "",
-                                    idIssuingState: "",
-                                    idIssuingCountry: "",
-                                    licenseIssuingAuthority: "",
-                                    licenseFirstName: "",
-                                    licenseLastName: "",
-                                    licenseIssuingCountry: "",
-                                    licenseIssuingState: "",
-                                    licenseNumber: "",
-                                    licenseExpiryDate: DateTime.now(),
-                                    licenseIssueDate: DateTime.now(),
-                                    licenseType: "",
-                                  );
-                                  saveTherapist(therapistModel).then(
-                                    (_) {
-                                      onJumpToPage(1);
-                                    },
-                                  );
-                                }
-                              },
+                            SizedBox(
+                              width: double.infinity,
+                              child: CustomButton(
+                                child: const Text("Next"),
+                                onPressed: () {
+                                  if (viewModel.formKey.currentState
+                                          ?.validate() ??
+                                      false) {
+                                    TherapistModel therapistModel =
+                                        TherapistModel(
+                                      therapistName: viewModel
+                                          .therapistNameController.text,
+                                      therapistQualification: viewModel
+                                          .therapistQualificationController
+                                          .text,
+                                      gender: viewModel.selectedGender!,
+                                      dateOfBirth: viewModel.dateOfBirth!,
+                                      certification: viewModel
+                                          .certificationController.text,
+                                      contactNumber: viewModel
+                                          .contactNumberController.text,
+                                      services: viewModel.selectedServices,
+                                      idType: IdType.other,
+                                      idNumber: "",
+                                      idExpiryDate: "",
+                                      idIssuingState: "",
+                                      idIssuingCountry: "",
+                                      licenseIssuingAuthority: "",
+                                      licenseFirstName: "",
+                                      licenseLastName: "",
+                                      licenseIssuingCountry: "",
+                                      licenseIssuingState: "",
+                                      licenseNumber: "",
+                                      licenseExpiryDate: DateTime.now(),
+                                      licenseIssueDate: DateTime.now(),
+                                      licenseType: "",
+                                    );
+                                    saveTherapist(therapistModel);
+                                  }
+                                },
+                              ),
                             ),
                             const SizedBox(height: 40),
                           ],

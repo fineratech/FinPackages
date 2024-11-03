@@ -167,41 +167,45 @@ class LicenseInfoView extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  CustomButton(
-                    child: const Text("Next"),
-                    onPressed: () {
-                      if (viewModel.formKey.currentState?.validate() ?? false) {
-                        TherapistModel therapist = TherapistModel(
-                          licenseIssuingAuthority:
-                              viewModel.issuingAuthorityController.text,
-                          licenseFirstName: viewModel.firstNameController.text,
-                          licenseLastName: viewModel.lastNameController.text,
-                          licenseIssuingCountry: viewModel.country ?? "",
-                          licenseIssuingState: viewModel.state ?? "",
-                          licenseNumber: viewModel.licenseNumberController.text,
-                          licenseIssueDate: viewModel.licenseIssueDate!,
-                          licenseExpiryDate: viewModel.licenseExpiryDate!,
-                          licenseFrontImage: viewModel.licenseFrontImage,
-                          licenseBackImage: viewModel.licenseBackImage,
-                          therapistName: "",
-                          therapistQualification: "",
-                          gender: Gender.other,
-                          dateOfBirth: DateTime.now(),
-                          certification: "",
-                          contactNumber: "",
-                          services: [],
-                          idType: IdType.other,
-                          idNumber: "",
-                          idIssuingCountry: "",
-                          idIssuingState: "",
-                          idExpiryDate: '',
-                          licenseType: viewModel.licenseTypeController.text,
-                        );
-                        saveTherapist(therapist).then((_) {
-                          onJumpToPage(2);
-                        });
-                      }
-                    },
+                  SizedBox(
+                    width: double.infinity,
+                    child: CustomButton(
+                      child: const Text("Next"),
+                      onPressed: () {
+                        if (viewModel.formKey.currentState?.validate() ??
+                            false) {
+                          TherapistModel therapist = TherapistModel(
+                            licenseIssuingAuthority:
+                                viewModel.issuingAuthorityController.text,
+                            licenseFirstName:
+                                viewModel.firstNameController.text,
+                            licenseLastName: viewModel.lastNameController.text,
+                            licenseIssuingCountry: viewModel.country ?? "",
+                            licenseIssuingState: viewModel.state ?? "",
+                            licenseNumber:
+                                viewModel.licenseNumberController.text,
+                            licenseIssueDate: viewModel.licenseIssueDate!,
+                            licenseExpiryDate: viewModel.licenseExpiryDate!,
+                            licenseFrontImage: viewModel.licenseFrontImage,
+                            licenseBackImage: viewModel.licenseBackImage,
+                            therapistName: "",
+                            therapistQualification: "",
+                            gender: Gender.other,
+                            dateOfBirth: DateTime.now(),
+                            certification: "",
+                            contactNumber: "",
+                            services: [],
+                            idType: IdType.other,
+                            idNumber: "",
+                            idIssuingCountry: "",
+                            idIssuingState: "",
+                            idExpiryDate: '',
+                            licenseType: viewModel.licenseTypeController.text,
+                          );
+                          saveTherapist(therapist);
+                        }
+                      },
+                    ),
                   )
                 ],
               ),

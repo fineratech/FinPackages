@@ -180,38 +180,42 @@ class IdInfoView extends StatelessWidget {
                   //   ],
                   // ),
                   const SizedBox(height: 20),
-                  CustomButton(
-                    child: const Text("Submit"),
-                    onPressed: () {
-                      if (viewModel.formKey.currentState?.validate() ?? false) {
-                        TherapistModel therapist = TherapistModel(
-                          idIssuingCountry: viewModel.country ?? "",
-                          idIssuingState: viewModel.state ?? "",
-                          idNumber: viewModel.idNumberController.text,
-                          idExpiryDate: viewModel.idExpiryDate.toString(),
-                          therapistName: "",
-                          therapistQualification: "",
-                          gender: Gender.other,
-                          dateOfBirth: DateTime.now(),
-                          certification: "",
-                          contactNumber: "",
-                          services: [],
-                          idType: viewModel.idType ?? IdType.other,
-                          licenseExpiryDate: DateTime.now(),
-                          licenseFrontImage: null,
-                          licenseBackImage: null,
-                          licenseFirstName: "",
-                          licenseIssuingAuthority: "",
-                          licenseIssuingCountry: "",
-                          licenseIssuingState: "",
-                          licenseIssueDate: DateTime.now(),
-                          licenseLastName: "",
-                          licenseNumber: "",
-                          licenseType: "",
-                        );
-                        saveTherapist(therapist);
-                      }
-                    },
+                  SizedBox(
+                    width: double.infinity,
+                    child: CustomButton(
+                      child: const Text("Submit"),
+                      onPressed: () {
+                        if (viewModel.formKey.currentState?.validate() ??
+                            false) {
+                          TherapistModel therapist = TherapistModel(
+                            idIssuingCountry: viewModel.country ?? "",
+                            idIssuingState: viewModel.state ?? "",
+                            idNumber: viewModel.idNumberController.text,
+                            idExpiryDate: viewModel.idExpiryDate.toString(),
+                            therapistName: "",
+                            therapistQualification: "",
+                            gender: Gender.other,
+                            dateOfBirth: DateTime.now(),
+                            certification: "",
+                            contactNumber: "",
+                            services: [],
+                            idType: viewModel.idType ?? IdType.other,
+                            licenseExpiryDate: DateTime.now(),
+                            licenseFrontImage: null,
+                            licenseBackImage: null,
+                            licenseFirstName: "",
+                            licenseIssuingAuthority: "",
+                            licenseIssuingCountry: "",
+                            licenseIssuingState: "",
+                            licenseIssueDate: DateTime.now(),
+                            licenseLastName: "",
+                            licenseNumber: "",
+                            licenseType: "",
+                          );
+                          saveTherapist(therapist);
+                        }
+                      },
+                    ),
                   )
                 ],
               ),

@@ -119,8 +119,10 @@ class RegisterTherapistViewModel extends ChangeNotifier {
   }
 
   Future<void> saveTherapist(TherapistModel therapist) async {
+    logger.i("Current Page: $currentPage");
     if (currentPage == 0) {
       therapistModel = therapist;
+      jumpToPage(1);
     } else {
       if (currentPage == 1) {
         therapistModel = therapistModel?.copyWith(
@@ -136,6 +138,7 @@ class RegisterTherapistViewModel extends ChangeNotifier {
           licenseIssuingState: therapist.licenseIssuingState,
           licenseType: therapist.licenseType,
         );
+        jumpToPage(2);
       } else {
         therapistModel = therapistModel?.copyWith(
           idExpiryDate: therapist.idExpiryDate,

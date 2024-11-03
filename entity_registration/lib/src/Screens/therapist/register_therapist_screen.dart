@@ -47,6 +47,8 @@ class RegisterTherapistScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: PageView(
+                      allowImplicitScrolling: false,
+                      physics: const NeverScrollableScrollPhysics(),
                       controller: viewModel.pageController,
                       children: [
                         BasicInfoView(
