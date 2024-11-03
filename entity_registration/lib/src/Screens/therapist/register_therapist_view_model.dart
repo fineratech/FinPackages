@@ -45,7 +45,7 @@ class RegisterTherapistViewModel extends ChangeNotifier {
   }
 
   set therapistModel(TherapistModel? therapist) {
-    therapistModel = therapist;
+    _therapistModel = therapist;
     notifyListeners();
   }
 
