@@ -126,6 +126,8 @@ class ApiEndPoints {
 
   static const String getServiceByProviderId =
       "$serviceReferencePathResource/GetServiceByProviderId";
+  static const String getServiceObjectsByProviderId =
+      "$serviceReferencePathResource/GetServiceObjectsByProviderId";
 
   static const String requestSpecificService =
       "$serviceReferencePathResource/RequestSpecificService";

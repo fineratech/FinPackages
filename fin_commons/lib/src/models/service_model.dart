@@ -67,14 +67,14 @@ class ServiceModel {
     return ServiceModel(
       name: map['Name'] ?? '',
       type: map['Type'] ?? '',
-      resourceId: map['ResourceId'] ?? '-1',
-      serviceLocationId: map['ServiceLocationId'] ?? '-1',
-      pickupLocationId: map['PickupLocationId'] ?? '-1',
-      dropoffLocationId: map['DropoffLocationId'] ?? '-1',
-      cost: map['Cost'] ?? '',
-      customerId: map['CustomerId'] ?? '-1',
-      providerId: map['ProviderId'] ?? '-1',
-      scheduleId: map['ScheduleId'] ?? '-1',
+      resourceId: (map['ResourceId'] ?? '-1').toString(),
+      serviceLocationId: (map['ServiceLocationId'] ?? '-1').toString(),
+      pickupLocationId: (map['PickupLocationId'] ?? '-1').toString(),
+      dropoffLocationId: (map['DropoffLocationId'] ?? '-1').toString(),
+      cost: (map['Cost'] ?? '').toString(),
+      customerId: (map['CustomerId'] ?? '-1').toString(),
+      providerId: (map['ProviderId'] ?? '-1').toString(),
+      scheduleId: (map['ScheduleId'] ?? '-1').toString(),
     );
   }
 

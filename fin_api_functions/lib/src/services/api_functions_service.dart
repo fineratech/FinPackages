@@ -347,7 +347,7 @@ class ApiFunctionsService {
     return serviceId;
   }
 
-  Future<List<ServiceModel>?> getServiceByProviderId(
+  Future<List<Map<String, dynamic>>?> getServiceByProviderId(
     String serviceProviderId,
   ) async {
     final String url =
@@ -356,6 +356,23 @@ class ApiFunctionsService {
     if (response.success) {
       final List<dynamic>? services =
           response.data['GetServiceByProviderIdResult'];
+      if (services != null) {
+        List<Map<String, dynamic>> serviceList =
+            services.map((e) => e as Map<String, dynamic>).toList();
+        return serviceList;
+      }
+    }
+    return null;
+  }
+
+  Future<List<ServiceModel>?> getServiceObjectsByProviderId(
+      String providerId) async {
+    final String url =
+        '${ApiEndPoints.getServiceObjectsByProviderId}/$providerId';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic>? services =
+          response.data['GetServiceObjectsByProviderIdResult'];
       if (services != null) {
         List<ServiceModel> serviceList =
             services.map((e) => ServiceModel.fromMap(e)).toList();
