@@ -21,6 +21,7 @@ class LicenseInfoView extends StatelessWidget {
       child: Consumer<LicenseInfoViewModel>(
         builder: (context, viewModel, _) {
           return SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: FormBuilder(
               key: viewModel.formKey,
               child: Column(

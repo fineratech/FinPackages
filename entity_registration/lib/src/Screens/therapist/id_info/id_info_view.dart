@@ -23,6 +23,7 @@ class IdInfoView extends StatelessWidget {
       child: Consumer<IdInfoViewModel>(
         builder: (context, viewModel, _) {
           return SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: FormBuilder(
               key: viewModel.formKey,
               child: Column(
