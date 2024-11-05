@@ -316,8 +316,12 @@ class ApiFunctionsService {
     String dob,
     String locationId, //-1 if not available
   ) async {
+    String formattedIdExpiryDate = DateTimeService.mmddyyyyFormat(idExpiryDate);
+    String formattedLicenseExpiryDate =
+        DateTimeService.mmddyyyyFormat(licenseExpiryDate);
+    String formattedDob = DateTimeService.mmddyyyyFormat(dob);
     final String url =
-        '${ApiEndPoints.registerProfessional}/$ownerID/$category/$type/$companyId/$idType/$idNumber/$idExpiryDate/$idIssuingState/$idIssuingCountry/$licenseType/$licenseNumber/$licenseExpiryDate/$licenseIssuingState/$licenseIssuingCountry/$gender/$dob/$locationId'; //UserregsirationID1 is merchantId sent from the previous screen
+        '${ApiEndPoints.registerProfessional}/$ownerID/$category/$type/$companyId/$idType/$idNumber/$formattedIdExpiryDate/$idIssuingState/$idIssuingCountry/$licenseType/$licenseNumber/$formattedLicenseExpiryDate/$licenseIssuingState/$licenseIssuingCountry/$gender/$formattedDob/$locationId'; //UserregsirationID1 is merchantId sent from the previous screen
 
     var response = await apiService.get(endPoint: url);
 
