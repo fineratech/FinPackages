@@ -140,7 +140,7 @@ class User {
     //   // User has admin permissions, show admin options
     // }
     return User(
-      userId: map['GetUserByIdResult']['UserId'],
+      userId: (map['GetUserByIdResult']['UserId'] ?? -1).toString(),
       email: map['GetUserByIdResult']['EmailAddress'],
       firstName: map['GetUserByIdResult']['FirstName'],
       lastName: map['GetUserByIdResult']['LastName'],
