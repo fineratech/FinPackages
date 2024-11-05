@@ -171,6 +171,14 @@ class BasicInfoView extends StatelessWidget {
                                   if (viewModel.formKey.currentState
                                           ?.validate() ??
                                       false) {
+                                    if (viewModel.selectedServices.isEmpty) {
+                                      Utils.showErrorToast(
+                                        context: context,
+                                        message:
+                                            "Please select at least one service",
+                                      );
+                                      return;
+                                    }
                                     TherapistModel therapistModel =
                                         TherapistModel(
                                       therapistName: viewModel

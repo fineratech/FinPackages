@@ -39,12 +39,13 @@ class RegistrationSuccessView extends StatelessWidget {
         },
         child: const Icon(Icons.add),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Spacer(),
           Image.asset(
-            "assets/images/check.png",
+            "lib/assets/images/check.png",
             height: 120,
             width: 120,
             package: 'entity_registration',
@@ -61,11 +62,14 @@ class RegistrationSuccessView extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          CustomButton(
-            onPressed: () {
-              onDone(data);
-            },
-            child: const Text("Next"),
+          SizedBox(
+            width: double.infinity,
+            child: CustomButton(
+              onPressed: () {
+                onDone(data);
+              },
+              child: const Text("Next"),
+            ),
           ),
           const SizedBox(
             height: 40,
