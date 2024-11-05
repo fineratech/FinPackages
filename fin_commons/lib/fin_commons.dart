@@ -30,6 +30,7 @@ export 'src/enums/id_type.dart';
 
 //Services
 export 'src/services/file_picker_service.dart';
+export 'src/services/date_time_service.dart';
 
 //Utils
 export 'src/utils.dart';
