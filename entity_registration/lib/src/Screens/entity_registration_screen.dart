@@ -48,6 +48,10 @@ class EntityRegistrationScreen extends StatelessWidget {
       case EntityType.patient:
         return PatientRegistrationScreen(
           onDone: onDone,
+          merchantId: merchantId,
+          userId: userID,
+          type: type,
+          locationId: locationId,
         );
       case EntityType.therapist:
         return RegisterTherapistScreen(
