@@ -652,4 +652,32 @@ class ApiFunctionsService {
     }
     return null;
   }
+
+  Future<int?> registerPatient(
+    String ownerId,
+    String category,
+    String type,
+    String companyId,
+    String mrn,
+    String idType,
+    String idNumber,
+    String idExpiry,
+    String idIssuingState,
+    String idIssuingCountry,
+    String gender,
+    String dob,
+    String locationId,
+  ) async {
+    String formattedIdExpiryDate = DateTimeService.mmddyyyyFormat(idExpiry);
+    String formattedDob = DateTimeService.mmddyyyyFormat(dob);
+    final String url =
+        '${ApiEndPoints.registerPatient}/$ownerId/$category/$type/$companyId/$mrn/$idType/$idNumber/$formattedIdExpiryDate/$idIssuingState/$idIssuingCountry/$gender/$formattedDob/$locationId';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final dynamic responseData = response.data;
+      int patientId = int.tryParse(responseData.toString()) ?? -1;
+      return patientId;
+    }
+    return null;
+  }
 }

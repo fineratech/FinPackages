@@ -161,4 +161,7 @@ class ApiEndPoints {
 
   static const String getAllAvailableServicesByCategory =
       "$serviceReferencePathResource/GetAllAvailableServicesByCategory";
+
+  static const String registerPatient =
+      "$serviceReferencePathResource/RegisterPatient";
 }
