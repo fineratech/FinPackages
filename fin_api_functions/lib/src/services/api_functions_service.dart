@@ -450,7 +450,8 @@ class ApiFunctionsService {
     final String url = '${ApiEndPoints.getIndependentProfessionals}/$type';
     var response = await apiService.get(endPoint: url);
     if (response.success) {
-      final List<dynamic> professionals = response.data;
+      final List<dynamic> professionals =
+          response.data["GetIndependentProfessionalsResult"];
       List<Map<String, dynamic>> professionalList =
           professionals.map((e) => e as Map<String, dynamic>).toList();
       return professionalList;
