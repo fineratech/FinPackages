@@ -166,4 +166,6 @@ class ApiEndPoints {
       "$serviceReferencePathResource/RegisterPatient";
   static const String findResourceEfficient =
       "$serviceReferencePathResource/FindResourceEfficient";
+  static const String getAppObjectProfessionalById =
+      "$serviceReferencePathResource/GetAppObjectProfessionalById";
 }
