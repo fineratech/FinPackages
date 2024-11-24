@@ -681,4 +681,18 @@ class ApiFunctionsService {
     }
     return null;
   }
+
+  Future<List<int>?> findResourceEfficient(
+      String search, String category) async {
+    final String url =
+        '${ApiEndPoints.findResourceEfficient}/$search/$category';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> data = response.data;
+      List<int> resourceIds =
+          data.map((e) => int.tryParse(e.toString()) ?? -1).toList();
+      return resourceIds;
+    }
+    return null;
+  }
 }

@@ -57,8 +57,8 @@ class ApiEndPoints {
       "$serviceReferencePathResource/MakeFavourite";
 
 ////Resource Service APIs
-  static const String findResourceEfficient =
-      "$serviceReferencePathResource/FindResourceEfficient/all/${AppConfig.resourceCategory}";
+  // static const String findResourceEfficient =
+  //     "$serviceReferencePathResource/FindResourceEfficient/all/${AppConfig.resourceCategory}";
   static const String getAppRealEstateById =
       "$serviceReferencePathResource/GetAppRealEstateById"; //is resource favourite api call
   static const String getBookings = "$serviceReferencePathResource/GetBookings";
@@ -164,4 +164,6 @@ class ApiEndPoints {
 
   static const String registerPatient =
       "$serviceReferencePathResource/RegisterPatient";
+  static const String findResourceEfficient =
+      "$serviceReferencePathResource/FindResourceEfficient";
 }
