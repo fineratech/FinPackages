@@ -12,6 +12,7 @@ class User {
   final int? addNewItemToShoppingCartSimplestID;
   final int? placeOrderDetailedID;
   final String? getOrderNumberID;
+  final int permission;
 
   final Map<String, dynamic>? registerTransactionID;
   final String? selectedBookingID;
@@ -20,6 +21,7 @@ class User {
   final String? rent;
   User({
     required this.userId,
+    required this.permission,
     this.email,
     this.firstName,
     this.lastName,
@@ -54,6 +56,7 @@ class User {
     String? cartLocation,
     int? parkingSpotsID,
     String? rent,
+    int? permission,
   }) {
     return User(
       userId: userId ?? this.userId,
@@ -75,6 +78,7 @@ class User {
       cartLocation: cartLocation ?? this.cartLocation,
       parkingSpotsID: parkingSpotsID ?? this.parkingSpotsID,
       rent: rent ?? this.rent,
+      permission: permission ?? this.permission,
     );
   }
 
@@ -96,6 +100,7 @@ class User {
       'CartLocation': cartLocation,
       'ParkingSpotsID': parkingSpotsID,
       'Rent': rent,
+      'Permission': permission,
     };
   }
 
@@ -118,6 +123,7 @@ class User {
       cartLocation: map['CartLocation'],
       parkingSpotsID: map['ParkingSpotsID'],
       rent: map['Rent'],
+      permission: map['Permission'],
     );
   }
 
@@ -145,6 +151,7 @@ class User {
       firstName: map['GetUserByIdResult']['FirstName'],
       lastName: map['GetUserByIdResult']['LastName'],
       phoneNumber: map['GetUserByIdResult']['CellPhone'],
+      permission: map['GetUserByIdResult']['Permission'],
     );
   }
 
