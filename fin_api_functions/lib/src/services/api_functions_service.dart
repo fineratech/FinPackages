@@ -688,7 +688,7 @@ class ApiFunctionsService {
         '${ApiEndPoints.findResourceEfficient}/$search/$category';
     var response = await apiService.get(endPoint: url);
     if (response.success) {
-      final List<dynamic> data = response.data;
+      final List<dynamic> data = response.data['FindResourceEfficientResult'];
       List<int> resourceIds =
           data.map((e) => int.tryParse(e.toString()) ?? -1).toList();
       return resourceIds;
