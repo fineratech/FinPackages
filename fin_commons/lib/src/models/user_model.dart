@@ -1,3 +1,4 @@
+import 'package:fin_commons/src/enums/user_permissions.dart';
 import 'package:flutter/foundation.dart';
 
 class User {
@@ -12,7 +13,7 @@ class User {
   final int? addNewItemToShoppingCartSimplestID;
   final int? placeOrderDetailedID;
   final String? getOrderNumberID;
-  final int permission;
+  final UserPermission permission;
 
   final Map<String, dynamic>? registerTransactionID;
   final String? selectedBookingID;
@@ -56,7 +57,7 @@ class User {
     String? cartLocation,
     int? parkingSpotsID,
     String? rent,
-    int? permission,
+    UserPermission? permission,
   }) {
     return User(
       userId: userId ?? this.userId,
@@ -100,7 +101,7 @@ class User {
       'CartLocation': cartLocation,
       'ParkingSpotsID': parkingSpotsID,
       'Rent': rent,
-      'Permission': permission,
+      'Permission': permission.index,
     };
   }
 
@@ -145,13 +146,17 @@ class User {
     //     userPermission == 5) {
     //   // User has admin permissions, show admin options
     // }
+    int permission = map['GetUserByIdResult']['Permission'] ?? -1;
+    UserPermission userPermission = permission != -1
+        ? UserPermission.values[permission]
+        : UserPermission.standard;
     return User(
       userId: (map['GetUserByIdResult']['UserId'] ?? -1).toString(),
       email: map['GetUserByIdResult']['EmailAddress'],
       firstName: map['GetUserByIdResult']['FirstName'],
       lastName: map['GetUserByIdResult']['LastName'],
       phoneNumber: map['GetUserByIdResult']['CellPhone'],
-      permission: map['GetUserByIdResult']['Permission'],
+      permission: userPermission,
     );
   }
 
