@@ -180,7 +180,7 @@ class TherapistModel {
 
   factory TherapistModel.fromAppObject(Map<String, dynamic> map) {
     return TherapistModel(
-      therapistName: map['Name'] as String,
+      therapistName: map['Name'] ?? '',
       professionalId: int.tryParse(map['ProfessionalId'] ?? ''),
       therapistQualification: map['TherapistQualification'] ?? '',
       gender: Gender.fromString(map['Gender'] ?? ''),
