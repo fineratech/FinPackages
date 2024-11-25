@@ -32,6 +32,7 @@ class TherapistModel {
   final DateTime licenseIssueDate;
   final File? licenseFrontImage;
   final File? licenseBackImage;
+  final int? professionalId;
   TherapistModel({
     required this.therapistName,
     required this.therapistQualification,
@@ -56,6 +57,7 @@ class TherapistModel {
     required this.licenseType,
     this.licenseFrontImage,
     this.licenseBackImage,
+    this.professionalId,
   });
 
   TherapistModel copyWith({
@@ -82,6 +84,7 @@ class TherapistModel {
     File? licenseFrontImage,
     File? licenseBackImage,
     String? licenseType,
+    int? professionalId,
   }) {
     return TherapistModel(
       therapistName: therapistName ?? this.therapistName,
@@ -110,6 +113,7 @@ class TherapistModel {
       licenseFrontImage: licenseFrontImage ?? this.licenseFrontImage,
       licenseBackImage: licenseBackImage ?? this.licenseBackImage,
       licenseType: licenseType ?? this.licenseType,
+      professionalId: professionalId ?? this.professionalId,
     );
   }
 
@@ -136,6 +140,7 @@ class TherapistModel {
       'licenseExpiryDate': licenseExpiryDate.millisecondsSinceEpoch,
       'licenseIssueDate': licenseIssueDate.millisecondsSinceEpoch,
       'licenseType': licenseType,
+      'professionalId': professionalId,
     };
   }
 
@@ -169,6 +174,40 @@ class TherapistModel {
       licenseIssueDate:
           DateTime.fromMillisecondsSinceEpoch(map['licenseIssueDate'] as int),
       licenseType: map['licenseType'] as String,
+      professionalId: map['professionalId'] as int,
+    );
+  }
+
+  factory TherapistModel.fromAppObject(Map<String, dynamic> map) {
+    return TherapistModel(
+      therapistName: map['Name'] as String,
+      professionalId: int.tryParse(map['ProfessionalId'] ?? ''),
+      therapistQualification: map['TherapistQualification'] ?? '',
+      gender: Gender.fromString(map['Gender'] ?? ''),
+      dateOfBirth: DateTime.tryParse(map['DOB'] ?? '') ?? DateTime.now(),
+      certification: map['Certification'] ?? '',
+      contactNumber: map['ContactNumber'] ?? '',
+      services: List<ServiceModel>.from(
+        (map['_SupportedServices'] as List).map<ServiceModel>(
+          (service) => ServiceModel.fromMap(service as Map<String, dynamic>),
+        ),
+      ),
+      idType: IdType.fromString(map['IdType'] ?? ''),
+      idNumber: map['idNumber'] ?? '',
+      idExpiryDate: map['idExpiryDate'] ?? '',
+      idIssuingState: map['idIssuingState'] ?? '',
+      idIssuingCountry: map['idIssuingCountry'] ?? '',
+      licenseIssuingAuthority: map['LicenseIssuingAuthority'] ?? '',
+      licenseFirstName: map['LicenseFirstName'] ?? '',
+      licenseLastName: map['LicenseLastName'] ?? '',
+      licenseIssuingCountry: map['License_IssuingCountry'] ?? '',
+      licenseIssuingState: map['License_IssuingState'] ?? '',
+      licenseNumber: (map['LicenseNumber'] ?? '').toString(),
+      licenseExpiryDate:
+          DateTime.tryParse(map['License_ExpiryDate'] ?? '') ?? DateTime.now(),
+      licenseIssueDate:
+          DateTime.tryParse(map['License_IssueDate'] ?? '') ?? DateTime.now(),
+      licenseType: map['LicenseType'] ?? '',
     );
   }
 

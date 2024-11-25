@@ -697,10 +697,11 @@ class ApiFunctionsService {
   }
 
   Future<Map<String, dynamic>?> getProfessionalById(String id) async {
-    final String url = '${ApiEndPoints.getAppObjectProfessionalById}/$id/"true';
+    final String url =
+        '${ApiEndPoints.getAppObjectProfessionalById}/$id/"false';
     var response = await apiService.get(endPoint: url);
     if (response.success) {
-      return response.data;
+      return response.data['GetAppObjectProfessionalByIdResult'];
     }
     return null;
   }
