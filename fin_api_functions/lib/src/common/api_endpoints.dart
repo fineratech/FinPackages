@@ -168,4 +168,18 @@ class ApiEndPoints {
       "$serviceReferencePathResource/FindResourceEfficient";
   static const String getAppObjectProfessionalById =
       "$serviceReferencePathResource/GetAppObjectProfessionalById";
+
+  static const String updateUserDetailed =
+      "$serviceReferencePathCustomer/UpdateUserDetailed";
+
+  static const String updatePassword =
+      "$serviceReferencePathCustomer/UpdatePassword";
+
+  static const String forgotPassword =
+      "$serviceReferencePathCustomer/ForgotPassword";
+
+  static const String contactUs = "$serviceReferencePathResource/ContactUs";
+
+  static const String searchServices =
+      "$serviceReferencePathResource/SearchServices";
 }

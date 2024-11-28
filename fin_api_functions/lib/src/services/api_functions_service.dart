@@ -705,4 +705,80 @@ class ApiFunctionsService {
     }
     return null;
   }
+
+  Future<bool> updateUserDetailed(
+    String userId,
+    String firstName,
+    String lastName,
+    String userName,
+    String emailAddress,
+    String cellPhoneNumber,
+    String address,
+    String apartmentNumber,
+    String city,
+    String state,
+    String country,
+  ) async {
+    final String url =
+        '${ApiEndPoints.updateUserDetailed}/$userId/$firstName/$lastName/$userName/$emailAddress/$cellPhoneNumber/$address/$apartmentNumber/$city/$state/$country';
+    var response = await apiService.get(endPoint: url);
+    return response.success;
+  }
+
+  Future<String?> updatePassword(
+    String email,
+    String currentPassword,
+    String newPassword,
+  ) async {
+    final String url =
+        '${ApiEndPoints.updatePassword}/$email/$currentPassword/$newPassword';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      return response.data['UpdatePasswordResult'];
+    }
+    return null;
+  }
+
+  Future<String?> forgotPassword(
+    String email,
+  ) async {
+    final String url = '${ApiEndPoints.forgotPassword}/$email';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      return response.data['ForgotPasswordResult'];
+    }
+    return null;
+  }
+
+  Future<String?> contactUs(
+    String name,
+    String contactNumber,
+    String email,
+    String query,
+  ) async {
+    final String url =
+        '${ApiEndPoints.contactUs}/$name/$contactNumber/$email/$query';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      return response.data['ContactUsResult'];
+    }
+    return null;
+  }
+
+  Future<List<ServiceModel>?> searchServices(
+    String search,
+    String minPrice,
+    String maxPrice,
+  ) async {
+    final String url =
+        '${ApiEndPoints.searchServices}/$search/$minPrice/$maxPrice';
+    var response = await apiService.get(endPoint: url);
+    List<dynamic>? data = response.data['SearchServicesResult'];
+    if (data != null) {
+      List<ServiceModel> services =
+          data.map((item) => ServiceModel.fromMap(item)).toList();
+      return services;
+    }
+    return null;
+  }
 }
