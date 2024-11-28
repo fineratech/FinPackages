@@ -1,6 +1,7 @@
 enum Gender {
   male,
   female,
+  unKnown,
   other;
 
   static Gender fromString(String gender) {
@@ -11,8 +12,10 @@ enum Gender {
         return Gender.female;
       case 'other' || 'Other':
         return Gender.other;
+      case 'unknown' || 'Unknown':
+        return Gender.unKnown;
       default:
-        return Gender.other;
+        return Gender.unKnown;
     }
   }
 }

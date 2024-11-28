@@ -13,6 +13,7 @@ class CustomDropdownField extends StatelessWidget {
     this.hintText,
     this.validator,
     this.onChanged,
+    this.initialValue,
   });
   final String name;
   final String? label;
@@ -20,6 +21,7 @@ class CustomDropdownField extends StatelessWidget {
   final List<DropdownMenuItem<dynamic>> items;
   final String? Function(dynamic)? validator;
   final void Function(dynamic)? onChanged;
+  final dynamic initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class CustomDropdownField extends StatelessWidget {
       items: items,
       validator: validator,
       onChanged: onChanged,
+      initialValue: initialValue,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: label,
