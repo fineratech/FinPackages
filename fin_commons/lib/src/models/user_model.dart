@@ -20,6 +20,12 @@ class User {
   final String? cartLocation;
   final int? parkingSpotsID;
   final String? rent;
+  final String? apartmentNumber;
+  final String? city;
+  final String? state;
+  final String? zipCode;
+  final String? country;
+  final String? userName;
   User({
     required this.userId,
     required this.permission,
@@ -38,6 +44,12 @@ class User {
     this.cartLocation,
     this.parkingSpotsID,
     this.rent,
+    this.apartmentNumber,
+    this.city,
+    this.state,
+    this.zipCode,
+    this.country,
+    this.userName,
   });
 
   User copyWith({
@@ -58,6 +70,12 @@ class User {
     int? parkingSpotsID,
     String? rent,
     UserPermission? permission,
+    String? apartmentNumber,
+    String? city,
+    String? state,
+    String? zipCode,
+    String? country,
+    String? userName,
   }) {
     return User(
       userId: userId ?? this.userId,
@@ -80,6 +98,12 @@ class User {
       parkingSpotsID: parkingSpotsID ?? this.parkingSpotsID,
       rent: rent ?? this.rent,
       permission: permission ?? this.permission,
+      apartmentNumber: apartmentNumber ?? this.apartmentNumber,
+      city: city ?? this.city,
+      state: state ?? this.state,
+      zipCode: zipCode ?? this.zipCode,
+      country: country ?? this.country,
+      userName: userName ?? this.userName,
     );
   }
 
@@ -102,6 +126,12 @@ class User {
       'ParkingSpotsID': parkingSpotsID,
       'Rent': rent,
       'Permission': permission.index,
+      'ApartmentNumber': apartmentNumber,
+      'City': city,
+      'State': state,
+      'ZipCode': zipCode,
+      'Country': country,
+      'UserName': userName,
     };
   }
 
@@ -125,6 +155,12 @@ class User {
       parkingSpotsID: map['ParkingSpotsID'],
       rent: map['Rent'],
       permission: map['Permission'],
+      apartmentNumber: map['ApartmentNumber'],
+      city: map['City'],
+      state: map['State'],
+      zipCode: map['ZipCode'],
+      country: map['Country'],
+      userName: map['UserName'],
     );
   }
 
@@ -157,6 +193,12 @@ class User {
       lastName: map['GetUserByIdResult']['LastName'],
       phoneNumber: map['GetUserByIdResult']['CellPhone'],
       permission: userPermission,
+      apartmentNumber: map['GetUserByIdResult']['AptNumber'],
+      city: map['GetUserByIdResult']['City'],
+      state: map['GetUserByIdResult']['State'],
+      zipCode: map['GetUserByIdResult']['ZipCode'],
+      country: map['GetUserByIdResult']['Country'],
+      userName: map['GetUserByIdResult']['UserName'],
     );
   }
 
