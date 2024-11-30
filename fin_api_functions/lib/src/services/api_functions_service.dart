@@ -722,7 +722,10 @@ class ApiFunctionsService {
     final String url =
         '${ApiEndPoints.updateUserDetailed}/$userId/$firstName/$lastName/$userName/$emailAddress/$cellPhoneNumber/$address/$apartmentNumber/$city/$state/$country';
     var response = await apiService.get(endPoint: url);
-    return response.success;
+    if (response.success) {
+      return response.data['UpdateUserDetailedResult'] ?? false;
+    }
+    return false;
   }
 
   Future<String?> updatePassword(
