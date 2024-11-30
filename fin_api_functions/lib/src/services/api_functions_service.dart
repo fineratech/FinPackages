@@ -723,7 +723,7 @@ class ApiFunctionsService {
         '${ApiEndPoints.updateUserDetailed}/$userId/$firstName/$lastName/$userName/$emailAddress/$cellPhoneNumber/$address/$apartmentNumber/$city/$state/$country';
     var response = await apiService.get(endPoint: url);
     if (response.success) {
-      return response.data['UpdateUserDetailedResult'] ?? false;
+      return response.data ?? false;
     }
     return false;
   }
