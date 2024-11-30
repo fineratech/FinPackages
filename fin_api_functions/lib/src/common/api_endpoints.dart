@@ -178,7 +178,7 @@ class ApiEndPoints {
   static const String forgotPassword =
       "$serviceReferencePathCustomer/ForgotPassword";
 
-  static const String contactUs = "$serviceReferencePathResource/ContactUs";
+  static const String contactUs = "$serviceReferencePathCustomer/ContactUs";
 
   static const String searchServices =
       "$serviceReferencePathResource/SearchServices";
