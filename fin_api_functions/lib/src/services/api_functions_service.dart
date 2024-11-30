@@ -748,7 +748,7 @@ class ApiFunctionsService {
     final String url = '${ApiEndPoints.forgotPassword}/$email';
     var response = await apiService.get(endPoint: url);
     if (response.success) {
-      return response.data['ForgotPasswordResult'];
+      return response.data;
     }
     return null;
   }
