@@ -79,19 +79,26 @@ class RegisterTherapistViewModel extends ChangeNotifier {
     );
     if (professionalId != -1) {
       for (ServiceModel service in therapistModel?.services ?? []) {
-        int serviceID = await _apiFunctionsService.addNewService(
-          service.name,
-          service.type,
-          "-1",
-          "-1",
-          "-1",
-          "-1",
-          service.cost,
-          "-1",
-          professionalId.toString(),
-          "-1",
-        );
-        if (serviceID == -1) {
+        String serviceType = service.type.isNotEmpty ? service.type : "-1";
+        try {
+          int serviceID = await _apiFunctionsService.addNewService(
+            service.name,
+            serviceType,
+            "-1",
+            "-1",
+            "-1",
+            "-1",
+            service.cost,
+            "-1",
+            professionalId.toString(),
+            "-1",
+          );
+          if (serviceID == -1) {
+            onError("Failed to register professional");
+            isLoading = false;
+            return;
+          }
+        } catch (e) {
           onError("Failed to register professional");
           isLoading = false;
           return;
