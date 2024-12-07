@@ -1,23 +1,34 @@
+import 'package:fin_api_functions/fin_api_functions.dart';
+import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:logger/logger.dart';
 
-class AddBeneficiaryOwnerViewModel extends ChangeNotifier{
-  AddBeneficiaryOwnerViewModel(){
+class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
+  AddBeneficiaryOwnerViewModel() {
     initialize();
   }
+
+  //Services
+  final Logger logger = Logger();
+  final ApiFunctionsService _apiFunctionsService = ApiFunctionsService(
+    logger: Logger(),
+  );
 
   //Variables
   DateTime? _dateOfBirth;
 
   DateTime? _issueDate;
 
-
   DateTime? _expiryDate;
 
-  String _selectedBeneficiaryType = 'LLC';
+  IdType? _idType;
+  OwnerType? _ownerType;
 
-  String _password = '';
+  bool _isLoading = false;
 
-  String _ownerId = '';
+  //Form Key
+  final formKey = GlobalKey<FormBuilderState>();
 
   //Getters
   DateTime? get dateOfBirth => _dateOfBirth;
@@ -26,68 +37,63 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier{
 
   DateTime? get expiryDate => _expiryDate;
 
-
-  String get selectedBeneficiaryType => _selectedBeneficiaryType;
-
-  String get password => _password;
-
-  String get ownerId => _ownerId;
+  IdType? get idType => _idType;
+  OwnerType? get ownerType => _ownerType;
+  bool get isLoading => _isLoading;
 
   //Setters
-  set dateOfBirth (DateTime? value){
+  set dateOfBirth(DateTime? value) {
     _dateOfBirth = value;
     notifyListeners();
-  } 
+  }
 
-
-  set issueDate (DateTime? value){
+  set issueDate(DateTime? value) {
     _issueDate = value;
     notifyListeners();
-  } 
+  }
 
-  set expiryDate (DateTime? value){
-    _expiryDate =value;
+  set expiryDate(DateTime? value) {
+    _expiryDate = value;
     notifyListeners();
-  } 
+  }
 
-  set selectedBeneficiaryType (String value){
-    _selectedBeneficiaryType = value;
+  set idType(IdType? value) {
+    _idType = value;
     notifyListeners();
-  } 
+  }
 
-  set password (String value){
-    _password = value;
+  set ownerType(OwnerType? value) {
+    _ownerType = value;
     notifyListeners();
-  } 
+  }
 
-  set ownerId (String value){
-    _ownerId = value;
+  set isLoading(bool value) {
+    _isLoading = value;
     notifyListeners();
-  } 
-
+  }
 
   //Controllers
-  late TextEditingController percentageOwnerController ;
-  late TextEditingController firstNameController ;
-  late TextEditingController lastNameController ;
-  late TextEditingController snnController ;
-  late TextEditingController addressController ;
-  late TextEditingController idController ;
-  late TextEditingController issuedStateController ;
-  late TextEditingController emailController ;
-  late TextEditingController phoneNumberController ;
-  late TextEditingController phoneNumberExtController ;
-  late TextEditingController faxNumberController ;
-  late TextEditingController aptController ;
-  late TextEditingController cityController ;
-  late TextEditingController stateController ;
-  late TextEditingController countryController ;
-  late TextEditingController postalCodeController ;
-  late TextEditingController postalCodeExtensionController ;
-  late TextEditingController issuedCountryController ;
-  late TextEditingController issuedCityController ;
+  late TextEditingController percentageOwnerController;
+  late TextEditingController firstNameController;
+  late TextEditingController lastNameController;
+  late TextEditingController snnController;
+  late TextEditingController addressController;
+  late TextEditingController idController;
+  late TextEditingController issuedStateController;
+  late TextEditingController emailController;
+  late TextEditingController phoneNumberController;
+  late TextEditingController phoneNumberExtController;
+  late TextEditingController faxNumberController;
+  late TextEditingController aptController;
+  late TextEditingController cityController;
+  late TextEditingController stateController;
+  late TextEditingController countryController;
+  late TextEditingController postalCodeController;
+  late TextEditingController postalCodeExtensionController;
+  late TextEditingController issuedCountryController;
+  late TextEditingController issuedCityController;
 
-  void initialize(){
+  void initialize() {
     percentageOwnerController = TextEditingController();
     firstNameController = TextEditingController();
     lastNameController = TextEditingController();
@@ -109,16 +115,70 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier{
     issuedCityController = TextEditingController();
   }
 
+  Future<bool> addBeneficiaryOwner(BuildContext context, String merchantId,
+      String merchantPayFacDbId) async {
+    isLoading = true;
+    try {
+      String ownerId = await _apiFunctionsService.registerOwner(
+        merchantId,
+        merchantPayFacDbId,
+        ownerType?.name ?? "-1", // beneficial owner, control owner
+        firstNameController.text,
+        " ",
+        lastNameController.text,
+        phoneNumberController.text,
+        phoneNumberExtController.text,
+        faxNumberController.text,
+        emailController.text,
+        percentageOwnerController.text,
+        snnController.text,
+        dateOfBirth!.year.toString(),
+        dateOfBirth!.month.toString(),
+        dateOfBirth!.day.toString(),
+        addressController.text,
+        cityController.text,
+        stateController.text,
+        countryController.text,
+        postalCodeController.text,
+        postalCodeExtensionController.text,
+      );
 
-  // String? PayFac; // Variable to hold the payFacTenancyId
+      await _apiFunctionsService.registerOwnersIssuedIdentity(
+        ownerId,
+        merchantPayFacDbId,
+        idType?.name ?? 'other',
+        idController.text,
+        issuedCityController.text,
+        issuedStateController.text,
+        issuedCountryController.text,
+        issueDate!.year.toString(),
+        issueDate!.month.toString(),
+        issueDate!.day.toString(),
+        expiryDate!.year.toString(),
+        expiryDate!.month.toString(),
+        expiryDate!.day.toString(),
+      );
 
+      if (context.mounted) {
+        Utils.showSuccessToast(
+          context: context,
+          message: "Beneficiary Owner Added Successfully",
+        );
+      }
 
-
-//   void generate_password(){
-
-// password = "${firstNameController.text.toString()}$month$year";
-//   }
-
+      isLoading = false;
+      return true;
+    } catch (e) {
+      if (context.mounted) {
+        Utils.showErrorToast(
+          context: context,
+          message: "Failed to add Beneficiary Owner",
+        );
+      }
+      isLoading = false;
+    }
+    return false;
+  }
 
   @override
   void dispose() {

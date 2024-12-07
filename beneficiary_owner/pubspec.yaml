@@ -1,7 +1,7 @@
 name: beneficiary_owner
 description: "A new Flutter project."
 version: 0.0.1
-homepage:
+publish_to: none
 
 environment:
   sdk: ^3.5.2
@@ -37,6 +37,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  uses-material-design: true
 
   # To add assets to your package, add an assets section, like this:
   # assets:
