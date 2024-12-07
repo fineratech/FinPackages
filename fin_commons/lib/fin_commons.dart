@@ -28,6 +28,7 @@ export 'src/enums/address_category.dart';
 export 'src/enums/entity.dart';
 export 'src/enums/gender.dart';
 export 'src/enums/id_type.dart';
+export 'src/enums/owner_type.dart';
 
 //Services
 export 'src/services/file_picker_service.dart';
