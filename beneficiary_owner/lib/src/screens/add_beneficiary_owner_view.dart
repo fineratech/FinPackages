@@ -63,6 +63,7 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                           CustomTextField(
                             name: 'percentage',
                             label: 'Percentage',
+                            textInputType: TextInputType.number,
                             controller: viewModel.percentageOwnerController,
                             validator: FormBuilderValidators.compose([
                               FormBuilderValidators.required(),
@@ -103,6 +104,7 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                                   child: CustomTextField(
                                 name: 'SSN',
                                 label: 'SSN',
+                                textInputType: TextInputType.number,
                                 controller: viewModel.snnController,
                                 validator: FormBuilderValidators.compose([
                                   FormBuilderValidators.required(),
@@ -150,6 +152,7 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                           CustomTextField(
                             name: 'phoneNumber',
                             label: 'Phone Number',
+                            textInputType: TextInputType.phone,
                             controller: viewModel.phoneNumberController,
                             validator: FormBuilderValidators.compose(
                               [
@@ -164,6 +167,7 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                           CustomTextField(
                             name: 'phoneNumberEXT',
                             label: 'Phone Numebr EXT',
+                            textInputType: TextInputType.phone,
                             controller: viewModel.phoneNumberExtController,
                             validator: FormBuilderValidators.compose(
                               [
@@ -178,6 +182,7 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                           CustomTextField(
                             name: 'faxNumber',
                             label: 'Fax Number',
+                            textInputType: TextInputType.number,
                             controller: viewModel.faxNumberController,
                             validator: FormBuilderValidators.compose(
                               [
@@ -275,6 +280,7 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                                 child: CustomTextField(
                                   name: 'postalCode',
                                   label: 'Postal Code',
+                                  textInputType: TextInputType.number,
                                   controller: viewModel.postalCodeController,
                                   validator: FormBuilderValidators.compose(
                                     [
@@ -291,6 +297,7 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                                   child: CustomTextField(
                                       name: 'postalCodeExtension',
                                       label: 'Postal Code Extension',
+                                      textInputType: TextInputType.number,
                                       controller: viewModel
                                           .postalCodeExtensionController,
                                       validator: FormBuilderValidators.compose([
@@ -400,6 +407,7 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                                   child: CustomDatePicker(
                                 name: 'issueDate',
                                 label: "Issue Date",
+                                inputType: InputType.date,
                                 onChanged: (date) {
                                   viewModel.issueDate = date;
                                 },
@@ -417,6 +425,7 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                                   child: CustomDatePicker(
                                 name: 'expiryDate',
                                 label: 'Expiry Date ',
+                                inputType: InputType.date,
                                 onChanged: (date) {
                                   viewModel.expiryDate = date;
                                 },
@@ -444,30 +453,34 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                           const SizedBox(
                             height: 60,
                           ),
-                          CustomButton(
-                            child: const Text("Add"),
-                            onPressed: () {
-                              if (viewModel.formKey.currentState?.validate() ??
-                                  false) {
-                                viewModel
-                                    .addBeneficiaryOwner(
-                                  context,
-                                  merchantId,
-                                  merchantPayFacDbId,
-                                )
-                                    .then((value) {
-                                  if (value) {
-                                    onDone();
-                                  }
-                                });
+                          SizedBox(
+                            width: double.infinity,
+                            child: CustomButton(
+                              child: const Text("Add"),
+                              onPressed: () {
+                                if (viewModel.formKey.currentState
+                                        ?.validate() ??
+                                    false) {
+                                  viewModel
+                                      .addBeneficiaryOwner(
+                                    context,
+                                    merchantId,
+                                    merchantPayFacDbId,
+                                  )
+                                      .then((value) {
+                                    if (value) {
+                                      onDone();
+                                    }
+                                  });
 
-                                // registerOwner(idController.text.toString(), PayFac.toString(), BeneficiaryOwnerTitle, title, firstNameController.text.toString(), "", lastNameController.text.toString(), phoneNumberController.text.toString(), PhoneNumberExtController.text.toString(), FaxNumberController.text.toString(), emailController.text.toString(), percentageOwnerController.text.toString(), SSNController.text.toString(), day.toString(), month.toString(), year.toString(), addressController.text.toString(), AptController.text.toString(), CityController.text.toString(), StateController.text.toString(), CountryController.text.toString(), postalCodeController.text.toString(), postalCodeExtensionController.text.toString());
-                                // generate_password();
-                                // owner_Id = loggedInUser_Global.userId;
-                                // registerUserWithPhoneNumberGolden(emailController.text.toString(), password.toString(), firstNameController.text.toString(), lastNameController.text.toString(), phoneNumberController.text.toString(), context);
-                                // registerOwnersIssuedIdentity(owner_Id.toString(), PayFac.toString(), selectedBeneficiaryType.toString(), idController.text.toString(), IssuedCityController.text.toString(), IssuedStateController.text.toString(), IssuedCountryController.text.toString(), issue_year.toString(), issue_month.toString(), issue_day.toString(), expiry_year.toString(), expiry_month.toString(), expiry_day.toString());
-                              }
-                            },
+                                  // registerOwner(idController.text.toString(), PayFac.toString(), BeneficiaryOwnerTitle, title, firstNameController.text.toString(), "", lastNameController.text.toString(), phoneNumberController.text.toString(), PhoneNumberExtController.text.toString(), FaxNumberController.text.toString(), emailController.text.toString(), percentageOwnerController.text.toString(), SSNController.text.toString(), day.toString(), month.toString(), year.toString(), addressController.text.toString(), AptController.text.toString(), CityController.text.toString(), StateController.text.toString(), CountryController.text.toString(), postalCodeController.text.toString(), postalCodeExtensionController.text.toString());
+                                  // generate_password();
+                                  // owner_Id = loggedInUser_Global.userId;
+                                  // registerUserWithPhoneNumberGolden(emailController.text.toString(), password.toString(), firstNameController.text.toString(), lastNameController.text.toString(), phoneNumberController.text.toString(), context);
+                                  // registerOwnersIssuedIdentity(owner_Id.toString(), PayFac.toString(), selectedBeneficiaryType.toString(), idController.text.toString(), IssuedCityController.text.toString(), IssuedStateController.text.toString(), IssuedCountryController.text.toString(), issue_year.toString(), issue_month.toString(), issue_day.toString(), expiry_year.toString(), expiry_month.toString(), expiry_day.toString());
+                                }
+                              },
+                            ),
                           )
                         ],
                       ),
