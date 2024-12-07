@@ -142,6 +142,7 @@ class AddServicesViewModel extends ChangeNotifier {
           builder: (context) => AddBankAccount(
             onDone: () {
               if (type == MerchantType.hospital) {
+                //TODO: Need to navigate to benificiary screen
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => EntityRegistrationScreen(
