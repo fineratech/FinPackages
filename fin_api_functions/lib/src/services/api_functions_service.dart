@@ -831,4 +831,25 @@ class ApiFunctionsService {
     var response = await apiService.get(endPoint: url);
     return response.data;
   }
+
+  Future registerOwnersIssuedIdentity(
+    String ownerID,
+    String payFacDbMerchantID,
+    String idType,
+    String idNumber,
+    String idIssuingCity,
+    String idIssuingState,
+    String idIssuingCountry,
+    String issueDateYear,
+    String issueDateMonth,
+    String issueDateDay,
+    String expiryDateYear,
+    String expiryDateMonth,
+    String expiryDateDay,
+  ) async {
+    final String url =
+        '${ApiEndPoints.registerOwnersIssuedIdentity}/$ownerID/$payFacDbMerchantID/$idType/$idNumber/$idIssuingCity/$idIssuingState/$idIssuingCountry/$issueDateYear/$issueDateMonth/$issueDateDay/$expiryDateYear/$expiryDateMonth/$expiryDateDay';
+    var response = await apiService.get(endPoint: url);
+    return response.data;
+  }
 }
