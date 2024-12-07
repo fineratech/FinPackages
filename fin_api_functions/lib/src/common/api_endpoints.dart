@@ -182,4 +182,7 @@ class ApiEndPoints {
 
   static const String searchServices =
       "$serviceReferencePathResource/SearchServices";
+
+  static const String findResourceAvailabilityInAMonth =
+      "$serviceReferencePathResource/FindResourceAvailabilityInAMonth";
 }

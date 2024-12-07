@@ -784,4 +784,22 @@ class ApiFunctionsService {
     }
     return null;
   }
+
+  Future<List<Map<String, dynamic>>> findResourceAvailabilityInAMonth(
+    String resourceId,
+    String month,
+    String year,
+  ) async {
+    final String url =
+        '${ApiEndPoints.findResourceAvailabilityInAMonth}/$resourceId/$month/$year';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> data =
+          response.data['FindResourceAvailabilityInAMonthResult'];
+      List<Map<String, dynamic>> availabilityList =
+          data.map((e) => e as Map<String, dynamic>).toList();
+      return availabilityList;
+    }
+    return [];
+  }
 }
