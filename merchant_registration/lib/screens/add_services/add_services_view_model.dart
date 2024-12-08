@@ -141,6 +141,7 @@ class AddServicesViewModel extends ChangeNotifier {
         MaterialPageRoute(
           builder: (context) => AddBankAccount(
             onDone: () {
+              //TODO: handle other types
               if (type == MerchantType.hospital) {
                 //TODO: Need to navigate to benificiary screen
                 Navigator.of(context).push(

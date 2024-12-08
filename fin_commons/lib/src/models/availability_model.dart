@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AvailabilityModel {
   final DateTime startDateTime;
@@ -33,8 +34,8 @@ class AvailabilityModel {
 
   factory AvailabilityModel.fromMap(Map<String, dynamic> map) {
     return AvailabilityModel(
-      startDateTime: DateTime.parse(map['StartTime']),
-      endDateTime: DateTime.parse(map['EndTime']),
+      startDateTime: DateFormat('mm/dd/yyyy hh:mm').parse(map['StartTime']),
+      endDateTime: DateFormat('mm/dd/yyyy hh:mm').parse(map['EndTime']),
     );
   }
 
