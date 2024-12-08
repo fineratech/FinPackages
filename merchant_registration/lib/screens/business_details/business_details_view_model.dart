@@ -30,6 +30,7 @@ class BusinessDetailsViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get merchantCategory => {
         MerchantType.hospital: 'Healthcare',
+        MerchantType.restaurant: 'Restaurant',
         MerchantType.other: 'Other',
       }[type];
 
