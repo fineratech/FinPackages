@@ -9,6 +9,7 @@ class ServiceModel {
   final String? customerId; //-1
   final String providerId; //Professional Id or Merchant Id
   final String? scheduleId; //-1
+  final String? serviceId;
   ServiceModel({
     required this.name,
     required this.type,
@@ -20,6 +21,7 @@ class ServiceModel {
     this.customerId = "-1",
     required this.providerId,
     this.scheduleId = "-1",
+    this.serviceId = "-1",
   });
 
   ServiceModel copyWith({
@@ -33,6 +35,7 @@ class ServiceModel {
     String? customerId,
     String? providerId,
     String? scheduleId,
+    String? serviceId,
   }) {
     return ServiceModel(
       name: name ?? this.name,
@@ -45,6 +48,7 @@ class ServiceModel {
       customerId: customerId ?? this.customerId,
       providerId: providerId ?? this.providerId,
       scheduleId: scheduleId ?? this.scheduleId,
+      serviceId: serviceId ?? this.serviceId,
     );
   }
 
@@ -60,6 +64,7 @@ class ServiceModel {
       'CustomerId': customerId,
       'ProviderId': providerId,
       'ScheduleId': scheduleId,
+      'ServiceId': serviceId,
     };
   }
 
@@ -75,6 +80,7 @@ class ServiceModel {
       customerId: (map['CustomerId'] ?? '-1').toString(),
       providerId: (map['ProviderId'] ?? '-1').toString(),
       scheduleId: (map['ScheduleId'] ?? '-1').toString(),
+      serviceId: (map['ID'] ?? '-1').toString(),
     );
   }
 
