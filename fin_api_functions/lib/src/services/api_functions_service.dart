@@ -785,7 +785,7 @@ class ApiFunctionsService {
     return null;
   }
 
-  Future<List<Map<String, dynamic>>> findResourceAvailabilityInAMonth(
+  Future<List<AvailabilityModel>> findResourceAvailabilityInAMonth(
     String resourceId,
     String month,
     String year,
@@ -796,8 +796,8 @@ class ApiFunctionsService {
     if (response.success) {
       final List<dynamic> data =
           response.data['FindResourceAvailabilityInAMonthResult'];
-      List<Map<String, dynamic>> availabilityList =
-          data.map((e) => e as Map<String, dynamic>).toList();
+      List<AvailabilityModel> availabilityList =
+          data.map((e) => AvailabilityModel.fromMap(e)).toList();
       return availabilityList;
     }
     return [];
