@@ -34,8 +34,8 @@ class AvailabilityModel {
 
   factory AvailabilityModel.fromMap(Map<String, dynamic> map) {
     return AvailabilityModel(
-      startDateTime: DateFormat('mm/dd/yyyy hh:mm').parse(map['StartTime']),
-      endDateTime: DateFormat('mm/dd/yyyy hh:mm').parse(map['EndTime']),
+      startDateTime: DateFormat('MM/dd/yyyy hh:mm').parse(map['StartTime']),
+      endDateTime: DateFormat('MM/dd/yyyy hh:mm').parse(map['EndTime']),
     );
   }
 
