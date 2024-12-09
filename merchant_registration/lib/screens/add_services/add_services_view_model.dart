@@ -64,8 +64,9 @@ class AddServicesViewModel extends ChangeNotifier {
 
   Future<void> getServices(BuildContext context) async {
     isLoading = true;
-    List<ServiceModel>? services = await apiFunctionsService
-        .getAllAvailableServicesByCategory('Healthcare');
+    List<ServiceModel>? services =
+        await apiFunctionsService.getAllAvailableServicesByCategory(
+            'Healthcare'); //TODO: Need to handle other types
 
     if (services != null) {
       allServices = services.where((service) {

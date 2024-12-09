@@ -78,7 +78,7 @@ class BusinessDetailsView extends StatelessWidget {
                             enabled: false,
                           ),
                           const SizedBox(height: 10),
-                        ] else
+                        ] else ...[
                           FutureBuilder(
                             future: viewModel.getPayFacs(),
                             builder: (context, snapshot) {
@@ -91,29 +91,45 @@ class BusinessDetailsView extends StatelessWidget {
                               } else if (snapshot.connectionState ==
                                       ConnectionState.done &&
                                   snapshot.hasData) {
-                                return CustomDropdownField(
-                                  name: 'payfacName',
-                                  hintText: 'Payfac Name',
-                                  label: 'Payfac Name',
-                                  onChanged: (value) {
-                                    viewModel.setSelectedPayFac(
-                                      value as PayFacsResult,
-                                    );
-                                  },
-                                  items: snapshot.data!
-                                      .map(
-                                        (e) => DropdownMenuItem(
-                                          value: e,
-                                          child: Text(e.name),
-                                        ),
-                                      )
-                                      .toList(),
+                                return Column(
+                                  children: [
+                                    CustomDropdownField(
+                                      name: 'payfacName',
+                                      hintText: 'Payfac Name',
+                                      label: 'Payfac Name',
+                                      onChanged: (value) {
+                                        viewModel.setSelectedPayFac(
+                                          value as PayFacsResult,
+                                        );
+                                      },
+                                      items: snapshot.data!
+                                          .map(
+                                            (e) => DropdownMenuItem(
+                                              value: e,
+                                              child: Text(e.name),
+                                            ),
+                                          )
+                                          .toList(),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    // CustomTextField(
+                                    //   name: 'payfacId',
+                                    //   hintText: 'Payfac ID',
+                                    //   label: 'Payfac ID',
+                                    //   controller: viewModel.payFacId,
+                                    //   // isReadOnly: true,
+                                    //   validator:
+                                    //       FormBuilderValidators.required(),
+                                    //   enabled: false,
+                                    // ),
+                                  ],
                                 );
                               } else {
                                 return const Text("Failed to load payfacs");
                               }
                             },
                           ),
+                        ],
                         CustomTextField(
                           name: 'dbaName',
                           hintText: 'DBA Name',
