@@ -28,11 +28,6 @@ class BusinessDetailsViewModel extends ChangeNotifier {
 
   PayFacsResult? get selectedPayFac => _selectedPayFac;
   bool get isLoading => _isLoading;
-  String? get merchantCategory => {
-        MerchantType.hospital: 'Healthcare',
-        MerchantType.restaurant: 'Restaurant',
-        MerchantType.other: 'Other',
-      }[type];
 
   // set selectedPayFac(PayFacsResult? value) {
   //   _selectedPayFac = value;
@@ -78,7 +73,9 @@ class BusinessDetailsViewModel extends ChangeNotifier {
     serviceEmail = TextEditingController();
     servicePhone = TextEditingController();
     payFacId = TextEditingController();
-    merchantCategoryController = TextEditingController(text: merchantCategory);
+    merchantCategoryController = TextEditingController(
+      text: type.category,
+    );
     mcc = TextEditingController();
     merchantTypeController = TextEditingController(text: type.name);
   }

@@ -267,7 +267,7 @@ class BusinessDetailsView extends StatelessWidget {
                                         ssn: viewModel.ssnOrTaxId.text,
                                         federalTaxId: viewModel.ssnOrTaxId.text,
                                         merchantCategory:
-                                            viewModel.merchantCategory,
+                                            viewModel.type.category,
                                         mcc: viewModel.mcc.text,
                                         type: merchantType,
                                         billingDisc:
