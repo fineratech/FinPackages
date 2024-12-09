@@ -63,6 +63,8 @@ class EntityRegistrationScreen extends StatelessWidget {
         );
       case EntityType.other:
         return Container();
+      default:
+        return Container();
     }
   }
 }
