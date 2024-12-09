@@ -38,6 +38,10 @@ dependencies:
     git:
       url: https://github.com/fineratech/FinPackages.git
       path: entity_registration
+  beneficiary_owner:
+    git:
+      url: https://github.com/fineratech/FinPackages.git
+      path: beneficiary_owner
 
 dev_dependencies:
   flutter_test:

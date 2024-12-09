@@ -1,4 +1,5 @@
 import 'package:bank_details/bank_details.dart';
+import 'package:beneficiary_owner/beneficiary_owner.dart';
 import 'package:entity_registration/entity_registration.dart';
 import 'package:fin_api_functions/fin_api_functions.dart';
 import 'package:fin_commons/fin_commons.dart';
@@ -64,9 +65,8 @@ class AddServicesViewModel extends ChangeNotifier {
 
   Future<void> getServices(BuildContext context) async {
     isLoading = true;
-    List<ServiceModel>? services =
-        await apiFunctionsService.getAllAvailableServicesByCategory(
-            'Healthcare'); //TODO: Need to handle other types
+    List<ServiceModel>? services = await apiFunctionsService
+        .getAllAvailableServicesByCategory(type.category);
 
     if (services != null) {
       allServices = services.where((service) {
@@ -99,21 +99,13 @@ class AddServicesViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String getTypeInString(MerchantType type) {
-    switch (type) {
-      case MerchantType.hospital:
-        return "Healthcare";
-      default:
-        return type.name;
-    }
-  }
-
-  Future<void> addServicesToDB({required BuildContext context}) async {
+  Future<void> addServicesToDB(
+      {required BuildContext context, required int payFacMerchantId}) async {
     isLoading = true;
     for (var service in addedServices) {
       int serviceId = await apiFunctionsService.addNewService(
         service.name,
-        getTypeInString(type),
+        type.category,
         '-1',
         '-1',
         '-1',
@@ -142,23 +134,29 @@ class AddServicesViewModel extends ChangeNotifier {
         MaterialPageRoute(
           builder: (context) => AddBankAccount(
             onDone: () {
-              //TODO: handle other types
-              if (type == MerchantType.hospital) {
-                //TODO: Need to navigate to benificiary screen
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => EntityRegistrationScreen(
-                      entityType: EntityType.therapist,
-                      onDone: (_) {
-                        onDone();
-                      },
-                      userID: userId.toString(),
-                      locationId: locationId.toString(),
-                      merchantId: merchantId.toString(),
-                    ),
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => AddBeneficiaryOwnerView(
+                    merchantPayFacDbId: payFacMerchantId.toString(),
+                    merchantId: merchantId.toString(),
+                    onDone: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => EntityRegistrationScreen(
+                            entityType: type.entity,
+                            onDone: (_) {
+                              onDone();
+                            },
+                            userID: userId.toString(),
+                            locationId: locationId.toString(),
+                            merchantId: merchantId.toString(),
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              }
+                ),
+              );
             },
             userId: userId,
             mID: merchantId,

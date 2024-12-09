@@ -14,11 +14,13 @@ class AddServicesView extends StatelessWidget {
     required this.userId,
     required this.locationId,
     required this.onDone,
+    required this.payFacMerchId,
   });
   final MerchantType type;
   final int merchantId;
   final int userId;
   final int locationId;
+  final int payFacMerchId;
   final VoidCallback onDone;
 
   @override
@@ -185,6 +187,7 @@ class AddServicesView extends StatelessWidget {
                                         } else {
                                           viewModel.addServicesToDB(
                                             context: context,
+                                            payFacMerchantId: payFacMerchId,
                                           );
                                         }
                                       },

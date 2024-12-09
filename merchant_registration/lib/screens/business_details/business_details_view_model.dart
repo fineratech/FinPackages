@@ -137,6 +137,7 @@ class BusinessDetailsViewModel extends ChangeNotifier {
             MaterialPageRoute(
               builder: (context) => AddServicesView(
                 type: type,
+                payFacMerchId: payFacMerchId,
                 merchantId: merchantId,
                 userId: userId,
                 locationId: locationId,
