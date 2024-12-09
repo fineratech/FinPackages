@@ -401,7 +401,7 @@ class ApiFunctionsService {
     return response.data.toString();
   }
 
-  Future<String> requestSpecificService(
+  Future<String?> requestSpecificService(
     String serviceId,
     String resourceId,
     String serviceLocationId,
@@ -424,7 +424,10 @@ class ApiFunctionsService {
     final String url =
         '${ApiEndPoints.requestSpecificService}/$serviceId/$resourceId/$serviceLocationId/$requestorId/$yearStart/$monthStart/$dayStart/$hourStart/$minuteStart/$secondStart/$millisecondStart/$yearEnd/$monthEnd/$dayEnd/$hourEnd/$minuteEnd/$secondEnd/$millisecondEnd';
     var response = await apiService.get(endPoint: url);
-    return response.data.toString();
+    if (response.success) {
+      return response.data['RequestSpecificServiceResult'];
+    }
+    return null;
   }
 
   Future<List<Map<String, dynamic>>> getProfessionalsOfACompany(
