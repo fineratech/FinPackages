@@ -3,6 +3,7 @@ enum MerchantType {
   pharmacy,
   grocery,
   restaurant,
+  trucking,
 
   other;
 
@@ -11,11 +12,13 @@ enum MerchantType {
       case MerchantType.hospital:
         return 'Healthcare';
       case MerchantType.pharmacy:
-        return 'Pharmacy';
+        return 'Healthcare';
       case MerchantType.grocery:
         return 'Grocery';
       case MerchantType.restaurant:
-        return 'Restaurant';
+        return 'Food_and_beverages';
+      case MerchantType.trucking:
+        return 'Transportation_and_logistics';
       case MerchantType.other:
         return 'Other';
     }
