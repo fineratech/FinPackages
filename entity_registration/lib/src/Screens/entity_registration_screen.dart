@@ -1,3 +1,4 @@
+import 'package:entity_registration/src/Screens/driver/driver_registration_screen.dart';
 import 'package:entity_registration/src/Screens/entity_registration_view_model.dart';
 import 'package:entity_registration/src/Screens/patient/patient_registration_screen.dart';
 import 'package:entity_registration/src/Screens/therapist/register_therapist_screen.dart';
@@ -61,6 +62,13 @@ class EntityRegistrationScreen extends StatelessWidget {
           type: type,
           locationId: locationId,
         );
+      case EntityType.driver:
+        return RegisterDriver( onDone: onDone,
+          merchantId: merchantId,
+          userId: userID,
+          type: type,
+          locationId: locationId,);
+      
       case EntityType.other:
         return Container();
       default:
