@@ -28,7 +28,6 @@ class RegisterDriver extends StatelessWidget {
         return Consumer<DriverRegistrationViewModel>(
           builder: (context,viewModel,_) {
             return Scaffold(
-              appBar: const CustomAppBar(title: 'Register Driver'),
               body: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0,vertical: 8),
                 child: SingleChildScrollView(
