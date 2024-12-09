@@ -6,6 +6,7 @@ enum EntityType {
   pharmisist,
   merchandise,
   foodMenu,
+  driver,
   other;
 
   String getPageTitle() {
@@ -24,6 +25,8 @@ enum EntityType {
         return 'Register Merchandise';
       case EntityType.foodMenu:
         return 'Register Food Menu';
+      case EntityType.driver:
+        return 'Register Driver';
       case EntityType.other:
         return 'Register Entity';
     }
