@@ -7,7 +7,9 @@ enum EntityType {
   merchandise,
   foodMenu,
   driver,
+  truck,
   other;
+
 
   String getPageTitle() {
     switch (this) {
@@ -27,6 +29,8 @@ enum EntityType {
         return 'Register Food Menu';
       case EntityType.driver:
         return 'Register Driver';
+      case EntityType.truck:
+        return 'Register Truck';
       case EntityType.other:
         return 'Register Entity';
     }
