@@ -304,6 +304,7 @@ class RegisterDriver extends StatelessWidget {
                             child: CustomDatePicker(
                               name: 'driverIdIssueDate',
                               label: 'Driver Id Issue Date',
+                              inputType: InputType.date,
                               onChanged: (p0) {
                                 viewModel.driverIdIssueDate = p0;
                               },
@@ -316,6 +317,7 @@ class RegisterDriver extends StatelessWidget {
                             child: CustomDatePicker(
                               name: 'driverIdExpiryDate',
                               label: 'Driver Id Expiry Date',
+                              inputType: InputType.date,
                               onChanged: (p0) {
                                 viewModel.driverIdExpiryDate = p0;
                               },
@@ -351,6 +353,7 @@ class RegisterDriver extends StatelessWidget {
                             child: CustomDatePicker(
                                 name: 'licenseIssueDate',
                                 label: 'License Issue Date',
+                                inputType: InputType.date,
                                 onChanged: (p0) {
                                   viewModel.licenseIssueDate = p0;
                                 },
@@ -363,6 +366,7 @@ class RegisterDriver extends StatelessWidget {
                             child: CustomDatePicker(
                                 name: 'licenseExpiryDate',
                                 label: 'License Expiry Date',
+                                inputType: InputType.date,
                                 onChanged: (p0) {
                                   viewModel.licenseExpiryDate = p0;
                                 },
