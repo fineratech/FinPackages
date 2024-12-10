@@ -430,7 +430,7 @@ class ApiFunctionsService {
     return null;
   }
 
-  Future<List<Map<String, dynamic>>> getProfessionalsOfACompany(
+  Future<List<int>> getProfessionalsOfACompany(
     String companyId,
     String category,
     String type,
@@ -439,10 +439,9 @@ class ApiFunctionsService {
         '${ApiEndPoints.getProfessionalsOfACompany}/$companyId/$category/$type';
     var response = await apiService.get(endPoint: url);
     if (response.success) {
-      final List<dynamic> professionals = response.data;
-      List<Map<String, dynamic>> professionalList =
-          professionals.map((e) => e as Map<String, dynamic>).toList();
-      return professionalList;
+      final List<int> professionalIds =
+          response.data['GetProfessionalsOfACompanyResult'];
+      return professionalIds;
     }
     return [];
   }
