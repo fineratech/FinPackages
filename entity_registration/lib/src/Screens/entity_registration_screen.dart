@@ -2,6 +2,7 @@ import 'package:entity_registration/src/Screens/driver/driver_registration_scree
 import 'package:entity_registration/src/Screens/entity_registration_view_model.dart';
 import 'package:entity_registration/src/Screens/patient/patient_registration_screen.dart';
 import 'package:entity_registration/src/Screens/therapist/register_therapist_screen.dart';
+import 'package:entity_registration/src/Screens/truck/truck_registration_screen.dart';
 import 'package:entity_registration/src/constants/app_colors.dart';
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,15 @@ class EntityRegistrationScreen extends StatelessWidget {
         );
       case EntityType.therapist:
         return RegisterTherapistScreen(
+          onDone: onDone,
+          merchantId: merchantId,
+          userId: userID,
+          type: type,
+          locationId: locationId,
+        );
+
+      case EntityType.truck:
+        return RegisterTruck(
           onDone: onDone,
           merchantId: merchantId,
           userId: userID,
