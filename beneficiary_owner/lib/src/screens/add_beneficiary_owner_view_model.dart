@@ -122,9 +122,10 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
       String ownerId = await _apiFunctionsService.registerOwner(
         merchantId,
         merchantPayFacDbId,
-        ownerType?.name ?? "-1", // beneficial owner, control owner
+        ownerType?.name ?? "beneficialowner", // beneficial owner, control owner
+        "Principal",
         firstNameController.text,
-        " ",
+        "",
         lastNameController.text,
         phoneNumberController.text,
         phoneNumberExtController.text,
@@ -136,6 +137,7 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
         dateOfBirth!.month.toString(),
         dateOfBirth!.day.toString(),
         addressController.text,
+        aptController.text, // Populate this value from the screen. If the apt controller dont have the addressline2 for the apt or suite number, send in "NA"
         cityController.text,
         stateController.text,
         countryController.text,
