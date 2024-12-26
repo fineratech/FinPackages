@@ -805,7 +805,6 @@ class ApiFunctionsService {
     return [];
   }
 
-  
   Future<dynamic> registerOwner(
     String resourceID,
     String payFacDbMerchantID,
@@ -836,7 +835,7 @@ class ApiFunctionsService {
     var response = await apiService.get(endPoint: url);
     return response.data;
   }
-  
+
   Future registerOwnersIssuedIdentity(
     String ownerID,
     String payFacDbMerchantID,
@@ -854,6 +853,12 @@ class ApiFunctionsService {
   ) async {
     final String url =
         '${ApiEndPoints.registerOwnersIssuedIdentity}/$ownerID/$payFacDbMerchantID/$idType/$idNumber/$idIssuingCity/$idIssuingState/$idIssuingCountry/$issueDateYear/$issueDateMonth/$issueDateDay/$expiryDateYear/$expiryDateMonth/$expiryDateDay';
+    var response = await apiService.get(endPoint: url);
+    return response.data;
+  }
+
+  Future<int?> deleteAccount(int nAccountId, String password) async {
+    final String url = '${ApiEndPoints.deleteAccount}/$nAccountId/$password';
     var response = await apiService.get(endPoint: url);
     return response.data;
   }
