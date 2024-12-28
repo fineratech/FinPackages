@@ -74,7 +74,7 @@ class AddServicesViewModel extends ChangeNotifier {
       allServices = services.where((service) {
         return service.providerId == "-1";
       }).toList();
-      addedServices.add(
+      allServices?.add(
         ServiceModel(
             name: "Other",
             type: type.category,
