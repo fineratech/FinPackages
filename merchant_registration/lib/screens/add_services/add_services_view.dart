@@ -97,6 +97,9 @@ class AddServicesView extends StatelessWidget {
                                     FormBuilderValidators.required(),
                                   ]),
                                 ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
                               ],
                               CustomTextField(
                                 name: 'cost',
