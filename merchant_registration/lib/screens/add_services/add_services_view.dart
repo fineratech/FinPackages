@@ -86,6 +86,18 @@ class AddServicesView extends StatelessWidget {
                                 ]),
                               ),
                               const SizedBox(height: 20),
+                              if (viewModel.selectedService != null &&
+                                  viewModel.selectedService!.name ==
+                                      "Other") ...[
+                                CustomTextField(
+                                  name: 'serviceName',
+                                  label: 'Service Name',
+                                  controller: viewModel.nameController,
+                                  validator: FormBuilderValidators.compose([
+                                    FormBuilderValidators.required(),
+                                  ]),
+                                ),
+                              ],
                               CustomTextField(
                                 name: 'cost',
                                 label: 'Cost',
@@ -148,6 +160,13 @@ class AddServicesView extends StatelessWidget {
                                               .copyWith(
                                             cost: viewModel.costController.text,
                                           );
+                                          if (viewModel.selectedService!.name ==
+                                              "Other") {
+                                            newService = newService.copyWith(
+                                              name:
+                                                  viewModel.nameController.text,
+                                            );
+                                          }
                                           if (viewModel.addedServices.any(
                                               (element) =>
                                                   element.name ==
@@ -160,6 +179,7 @@ class AddServicesView extends StatelessWidget {
                                           } else {
                                             viewModel.addService(newService);
                                             viewModel.costController.clear();
+                                            viewModel.nameController.clear();
                                             Utils.showSuccessToast(
                                               context: context,
                                               message:

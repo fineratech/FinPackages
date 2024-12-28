@@ -35,6 +35,7 @@ class AddServicesViewModel extends ChangeNotifier {
 
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   late TextEditingController costController;
+  late TextEditingController nameController;
 
   bool get isError => _isError;
   bool get isLoading => _isLoading;
@@ -60,6 +61,7 @@ class AddServicesViewModel extends ChangeNotifier {
       logger: logger,
     );
     costController = TextEditingController();
+    nameController = TextEditingController();
     getServices(context);
   }
 
@@ -72,6 +74,13 @@ class AddServicesViewModel extends ChangeNotifier {
       allServices = services.where((service) {
         return service.providerId == "-1";
       }).toList();
+      addedServices.add(
+        ServiceModel(
+            name: "Other",
+            type: type.category,
+            cost: '',
+            providerId: merchantId.toString()),
+      );
       addedServices = services.where((service) {
         return service.providerId == merchantId.toString();
       }).toList();
@@ -170,6 +179,7 @@ class AddServicesViewModel extends ChangeNotifier {
   @override
   void dispose() {
     costController.dispose();
+    nameController.dispose();
     super.dispose();
   }
 }

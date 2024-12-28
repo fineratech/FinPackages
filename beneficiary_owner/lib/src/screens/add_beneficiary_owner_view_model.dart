@@ -137,7 +137,8 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
         dateOfBirth!.month.toString(),
         dateOfBirth!.day.toString(),
         addressController.text,
-        aptController.text, // Populate this value from the screen. If the apt controller dont have the addressline2 for the apt or suite number, send in "NA"
+        aptController
+            .text, // Populate this value from the screen. If the apt controller dont have the addressline2 for the apt or suite number, send in "NA"
         cityController.text,
         stateController.text,
         countryController.text,
