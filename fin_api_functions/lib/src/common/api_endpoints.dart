@@ -185,4 +185,10 @@ class ApiEndPoints {
 
   static const String findResourceAvailabilityInAMonth =
       "$serviceReferencePathResource/FindResourceAvailabilityInAMonth";
+  static const String
+      getResourceIdsOfAGivenCategoryInAGivenCityAndPriceRange = //TODO: Implement this
+      "$serviceReferencePathResource/GetResourceIdsOfAGivenCategoryInAGivenCityAndPriceRange";
+  static const String
+      findResourceEfficientWithGivenCategoryAndType = //TODO: Implement this
+      "$serviceReferencePathResource/FindResourceEfficientWithGivenCategoryAndType";
 }

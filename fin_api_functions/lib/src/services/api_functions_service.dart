@@ -793,7 +793,7 @@ class ApiFunctionsService {
     String year,
   ) async {
     final String url =
-        '${ApiEndPoints.findResourceAvailabilityInAMonth}/$resourceId/$month/$year';
+        '${ApiEndPoints.findResourceAvailabilityInAMonth}/$resourceId/$month/$year/';
     var response = await apiService.get(endPoint: url);
     if (response.success) {
       final List<dynamic> data =
