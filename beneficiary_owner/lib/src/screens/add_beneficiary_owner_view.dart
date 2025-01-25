@@ -87,13 +87,22 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                               ),
                               Expanded(
                                 child: CustomTextField(
-                                  name: 'lastName',
-                                  label: 'Last Name ',
-                                  controller: viewModel.lastNameController,
+                                  name: 'middleName',
+                                  label: 'Middle Name ',
+                                  controller: viewModel.middleNameController,
                                   validator: FormBuilderValidators.required(),
                                 ),
                               ),
                             ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          CustomTextField(
+                            name: 'lastName',
+                            label: 'Last Name ',
+                            controller: viewModel.lastNameController,
+                            validator: FormBuilderValidators.required(),
                           ),
                           const SizedBox(
                             height: 15,

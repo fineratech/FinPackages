@@ -75,6 +75,7 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
   //Controllers
   late TextEditingController percentageOwnerController;
   late TextEditingController firstNameController;
+  late TextEditingController middleNameController;
   late TextEditingController lastNameController;
   late TextEditingController snnController;
   late TextEditingController addressController;
@@ -96,6 +97,7 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
   void initialize() {
     percentageOwnerController = TextEditingController();
     firstNameController = TextEditingController();
+    middleNameController = TextEditingController();
     lastNameController = TextEditingController();
     snnController = TextEditingController();
     addressController = TextEditingController();
@@ -125,7 +127,7 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
         ownerType?.name ?? "beneficialowner", // beneficial owner, control owner
         "Principal",
         firstNameController.text,
-        "",
+        lastNameController.text,
         lastNameController.text,
         phoneNumberController.text,
         phoneNumberExtController.text,
@@ -187,6 +189,7 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
   void dispose() {
     percentageOwnerController.dispose();
     firstNameController.dispose();
+    middleNameController.dispose();
     lastNameController.dispose();
     snnController.dispose();
     addressController.dispose();
