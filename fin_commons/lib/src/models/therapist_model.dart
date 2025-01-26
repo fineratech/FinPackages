@@ -33,6 +33,7 @@ class TherapistModel {
   final File? licenseFrontImage;
   final File? licenseBackImage;
   final int? professionalId;
+  final String? description;
   TherapistModel({
     required this.therapistName,
     required this.therapistQualification,
@@ -58,6 +59,7 @@ class TherapistModel {
     this.licenseFrontImage,
     this.licenseBackImage,
     this.professionalId,
+    this.description,
   });
 
   TherapistModel copyWith({
@@ -85,6 +87,7 @@ class TherapistModel {
     File? licenseBackImage,
     String? licenseType,
     int? professionalId,
+    String? description,
   }) {
     return TherapistModel(
       therapistName: therapistName ?? this.therapistName,
@@ -114,6 +117,7 @@ class TherapistModel {
       licenseBackImage: licenseBackImage ?? this.licenseBackImage,
       licenseType: licenseType ?? this.licenseType,
       professionalId: professionalId ?? this.professionalId,
+      description: description ?? this.description,
     );
   }
 
@@ -141,6 +145,7 @@ class TherapistModel {
       'licenseIssueDate': licenseIssueDate.millisecondsSinceEpoch,
       'licenseType': licenseType,
       'professionalId': professionalId,
+      'description': description,
     };
   }
 
@@ -175,6 +180,7 @@ class TherapistModel {
           DateTime.fromMillisecondsSinceEpoch(map['licenseIssueDate'] as int),
       licenseType: map['licenseType'] as String,
       professionalId: map['professionalId'] as int,
+      description: map['description'],
     );
   }
 
@@ -208,6 +214,7 @@ class TherapistModel {
       licenseIssueDate:
           DateTime.tryParse(map['License_IssueDate'] ?? '') ?? DateTime.now(),
       licenseType: map['LicenseType'] ?? '',
+      description: map['Description'],
     );
   }
 
@@ -245,6 +252,7 @@ class TherapistModel {
         other.licenseIssuingState == licenseIssuingState &&
         other.licenseNumber == licenseNumber &&
         other.licenseExpiryDate == licenseExpiryDate &&
+        other.description == description &&
         other.licenseIssueDate == licenseIssueDate;
   }
 
