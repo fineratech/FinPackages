@@ -29,7 +29,20 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
             return ModalProgressHUD(
               inAsyncCall: viewModel.isLoading,
               child: Scaffold(
-                appBar: const CustomAppBar(title: 'Add Beneficiary Owner'),
+                appBar: CustomAppBar(
+                  title: 'Add Beneficiary Owner',
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        onDone();
+                      },
+                      child: const Text("Skip"),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                  ],
+                ),
                 body: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -267,17 +280,20 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                                 width: 5,
                               ),
                               Expanded(
-                                  child: CustomTextField(
-                                name: 'country',
-                                label: 'Country',
-                                controller: viewModel.countryController,
-                                validator: FormBuilderValidators.compose(
-                                  [
-                                    FormBuilderValidators.required(),
-                                    FormBuilderValidators.country(),
-                                  ],
+                                child: CustomTextField(
+                                  name: 'country',
+                                  label: 'Country Code',
+                                  controller: viewModel.countryController,
+                                  validator: FormBuilderValidators.compose(
+                                    [
+                                      FormBuilderValidators.required(),
+                                      FormBuilderValidators.uppercase(),
+                                      FormBuilderValidators.maxLength(2),
+                                      FormBuilderValidators.alphabetical(),
+                                    ],
+                                  ),
                                 ),
-                              )),
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -303,16 +319,20 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                                 width: 5,
                               ),
                               Expanded(
-                                  child: CustomTextField(
-                                      name: 'postalCodeExtension',
-                                      label: 'Postal Code Extension',
-                                      textInputType: TextInputType.number,
-                                      controller: viewModel
-                                          .postalCodeExtensionController,
-                                      validator: FormBuilderValidators.compose([
-                                        FormBuilderValidators.required(),
-                                        FormBuilderValidators.numeric(),
-                                      ]))),
+                                child: CustomTextField(
+                                  name: 'postalCodeExtension',
+                                  label: 'Postal Code Extension',
+                                  textInputType: TextInputType.number,
+                                  controller:
+                                      viewModel.postalCodeExtensionController,
+                                  validator: FormBuilderValidators.compose(
+                                    [
+                                      FormBuilderValidators.required(),
+                                      FormBuilderValidators.numeric(),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(
