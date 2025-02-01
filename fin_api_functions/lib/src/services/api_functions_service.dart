@@ -949,4 +949,28 @@ class ApiFunctionsService {
     }
     return [];
   }
+
+  Future<List<int>>
+      getResourceIdsOfAGivenCategoryInAGivenCityAndPriceRangeSupportingSpecificService(
+    String category,
+    String type,
+    String city,
+    String state,
+    String country,
+    String minPrice,
+    String maxPrice,
+    String supportedServices, //Comma seperated services string
+  ) async {
+    final String url =
+        '${ApiEndPoints.getResourceIdsOfAGivenCategoryInAGivenCityAndPriceRangeSupportingSpecificService}/$category/$type/$city/$state/$country/$minPrice/$maxPrice/$supportedServices';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> data = response.data[
+          'GetResourceIdsOfAGivenCategoryInAGivenCityAndPriceRangeSupportingSpecificServiceResult'];
+      List<int> resourceIds =
+          data.map((e) => int.tryParse(e.toString()) ?? -1).toList();
+      return resourceIds;
+    }
+    return [];
+  }
 }

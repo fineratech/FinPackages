@@ -194,4 +194,8 @@ class ApiEndPoints {
       "$serviceReferencePathResource/GetPatients/patient";
   static const String registerProfessionalWithDescription =
       "$serviceReferencePathResource/RegisterProfessionalWithDescription";
+
+  static const String
+      getResourceIdsOfAGivenCategoryInAGivenCityAndPriceRangeSupportingSpecificService =
+      "$serviceReferencePathResource/GetResourceIdsOfAGivenCategoryInAGivenCityAndPriceRangeSupportingSpecificService";
 }
