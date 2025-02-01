@@ -90,6 +90,23 @@ class PatientModel {
     );
   }
 
+  factory PatientModel.fromAppObject(Map<String, dynamic> map) {
+    return PatientModel(
+      name: map['Name'] ?? '',
+      ownerId: map['OwnerId'] ?? '',
+      companyId: map['CompanyId'] ?? '',
+      mrn: map['MRN_Number'] ?? '',
+      idType: map['IdType'] ?? '',
+      idNumber: map['IdNumber'] ?? '',
+      idExpiry: map['IdExpiry'] ?? '',
+      idIssuingState: map['IdIssuingState'] ?? '',
+      idIssuingCountry: map['IdIssuingCountry'] ?? '',
+      gender: map['Gender'] ?? '',
+      dob: map['DOB'] ?? '',
+      locationId: map['LocationId'] ?? '',
+    );
+  }
+
   @override
   bool operator ==(covariant PatientModel other) {
     if (identical(this, other)) return true;
