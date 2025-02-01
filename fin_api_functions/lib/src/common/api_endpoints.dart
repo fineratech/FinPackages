@@ -185,10 +185,13 @@ class ApiEndPoints {
 
   static const String findResourceAvailabilityInAMonth =
       "$serviceReferencePathResource/FindResourceAvailabilityInAMonth";
-  static const String
-      getResourceIdsOfAGivenCategoryInAGivenCityAndPriceRange = //TODO: Implement this
+  static const String getResourceIdsOfAGivenCategoryInAGivenCityAndPriceRange =
       "$serviceReferencePathResource/GetResourceIdsOfAGivenCategoryInAGivenCityAndPriceRange";
-  static const String
-      findResourceEfficientWithGivenCategoryAndType = //TODO: Implement this
+  static const String findResourceEfficientWithGivenCategoryAndType =
       "$serviceReferencePathResource/FindResourceEfficientWithGivenCategoryAndType";
+
+  static const String getPatients =
+      "$serviceReferencePathResource/GetPatients/patient";
+  static const String registerProfessionalWithDescription =
+      "$serviceReferencePathResource/RegisterProfessionalWithDescription";
 }

@@ -862,4 +862,91 @@ class ApiFunctionsService {
     var response = await apiService.get(endPoint: url);
     return response.data;
   }
+
+  Future<List<PatientModel>> getPatients() async {
+    const String url = ApiEndPoints.getPatients;
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> data = response.data['GetPatientsResult'];
+      List<PatientModel> patients =
+          data.map((e) => PatientModel.fromMap(e)).toList();
+      return patients;
+    }
+    return [];
+  }
+
+  Future<int> registerProfessionalWithDescription(
+    String ownerID, //UserId
+    String description,
+    String
+        category, //healthCare, trucking, realEstate, resturants, b2b, professionalServices, travelAndEntertainment, government, education.
+    String
+        type, //doctor, nurse, driver, realEstateAgent, realEstateBroker, realEstateManager, realEstateOwner, realEstateTenant, realEstateVendor, realEstateBuyer, realEstateSeller, realEstateLender, realEstateLandlord, realEstateTenantRep, realEstateLandlordRep, realEstateTenantRepBroker, realEstateLandlordRepBroker, realEstateTenantRepAgent, realEstateLandlordRepAgent, realEstateTenantRepManager, realEstateLandlordRepManager, realEstateTenantRepOwner, realEstateLandlordRepOwner, realEstateTenantRepVendor, realEstateLandlordRepVendor, realEstateTenantRepBuyer, realEstateLandlordRepBuyer, realEstateTenantRepSeller, realEstateLandlordRepSeller
+    String companyId, //MerchantId
+    String idType, //Passport, CNIC, StateID
+    String idNumber,
+    String idExpiryDate,
+    String idIssuingState,
+    String idIssuingCountry,
+    String licenseType, //Free text
+    String licenseNumber,
+    String licenseExpiryDate,
+    String licenseIssuingState,
+    String licenseIssuingCountry,
+    String gender,
+    String dob,
+    String locationId, //-1 if not available
+  ) async {
+    String formattedIdExpiryDate = DateTimeService.mmddyyyyFormat(idExpiryDate);
+    String formattedLicenseExpiryDate =
+        DateTimeService.mmddyyyyFormat(licenseExpiryDate);
+    String formattedDob = DateTimeService.mmddyyyyFormat(dob);
+    final String url =
+        '${ApiEndPoints.registerProfessionalWithDescription}/$ownerID/$description/$category/$type/$companyId/$idType/$idNumber/$formattedIdExpiryDate/$idIssuingState/$idIssuingCountry/$licenseType/$licenseNumber/$formattedLicenseExpiryDate/$licenseIssuingState/$licenseIssuingCountry/$gender/$formattedDob/$locationId'; //UserregsirationID1 is merchantId sent from the previous screen
+
+    var response = await apiService.get(endPoint: url);
+
+    int professionalId = int.tryParse(response.data.toString()) ?? -1;
+    return professionalId;
+  }
+
+  Future<List<int>> getResourceIdsOfAGivenCategoryInAGivenCityAndPriceRange(
+    String category,
+    String type,
+    String city,
+    String state,
+    String country,
+    String minPrice,
+    String maxPrice,
+  ) async {
+    final String url =
+        '${ApiEndPoints.getResourceIdsOfAGivenCategoryInAGivenCityAndPriceRange}/$category/$type/$city/$state/$country/$minPrice/$maxPrice';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> data = response.data[
+          'GetResourceIdsOfAGivenCategoryInAGivenCityAndPriceRangeResult'];
+      List<int> resourceIds =
+          data.map((e) => int.tryParse(e.toString()) ?? -1).toList();
+      return resourceIds;
+    }
+    return [];
+  }
+
+  Future<List<int>> findResourceEfficientWithGivenCategoryAndType(
+    String searchText,
+    String category,
+    String type,
+  ) async {
+    final String url =
+        '${ApiEndPoints.findResourceEfficientWithGivenCategoryAndType}/$searchText/$category/$type';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> data =
+          response.data['FindResourceEfficientWithGivenCategoryAndTypeResult'];
+      List<int> resourceIds =
+          data.map((e) => int.tryParse(e.toString()) ?? -1).toList();
+      return resourceIds;
+    }
+    return [];
+  }
 }
