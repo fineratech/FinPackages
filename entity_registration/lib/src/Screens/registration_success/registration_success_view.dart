@@ -12,6 +12,7 @@ class RegistrationSuccessView extends StatelessWidget {
     required this.userID,
     required this.locationId,
     this.data,
+    this.isSkipable = false,
   });
   final void Function(dynamic) onDone;
   final EntityType entityType;
@@ -19,6 +20,7 @@ class RegistrationSuccessView extends StatelessWidget {
   final String userID;
   final String locationId;
   final dynamic data;
+  final bool isSkipable;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class RegistrationSuccessView extends StatelessWidget {
                 merchantId: merchantId,
                 userID: userID,
                 locationId: locationId,
+                isSkipable: isSkipable,
               ),
             ),
           );

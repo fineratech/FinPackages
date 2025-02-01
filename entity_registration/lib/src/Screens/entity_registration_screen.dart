@@ -16,12 +16,14 @@ class EntityRegistrationScreen extends StatelessWidget {
     required this.userID,
     required this.merchantId,
     required this.locationId,
+    this.isSkipable = false,
   });
   final EntityType entityType;
   final void Function(dynamic) onDone;
   final String userID;
   final String merchantId;
   final String locationId;
+  final bool isSkipable;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,17 @@ class EntityRegistrationScreen extends StatelessWidget {
                   color: AppColors.primaryColor,
                 ),
               ),
+              actions: [
+                if (isSkipable) ...[
+                  TextButton(
+                    onPressed: () {
+                      onDone(null);
+                    },
+                    child: const Text('Skip'),
+                  ),
+                  const SizedBox(width: 10),
+                ]
+              ],
             ),
             body: getPage(entityType),
           );
@@ -73,12 +86,14 @@ class EntityRegistrationScreen extends StatelessWidget {
           locationId: locationId,
         );
       case EntityType.driver:
-        return RegisterDriver( onDone: onDone,
+        return RegisterDriver(
+          onDone: onDone,
           merchantId: merchantId,
           userId: userID,
           type: type,
-          locationId: locationId,);
-      
+          locationId: locationId,
+        );
+
       case EntityType.other:
         return Container();
       default:
