@@ -159,6 +159,7 @@ class AddServicesViewModel extends ChangeNotifier {
                             userID: userId.toString(),
                             locationId: locationId.toString(),
                             merchantId: merchantId.toString(),
+                            isSkipable: true,
                           ),
                         ),
                       );
