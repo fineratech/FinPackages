@@ -66,6 +66,7 @@ class BasicInfoViewModel extends ChangeNotifier {
 
   //TextEditingControllers
   late TextEditingController therapistNameController;
+  late TextEditingController therapistDescriptionController;
   late TextEditingController therapistQualificationController;
   late TextEditingController certificationController;
   late TextEditingController contactNumberController;
@@ -75,6 +76,7 @@ class BasicInfoViewModel extends ChangeNotifier {
       logger: logger,
     );
     therapistNameController = TextEditingController();
+    therapistDescriptionController = TextEditingController();
     therapistQualificationController = TextEditingController();
     certificationController = TextEditingController();
     contactNumberController = TextEditingController();
@@ -103,33 +105,12 @@ class BasicInfoViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // List<Service> services = [
-  //   Service(
-  //     name: AppStrings.therapistOnSite,
-  //     pngPath: 'lib/assets/images/therapist.png',
-  //   ),
-  //   Service(
-  //       name: AppStrings.onCallNurse,
-  //       pngPath: 'lib/assets/images/call_icon.png'),
-  //   Service(
-  //       name: AppStrings.physicalTherapy,
-  //       pngPath: 'lib/assets/images/psychologist.png'),
-  //   Service(
-  //     name: AppStrings.rehabilitation,
-  //     pngPath: 'lib/assets/images/rehabilitation.png',
-  //   ),
-  //   Service(
-  //     name: AppStrings.hospicare,
-  //     pngPath: 'lib/assets/images/doc.png',
-  //   ),
-  // ];
-
   @override
   void dispose() {
     therapistNameController.dispose();
     therapistQualificationController.dispose();
     certificationController.dispose();
-
+    therapistDescriptionController.dispose();
     contactNumberController.dispose();
 
     super.dispose();

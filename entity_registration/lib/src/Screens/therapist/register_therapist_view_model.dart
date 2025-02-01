@@ -58,8 +58,10 @@ class RegisterTherapistViewModel extends ChangeNotifier {
 
   Future<void> registerProfessional() async {
     isLoading = true;
-    int professionalId = await _apiFunctionsService.registerProfessional(
+    int professionalId =
+        await _apiFunctionsService.registerProfessionalWithDescription(
       userId,
+      therapistModel?.description ?? '',
       "Healthcare",
       "Therapist",
       merchantId,

@@ -59,6 +59,18 @@ class BasicInfoView extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             CustomTextField(
+                              name: "therapistDescription",
+                              label: "Therapist Description",
+                              hintText: "Therapist Description",
+                              controller:
+                                  viewModel.therapistDescriptionController,
+                              maxLines: 3,
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(),
+                              ]),
+                            ),
+                            const SizedBox(height: 10),
+                            CustomTextField(
                               name: "therapistQualification",
                               label: "Therapist Qualification",
                               hintText: "Therapist Qualification",
@@ -207,6 +219,8 @@ class BasicInfoView extends StatelessWidget {
                                       licenseExpiryDate: DateTime.now(),
                                       licenseIssueDate: DateTime.now(),
                                       licenseType: "",
+                                      description: viewModel
+                                          .therapistDescriptionController.text,
                                     );
                                     saveTherapist(therapistModel);
                                   }
