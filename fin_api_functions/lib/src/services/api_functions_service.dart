@@ -869,7 +869,7 @@ class ApiFunctionsService {
     if (response.success) {
       final List<dynamic> data = response.data['GetPatientsResult'];
       List<PatientModel> patients =
-          data.map((e) => PatientModel.fromMap(e)).toList();
+          data.map((e) => PatientModel.fromAppObject(e)).toList();
       return patients;
     }
     return [];
