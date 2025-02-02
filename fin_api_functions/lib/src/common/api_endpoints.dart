@@ -198,4 +198,7 @@ class ApiEndPoints {
   static const String
       getResourceIdsOfAGivenCategoryInAGivenCityAndPriceRangeSupportingSpecificService =
       "$serviceReferencePathResource/GetResourceIdsOfAGivenCategoryInAGivenCityAndPriceRangeSupportingSpecificService";
+
+  static const String getAppointments =
+      "$serviceReferencePathResource/GetAppointments";
 }

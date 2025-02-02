@@ -863,8 +863,8 @@ class ApiFunctionsService {
     return response.data;
   }
 
-  Future<List<PatientModel>> getPatients() async {
-    const String url = ApiEndPoints.getPatients;
+  Future<List<PatientModel>> getPatients({String hospitalId = '-1'}) async {
+    final String url = "${ApiEndPoints.getPatients}/$hospitalId";
     var response = await apiService.get(endPoint: url);
     if (response.success) {
       final List<dynamic> data = response.data['GetPatientsResult'];
@@ -970,6 +970,16 @@ class ApiFunctionsService {
       List<int> resourceIds =
           data.map((e) => int.tryParse(e.toString()) ?? -1).toList();
       return resourceIds;
+    }
+    return [];
+  }
+
+  Future<List<dynamic>> getAppointments(String resourceId) async {
+    final String url = '${ApiEndPoints.getAppointments}/$resourceId';
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> data = response.data['GetAppointmentsResult'];
+      return data;
     }
     return [];
   }
