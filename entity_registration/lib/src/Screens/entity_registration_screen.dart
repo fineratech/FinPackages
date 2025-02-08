@@ -85,7 +85,7 @@ class EntityRegistrationScreen extends StatelessWidget {
           type: type,
           locationId: locationId,
         );
-      case EntityType.driver:
+/*      case EntityType.driver:
         return RegisterDriver(
           onDone: onDone,
           merchantId: merchantId,
@@ -93,7 +93,7 @@ class EntityRegistrationScreen extends StatelessWidget {
           type: type,
           locationId: locationId,
         );
-
+*/
       case EntityType.other:
         return Container();
       default:
