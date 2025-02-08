@@ -1,4 +1,4 @@
-import 'package:csc_picker/csc_picker.dart';
+import 'package:csc_picker_plus/csc_picker_plus.dart';
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -147,7 +147,7 @@ class CompanyDetailsView extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      CSCPicker(
+                      CSCPickerPlus(
                         layout: Layout.horizontal,
                         flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
                         currentCountry: viewModel.country,

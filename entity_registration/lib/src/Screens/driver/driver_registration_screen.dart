@@ -1,4 +1,4 @@
-import 'package:csc_picker/csc_picker.dart';
+
 import 'package:entity_registration/src/Screens/driver/driver_registration_view_model.dart';
 import 'package:entity_registration/src/constants/app_colors.dart';
 import 'package:fin_commons/fin_commons.dart';
@@ -100,7 +100,7 @@ class RegisterDriver extends StatelessWidget {
                         height: 20,
                       ),
 
-                      CSCPicker(
+                      CSCPickerPlus(
                         layout: Layout.horizontal,
                         flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
                         currentCountry: viewModel.country,

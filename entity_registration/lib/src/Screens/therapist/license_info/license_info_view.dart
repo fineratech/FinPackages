@@ -1,4 +1,4 @@
-import 'package:csc_picker/csc_picker.dart';
+import 'package:csc_picker_plus/csc_picker_plus.dart';
 import 'package:entity_registration/src/Screens/therapist/license_info/license_info_view_model.dart';
 import 'package:entity_registration/src/constants/app_colors.dart';
 import 'package:entity_registration/src/widgets/image_with_title.dart';
@@ -69,7 +69,7 @@ class LicenseInfoView extends StatelessWidget {
                     ]),
                   ),
                   const SizedBox(height: 10),
-                  CSCPicker(
+                  CSCPickerPlus(
                     layout: Layout.horizontal,
                     showCities: false,
                     flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,

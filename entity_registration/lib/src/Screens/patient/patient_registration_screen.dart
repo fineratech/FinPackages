@@ -1,4 +1,4 @@
-import 'package:csc_picker/csc_picker.dart';
+import 'package:csc_picker_plus/csc_picker_plus.dart';
 import 'package:entity_registration/src/Screens/patient/patient_registration_view_model.dart';
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
@@ -197,7 +197,7 @@ class PatientRegistrationScreen extends StatelessWidget {
                       ]),
                     ),
                     const SizedBox(height: 10),
-                    CSCPicker(
+                    CSCPickerPlus(
                       layout: Layout.horizontal,
                       showCities: false,
                       flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
