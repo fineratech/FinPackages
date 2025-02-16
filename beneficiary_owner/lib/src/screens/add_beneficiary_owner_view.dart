@@ -1,6 +1,8 @@
 // import 'dart:convert';
 
+import 'package:beneficiary_owner/src/app_colors.dart';
 import 'package:beneficiary_owner/src/screens/add_beneficiary_owner_view_model.dart';
+import 'package:csc_picker_plus/csc_picker_plus.dart';
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -216,21 +218,23 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          CustomTextField(
-                            name: 'address',
-                            label: 'Address',
-                            controller: viewModel.addressController,
-                            validator: FormBuilderValidators.compose(
-                              [
-                                FormBuilderValidators.required(),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
                           Row(
                             children: [
+                              Expanded(
+                                child: CustomTextField(
+                                  name: 'address',
+                                  label: 'Address',
+                                  controller: viewModel.addressController,
+                                  validator: FormBuilderValidators.compose(
+                                    [
+                                      FormBuilderValidators.required(),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
                               Expanded(
                                   child: CustomTextField(
                                 name: 'apt',
@@ -242,60 +246,91 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                                   ],
                                 ),
                               )),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Expanded(
-                                child: CustomTextField(
-                                    name: 'city',
-                                    label: 'City',
-                                    controller: viewModel.cityController,
-                                    validator: FormBuilderValidators.compose(
-                                      [
-                                        FormBuilderValidators.required(),
-                                        FormBuilderValidators.city()
-                                      ],
-                                    )),
-                              ),
+
+                              // Expanded(
+                              //   child: CustomTextField(
+                              //       name: 'city',
+                              //       label: 'City',
+                              //       controller: viewModel.cityController,
+                              //       validator: FormBuilderValidators.compose(
+                              //         [
+                              //           FormBuilderValidators.required(),
+                              //           FormBuilderValidators.city()
+                              //         ],
+                              //       )),
+                              // ),
                             ],
                           ),
                           const SizedBox(
                             height: 20,
                           ),
-                          Row(
-                            children: [
-                              Expanded(
-                                  child: CustomTextField(
-                                name: 'state',
-                                label: 'State',
-                                controller: viewModel.stateController,
-                                validator: FormBuilderValidators.compose(
-                                  [
-                                    FormBuilderValidators.required(),
-                                    FormBuilderValidators.state(),
-                                  ],
-                                ),
-                              )),
-                              const SizedBox(
-                                width: 5,
+                          CSCPickerPlus(
+                            layout: Layout.horizontal,
+                            flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
+                            currentCountry: viewModel.country,
+                            currentState: viewModel.state,
+                            currentCity: viewModel.city,
+                            countryDropdownLabel:
+                                viewModel.country ?? 'Country',
+                            defaultCountry: CscCountry.United_States,
+                            onCountryChanged: (value) {
+                              viewModel.country = value;
+                            },
+                            onStateChanged: (value) {
+                              viewModel.state = value;
+                            },
+                            onCityChanged: (value) {
+                              viewModel.city = value;
+                            },
+                            selectedItemStyle: const TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            dropdownDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: AppColors.primaryColor,
                               ),
-                              Expanded(
-                                child: CustomTextField(
-                                  name: 'country',
-                                  label: 'Country Code',
-                                  controller: viewModel.countryController,
-                                  validator: FormBuilderValidators.compose(
-                                    [
-                                      FormBuilderValidators.required(),
-                                      FormBuilderValidators.uppercase(),
-                                      FormBuilderValidators.maxLength(2),
-                                      FormBuilderValidators.alphabetical(),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
+                          // Row(
+                          //   children: [
+                          //     Expanded(
+                          //         child: CustomTextField(
+                          //       name: 'state',
+                          //       label: 'State',
+                          //       controller: viewModel.stateController,
+                          //       validator: FormBuilderValidators.compose(
+                          //         [
+                          //           FormBuilderValidators.required(),
+                          //           FormBuilderValidators.state(),
+                          //         ],
+                          //       ),
+                          //     )),
+                          //     const SizedBox(
+                          //       width: 5,
+                          //     ),
+                          //     Expanded(
+                          //       child: CustomTextField(
+                          //         name: 'country',
+                          //         label: 'Country Code',
+                          //         controller: viewModel.countryController,
+                          //         validator: FormBuilderValidators.compose(
+                          //           [
+                          //             FormBuilderValidators.required(),
+                          //             FormBuilderValidators.uppercase(),
+                          //             FormBuilderValidators.maxLength(2),
+                          //             FormBuilderValidators.alphabetical(),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           const SizedBox(
                             height: 20,
                           ),
@@ -380,53 +415,86 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          CustomTextField(
-                            name: 'issuedState',
-                            label: 'Issued State',
-                            controller: viewModel.issuedStateController,
-                            validator: FormBuilderValidators.compose(
-                              [
-                                FormBuilderValidators.required(),
-                                FormBuilderValidators.state(),
-                              ],
+                          CSCPickerPlus(
+                            layout: Layout.horizontal,
+                            flagState: CountryFlag.SHOW_IN_DROP_DOWN_ONLY,
+                            currentCountry: viewModel.idIssueCountry,
+                            currentState: viewModel.idIssueState,
+                            currentCity: viewModel.idIssueCity,
+                            countryDropdownLabel:
+                                viewModel.idIssueCountry ?? 'Country',
+                            defaultCountry: CscCountry.United_States,
+                            onCountryChanged: (value) {
+                              viewModel.idIssueCountry = value;
+                            },
+                            onStateChanged: (value) {
+                              viewModel.idIssueState = value;
+                            },
+                            onCityChanged: (value) {
+                              viewModel.idIssueCity = value;
+                            },
+                            selectedItemStyle: const TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            dropdownDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: AppColors.primaryColor,
+                              ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: CustomTextField(
-                                  name: 'issuedCountry',
-                                  label: 'Issued Country',
-                                  controller: viewModel.issuedCountryController,
-                                  validator: FormBuilderValidators.compose(
-                                    [
-                                      FormBuilderValidators.required(),
-                                      FormBuilderValidators.country(),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Expanded(
-                                child: CustomTextField(
-                                  name: 'issuedCity',
-                                  label: 'Isssued City',
-                                  controller: viewModel.issuedCityController,
-                                  validator: FormBuilderValidators.compose(
-                                    [
-                                      FormBuilderValidators.required(),
-                                      FormBuilderValidators.city(),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
+                          // CustomTextField(
+                          //   name: 'issuedState',
+                          //   label: 'Issued State',
+                          //   controller: viewModel.issuedStateController,
+                          //   validator: FormBuilderValidators.compose(
+                          //     [
+                          //       FormBuilderValidators.required(),
+                          //       FormBuilderValidators.state(),
+                          //     ],
+                          //   ),
+                          // ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
+                          // Row(
+                          //   children: [
+                          //     Expanded(
+                          //       child: CustomTextField(
+                          //         name: 'issuedCountry',
+                          //         label: 'Issued Country',
+                          //         controller: viewModel.issuedCountryController,
+                          //         validator: FormBuilderValidators.compose(
+                          //           [
+                          //             FormBuilderValidators.required(),
+                          //             FormBuilderValidators.country(),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     const SizedBox(
+                          //       width: 5,
+                          //     ),
+                          //     Expanded(
+                          //       child: CustomTextField(
+                          //         name: 'issuedCity',
+                          //         label: 'Isssued City',
+                          //         controller: viewModel.issuedCityController,
+                          //         validator: FormBuilderValidators.compose(
+                          //           [
+                          //             FormBuilderValidators.required(),
+                          //             FormBuilderValidators.city(),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           const SizedBox(
                             height: 20,
                           ),
@@ -439,6 +507,9 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                                 inputType: InputType.date,
                                 onChanged: (date) {
                                   viewModel.issueDate = date;
+                                  viewModel.expiryDate = date?.add(
+                                    const Duration(days: 365),
+                                  );
                                 },
                                 validator: FormBuilderValidators.compose(
                                   [

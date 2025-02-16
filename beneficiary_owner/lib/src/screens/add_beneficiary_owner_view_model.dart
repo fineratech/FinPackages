@@ -23,9 +23,17 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
   DateTime? _expiryDate;
 
   IdType? _idType;
-  OwnerType? _ownerType;
+  OwnerType? _ownerType = OwnerType.beneficiary;
 
   bool _isLoading = false;
+
+  String? _country;
+  String? _state;
+  String? _city;
+
+  String? _idIssueCountry;
+  String? _idIssueState;
+  String? _idIssueCity;
 
   //Form Key
   final formKey = GlobalKey<FormBuilderState>();
@@ -40,6 +48,13 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
   IdType? get idType => _idType;
   OwnerType? get ownerType => _ownerType;
   bool get isLoading => _isLoading;
+
+  String? get country => _country;
+  String? get state => _state;
+  String? get city => _city;
+  String? get idIssueCountry => _idIssueCountry;
+  String? get idIssueState => _idIssueState;
+  String? get idIssueCity => _idIssueCity;
 
   //Setters
   set dateOfBirth(DateTime? value) {
@@ -72,6 +87,36 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  set country(String? value) {
+    _country = value;
+    notifyListeners();
+  }
+
+  set state(String? value) {
+    _state = value;
+    notifyListeners();
+  }
+
+  set city(String? value) {
+    _city = value;
+    notifyListeners();
+  }
+
+  set idIssueCountry(String? value) {
+    _idIssueCountry = value;
+    notifyListeners();
+  }
+
+  set idIssueState(String? value) {
+    _idIssueState = value;
+    notifyListeners();
+  }
+
+  set idIssueCity(String? value) {
+    _idIssueCity = value;
+    notifyListeners();
+  }
+
   //Controllers
   late TextEditingController percentageOwnerController;
   late TextEditingController firstNameController;
@@ -80,19 +125,19 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
   late TextEditingController snnController;
   late TextEditingController addressController;
   late TextEditingController idController;
-  late TextEditingController issuedStateController;
+  // late TextEditingController issuedStateController;
   late TextEditingController emailController;
   late TextEditingController phoneNumberController;
   late TextEditingController phoneNumberExtController;
   late TextEditingController faxNumberController;
   late TextEditingController aptController;
-  late TextEditingController cityController;
-  late TextEditingController stateController;
-  late TextEditingController countryController;
+  // late TextEditingController cityController;
+  // late TextEditingController stateController;
+  // late TextEditingController countryController;
   late TextEditingController postalCodeController;
   late TextEditingController postalCodeExtensionController;
-  late TextEditingController issuedCountryController;
-  late TextEditingController issuedCityController;
+  // late TextEditingController issuedCountryController;
+  // late TextEditingController issuedCityController;
 
   void initialize() {
     percentageOwnerController = TextEditingController();
@@ -102,19 +147,19 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
     snnController = TextEditingController();
     addressController = TextEditingController();
     idController = TextEditingController();
-    issuedStateController = TextEditingController();
+    // issuedStateController = TextEditingController();
     emailController = TextEditingController();
     phoneNumberController = TextEditingController();
     phoneNumberExtController = TextEditingController();
     faxNumberController = TextEditingController();
     aptController = TextEditingController();
-    cityController = TextEditingController();
-    stateController = TextEditingController();
-    countryController = TextEditingController();
+    // cityController = TextEditingController();
+    // stateController = TextEditingController();
+    // countryController = TextEditingController();
     postalCodeController = TextEditingController();
     postalCodeExtensionController = TextEditingController();
-    issuedCountryController = TextEditingController();
-    issuedCityController = TextEditingController();
+    // issuedCountryController = TextEditingController();
+    // issuedCityController = TextEditingController();
   }
 
   Future<bool> addBeneficiaryOwner(BuildContext context, String merchantId,
@@ -141,9 +186,9 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
         addressController.text,
         aptController
             .text, // Populate this value from the screen. If the apt controller dont have the addressline2 for the apt or suite number, send in "NA"
-        cityController.text,
-        stateController.text,
-        countryController.text,
+        city ?? '-1',
+        state ?? '-1',
+        country ?? '-1',
         postalCodeController.text,
         postalCodeExtensionController.text,
       );
@@ -153,9 +198,9 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
         merchantPayFacDbId,
         idType?.name ?? 'other',
         idController.text,
-        issuedCityController.text,
-        issuedStateController.text,
-        issuedCountryController.text,
+        idIssueCity ?? '-1',
+        idIssueState ?? '-1',
+        idIssueCountry ?? '-1',
         issueDate!.year.toString(),
         issueDate!.month.toString(),
         issueDate!.day.toString(),
@@ -194,19 +239,19 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
     snnController.dispose();
     addressController.dispose();
     idController.dispose();
-    issuedStateController.dispose();
+    // issuedStateController.dispose();
     emailController.dispose();
     phoneNumberController.dispose();
     phoneNumberExtController.dispose();
     faxNumberController.dispose();
     aptController.dispose();
-    cityController.dispose();
-    stateController.dispose();
-    countryController.dispose();
+    // cityController.dispose();
+    // stateController.dispose();
+    // countryController.dispose();
     postalCodeController.dispose();
     postalCodeExtensionController.dispose();
-    issuedCountryController.dispose();
-    issuedCityController.dispose();
+    // issuedCountryController.dispose();
+    // issuedCityController.dispose();
     super.dispose();
   }
 }
