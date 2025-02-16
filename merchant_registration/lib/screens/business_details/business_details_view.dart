@@ -138,7 +138,7 @@ class BusinessDetailsView extends StatelessWidget {
                           onChanged: (value) {
                             if (value != null) {
                               viewModel.billingDescriptor.text =
-                                  viewModel.billingDescriptor.text + value;
+                                  "${viewModel.selectedPayFac?.name ?? ''}____$value";
                             }
                           },
                           validator: FormBuilderValidators.required(),
