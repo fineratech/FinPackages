@@ -135,6 +135,12 @@ class BusinessDetailsView extends StatelessWidget {
                           hintText: 'DBA Name',
                           label: 'DBA Name',
                           controller: viewModel.dbaName,
+                          onChanged: (value) {
+                            if (value != null) {
+                              viewModel.billingDescriptor.text =
+                                  viewModel.billingDescriptor.text + value;
+                            }
+                          },
                           validator: FormBuilderValidators.required(),
                         ),
                         const SizedBox(height: 10),
