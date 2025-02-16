@@ -11,6 +11,7 @@ class PatientModel {
   final String gender;
   final String dob;
   final String locationId;
+  final String patientId;
   PatientModel({
     required this.name,
     required this.ownerId,
@@ -24,6 +25,7 @@ class PatientModel {
     required this.gender,
     required this.dob,
     required this.locationId,
+    this.patientId = '',
   });
 
   PatientModel copyWith({
@@ -39,6 +41,7 @@ class PatientModel {
     String? gender,
     String? dob,
     String? locationId,
+    String? patientId,
   }) {
     return PatientModel(
       name: name ?? this.name,
@@ -53,6 +56,7 @@ class PatientModel {
       gender: gender ?? this.gender,
       dob: dob ?? this.dob,
       locationId: locationId ?? this.locationId,
+      patientId: patientId ?? this.patientId,
     );
   }
 
@@ -87,6 +91,7 @@ class PatientModel {
       gender: map['gender'] as String,
       dob: map['dob'] as String,
       locationId: map['locationId'] as String,
+      patientId: map['patientId'] as String,
     );
   }
 
@@ -104,6 +109,7 @@ class PatientModel {
       gender: map['Gender'] ?? '',
       dob: map['DOB'] ?? '',
       locationId: map['LocationId'] ?? '',
+      patientId: map['PatientId'] ?? '',
     );
   }
 
@@ -122,6 +128,7 @@ class PatientModel {
         other.idIssuingCountry == idIssuingCountry &&
         other.gender == gender &&
         other.dob == dob &&
+        other.patientId == patientId &&
         other.locationId == locationId;
   }
 
@@ -138,6 +145,7 @@ class PatientModel {
         idIssuingCountry.hashCode ^
         gender.hashCode ^
         dob.hashCode ^
+        patientId.hashCode ^
         locationId.hashCode;
   }
 }
