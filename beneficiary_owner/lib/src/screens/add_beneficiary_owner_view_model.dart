@@ -169,7 +169,8 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
       String ownerId = await _apiFunctionsService.registerOwner(
         merchantId,
         merchantPayFacDbId,
-        ownerType?.name ?? "beneficialowner", // beneficial owner, control owner
+        ownerType?.value ??
+            "beneficialowner", // beneficial owner, control owner
         "Principal",
         firstNameController.text,
         lastNameController.text,
