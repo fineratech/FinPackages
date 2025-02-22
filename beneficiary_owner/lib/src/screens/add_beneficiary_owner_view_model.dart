@@ -166,7 +166,7 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
       String merchantPayFacDbId) async {
     isLoading = true;
     try {
-      String ownerId = await _apiFunctionsService.registerOwner(
+      String? ownerId = await _apiFunctionsService.registerOwner(
         merchantId,
         merchantPayFacDbId,
         ownerType?.value ??
@@ -194,30 +194,32 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
         postalCodeExtensionController.text,
       );
 
-      try {
-        await _apiFunctionsService.registerOwnersIssuedIdentity(
-          ownerId,
-          merchantPayFacDbId,
-          idType?.name ?? 'other',
-          idController.text,
-          idIssueCity ?? '-1',
-          idIssueState ?? '-1',
-          idIssueCountry ?? '-1',
-          issueDate!.year.toString(),
-          issueDate!.month.toString(),
-          issueDate!.day.toString(),
-          expiryDate!.year.toString(),
-          expiryDate!.month.toString(),
-          expiryDate!.day.toString(),
-        );
-      } catch (e) {
-        if (context.mounted) {
-          Utils.showErrorToast(
-            context: context,
-            message: "Failed to register Owner's Issued Identity",
+      if (ownerId != null) {
+        try {
+          await _apiFunctionsService.registerOwnersIssuedIdentity(
+            ownerId,
+            merchantPayFacDbId,
+            idType?.name ?? 'other',
+            idController.text,
+            idIssueCity ?? '-1',
+            idIssueState ?? '-1',
+            idIssueCountry ?? '-1',
+            issueDate!.year.toString(),
+            issueDate!.month.toString(),
+            issueDate!.day.toString(),
+            expiryDate!.year.toString(),
+            expiryDate!.month.toString(),
+            expiryDate!.day.toString(),
           );
+        } catch (e) {
+          if (context.mounted) {
+            Utils.showErrorToast(
+              context: context,
+              message: "Failed to register Owner's Issued Identity",
+            );
+          }
+          isLoading = false;
         }
-        isLoading = false;
       }
 
       if (context.mounted) {
