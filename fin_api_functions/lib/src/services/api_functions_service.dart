@@ -804,7 +804,7 @@ class ApiFunctionsService {
     return [];
   }
 
-  Future<dynamic> registerOwner(
+  Future<String?> registerOwner(
     String resourceID,
     String payFacDbMerchantID,
     String ownerType,
@@ -832,7 +832,10 @@ class ApiFunctionsService {
     final String url =
         '${ApiEndPoints.registerOwner}/$resourceID/$payFacDbMerchantID/$ownerType/$title/$firstName/$middleName/$lastName/$phoneNumber/$phoneNumberExt/$faxNumber/$email/$ownershipPercentage/$ssnOrItin/$dobYear/$dobMonth/$dobDay/$addressLine1/$addressLine2/$city/$state/$country/$postalCode/$postalCodeExt';
     var response = await apiService.get(endPoint: url);
-    return response.data;
+    if (response.success) {
+      return response.data['RegisterOwnerResult'];
+    }
+    return null;
   }
 
   Future registerOwnersIssuedIdentity(
