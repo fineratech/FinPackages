@@ -538,18 +538,18 @@ class AddBeneficiaryOwnerView extends StatelessWidget {
                               )),
                             ],
                           ),
-                          const SizedBox(
-                            height: 60,
-                          ),
-                          const Row(
-                            children: [
-                              Icon(Icons.camera_alt),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text('Add Picture'),
-                            ],
-                          ),
+                          // const SizedBox(
+                          //   height: 60,
+                          // ),
+                          // const Row(
+                          //   children: [
+                          //     Icon(Icons.camera_alt),
+                          //     SizedBox(
+                          //       width: 20,
+                          //     ),
+                          //     Text('Add Picture'),
+                          //   ],
+                          // ),
                           const SizedBox(
                             height: 60,
                           ),
