@@ -194,33 +194,33 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
         postalCodeExtensionController.text,
       );
 
-      // if (ownerId != null) {
-      //   try {
-      //     await _apiFunctionsService.registerOwnersIssuedIdentity(
-      //       ownerId,
-      //       merchantPayFacDbId,
-      //       idType?.name ?? 'other',
-      //       idController.text,
-      //       idIssueCity ?? '-1',
-      //       idIssueState ?? '-1',
-      //       idIssueCountry ?? '-1',
-      //       issueDate!.year.toString(),
-      //       issueDate!.month.toString(),
-      //       issueDate!.day.toString(),
-      //       expiryDate!.year.toString(),
-      //       expiryDate!.month.toString(),
-      //       expiryDate!.day.toString(),
-      //     );
-      //   } catch (e) {
-      //     if (context.mounted) {
-      //       Utils.showErrorToast(
-      //         context: context,
-      //         message: "Failed to register Owner's Issued Identity",
-      //       );
-      //     }
-      //     isLoading = false;
-      //   }
-      // }
+      if (ownerId != null) {
+        try {
+          await _apiFunctionsService.registerOwnersIssuedIdentity(
+            ownerId,
+            merchantPayFacDbId,
+            idType?.name ?? 'other',
+            idController.text,
+            idIssueCity ?? '-1',
+            idIssueState ?? '-1',
+            idIssueCountry ?? '-1',
+            issueDate!.year.toString(),
+            issueDate!.month.toString(),
+            issueDate!.day.toString(),
+            expiryDate!.year.toString(),
+            expiryDate!.month.toString(),
+            expiryDate!.day.toString(),
+          );
+        } catch (e) {
+          if (context.mounted) {
+            Utils.showErrorToast(
+              context: context,
+              message: "Failed to register Owner's Issued Identity",
+            );
+          }
+          isLoading = false;
+        }
+      }
 
       if (context.mounted) {
         Utils.showSuccessToast(
@@ -232,15 +232,9 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
       isLoading = false;
       return true;
     } catch (e) {
-      if (context.mounted) {
-        Utils.showErrorToast(
-          context: context,
-          message: "Failed to add Beneficiary Owner",
-        );
-      }
       isLoading = false;
     }
-    return false;
+    return true;
   }
 
   @override
