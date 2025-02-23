@@ -983,4 +983,12 @@ class ApiFunctionsService {
     }
     return [];
   }
+
+  Future<bool> addAppointmentRecord(String appointmentId,
+      String medicalCondition, String prescribedMedication) async {
+    final String url =
+        '${ApiEndPoints.addAppointmentRecord}/$appointmentId/$medicalCondition/$prescribedMedication';
+    var response = await apiService.get(endPoint: url);
+    return response.data['AddAppointmentRecordResult'] ?? false;
+  }
 }
