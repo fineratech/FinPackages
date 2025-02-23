@@ -22,7 +22,7 @@ class AddBeneficiaryOwnerViewModel extends ChangeNotifier {
 
   DateTime? _expiryDate;
 
-  IdType? _idType;
+  IdType? _idType = IdType.passport;
   OwnerType? _ownerType = OwnerType.beneficiary;
 
   bool _isLoading = false;

@@ -17,7 +17,7 @@ class BasicInfoViewModel extends ChangeNotifier {
   final formKey = GlobalKey<FormBuilderState>();
 
   // Fields
-  Gender? _selectedGender;
+  Gender? _selectedGender = Gender.male;
   DateTime? _dateOfBirth;
   List<ServiceModel>? _allServices;
   List<ServiceModel> _selectedServices = [];

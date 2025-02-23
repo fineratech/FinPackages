@@ -7,8 +7,8 @@ class AddBankDetailsViewModel extends ChangeNotifier {
   }
 
   bool _isDefault = false;
-  String? _ddaType;
-  String? _achType;
+  String? _ddaType = 'Checking';
+  String? _achType = 'CommercialChecking';
 
   GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
 

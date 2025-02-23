@@ -55,6 +55,7 @@ class PatientRegistrationScreen extends StatelessWidget {
                       name: 'gender',
                       label: 'Gender',
                       hintText: 'Gender',
+                      initialValue: viewModel.selectedGender,
                       onChanged: (value) {
                         viewModel.selectedGender = value;
                       },
@@ -134,6 +135,7 @@ class PatientRegistrationScreen extends StatelessWidget {
                       name: 'idType',
                       hintText: 'ID Type',
                       label: 'ID Type',
+                      initialValue: viewModel.idType,
                       items: IdType.values
                           .map(
                             (e) => DropdownMenuItem(

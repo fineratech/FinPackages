@@ -15,7 +15,7 @@ class IdInfoViewModel extends ChangeNotifier {
   DateTime? _idExpiryDate;
   File? _idFrontImage;
   File? _idBackImage;
-  IdType? _idType;
+  IdType? _idType = IdType.passport;
 
   //License Fields
   late TextEditingController issuingAuthorityController;

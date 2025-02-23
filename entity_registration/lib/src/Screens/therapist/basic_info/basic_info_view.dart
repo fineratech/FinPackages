@@ -85,6 +85,7 @@ class BasicInfoView extends StatelessWidget {
                               name: 'gender',
                               label: 'Gender',
                               hintText: 'Gender',
+                              initialValue: viewModel.selectedGender,
                               onChanged: (value) {
                                 viewModel.selectedGender = value;
                               },

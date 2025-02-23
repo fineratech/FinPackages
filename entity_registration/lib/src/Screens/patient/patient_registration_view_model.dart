@@ -24,12 +24,12 @@ class PatientRegistrationViewModel extends ChangeNotifier {
   final formKey = GlobalKey<FormBuilderState>();
 
   // Fields
-  Gender? _selectedGender;
+  Gender? _selectedGender = Gender.male;
   DateTime? _dateOfBirth;
   DateTime? _registrationDate;
   DateTime? _idIssueDate;
   DateTime? _idExpiryDate;
-  IdType? _idType;
+  IdType? _idType = IdType.passport;
   String? _country;
   String? _state;
   String? _city;

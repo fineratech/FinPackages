@@ -91,6 +91,7 @@ class CompanyDetailsView extends StatelessWidget {
                         name: 'addressCategory',
                         hintText: "Address Category",
                         label: "Address Sub-Category",
+                        initialValue: viewModel.addressCategory,
                         onChanged: (category) {
                           viewModel.addressCategory = category;
                         },
@@ -109,6 +110,7 @@ class CompanyDetailsView extends StatelessWidget {
                         name: 'addressSubCategory',
                         hintText: "Address Sub-Category",
                         label: "Address Sub-Category",
+                        initialValue: viewModel.addressSubCategory,
                         onChanged: (category) {
                           viewModel.addressSubCategory = category;
                         },

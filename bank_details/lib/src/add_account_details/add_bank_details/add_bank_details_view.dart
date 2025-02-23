@@ -72,6 +72,7 @@ class AddBankDetailsView extends StatelessWidget {
                           name: "ddaType",
                           hintText: "DDA Type",
                           validator: FormBuilderValidators.required(),
+                          initialValue: viewModel.ddaType,
                           onChanged: (value) {
                             viewModel.ddaType = value;
                           },
@@ -97,6 +98,7 @@ class AddBankDetailsView extends StatelessWidget {
                     name: "achType",
                     hintText: "Ach Type",
                     validator: FormBuilderValidators.required(),
+                    initialValue: viewModel.achType,
                     onChanged: (value) {
                       viewModel.achType = value;
                     },

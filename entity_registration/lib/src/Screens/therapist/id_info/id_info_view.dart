@@ -65,6 +65,7 @@ class IdInfoView extends StatelessWidget {
                     name: 'idType',
                     hintText: 'ID Type',
                     label: 'ID Type',
+                    initialValue: viewModel.idType,
                     items: IdType.values
                         .map(
                           (e) => DropdownMenuItem(
