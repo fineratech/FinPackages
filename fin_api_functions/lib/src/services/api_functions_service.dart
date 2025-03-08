@@ -537,7 +537,7 @@ class ApiFunctionsService {
     final String url =
         '${ApiEndPoints.setResourceProperty}/$propertyName/$propertyValue/$resourceID';
     var response = await apiService.get(endPoint: url);
-    return response.data.toString();
+    return response.data['SetResourcePropertyResult'] ?? "";
   }
 
   Future<List<Map<String, dynamic>>> getVehiclesOfACompany(
@@ -559,13 +559,13 @@ class ApiFunctionsService {
     String transactionType,
     String transactionRefId,
     String processor,
-    String environment,
-    String gatewayResponse,
-  ) async {
+    String environment, [
+    String gatewayResponse = "",
+  ]) async {
     final String url =
         '${ApiEndPoints.registerTransaction}/$orderNumber/$transactionType/$transactionRefId/$processor/$environment/$gatewayResponse';
     var response = await apiService.get(endPoint: url);
-    return response.data.toString();
+    return response.data['RegisterTransactionResult'] ?? "";
   }
 
   Future<List<Map<String, dynamic>>> getTransactionByTransactionRefIDProcessor(
@@ -990,5 +990,66 @@ class ApiFunctionsService {
         '${ApiEndPoints.addAppointmentRecord}/$appointmentId/$medicalCondition/$prescribedMedication';
     var response = await apiService.get(endPoint: url);
     return response.data['AddAppointmentRecordResult'] ?? false;
+  }
+
+  Future<List<Map<String, dynamic>>> getAppointmentsRecord(
+      String resourceId) async {
+    final String url = '${ApiEndPoints.getAppointmentsRecord}/$resourceId';
+    var response = await apiService.get(endPoint: url);
+    return response.data['GetAppointmentsRecordResult'] ?? [];
+  }
+
+  Future<bool> provideInsuranceInfo(
+    String primaryOrSecondary,
+    String patientId,
+    String isInsured,
+    String insuranceHolder,
+    String policyHolderName,
+    String insuranceCompany,
+    String idNumber,
+    String groupNumber,
+  ) async {
+    final String url =
+        '${ApiEndPoints.provideInsuranceInfo}/$primaryOrSecondary/$patientId/$isInsured/$insuranceHolder/$policyHolderName/$insuranceCompany/$idNumber/$groupNumber';
+    var response = await apiService.get(endPoint: url);
+    return response.data['ProvideInsuranceInfoResult'] ?? false;
+  }
+
+  Future<String> getIDForNewShoppingCart(String userId) async {
+    final String url = '${ApiEndPoints.getIDForNewShoppingCart}/$userId';
+    var response = await apiService.get(endPoint: url);
+    return response.data['GetIDForNewShoppingCartResult'];
+  }
+
+  Future<int> addNewItemToShoppingCartSimplestComprehensive(
+    String title,
+    String resourceId,
+    String count,
+    String serviceId,
+    String price,
+    String cardId, [
+    String isVAS = 'false',
+  ]) async {
+    final String url =
+        '${ApiEndPoints.addNewItemToShoppingCartSimplestComprehensive}/$title/$resourceId/$count/$serviceId/$price/$cardId/$isVAS';
+    var response = await apiService.get(endPoint: url);
+    return response.data['AddNewItemToShoppingCartSimplestComprehensiveResult'];
+  }
+
+  Future<int> placeOrderDetailedComprehensive(
+    String shoppingCartId,
+    String pickupAddressId,
+    String shippingAddressId,
+    String status,
+    String orderFrequency,
+    String currency,
+    String methodOfPayment, [
+    String bankAccountId = '0',
+    String bankCardId = '0',
+  ]) async {
+    final String url =
+        '${ApiEndPoints.placeOrderDetailedComprehensive}/$shoppingCartId/$pickupAddressId/$shippingAddressId/$status/$orderFrequency/$currency/$methodOfPayment/$bankAccountId/$bankCardId';
+    var response = await apiService.get(endPoint: url);
+    return response.data['PlaceOrderDetailedComprehensiveResult'];
   }
 }

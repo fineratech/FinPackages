@@ -204,4 +204,16 @@ class ApiEndPoints {
 
   static const String addAppointmentRecord =
       "$serviceReferencePathResource/AddAppointmentRecord";
+
+  static const String getAppointmentsRecord =
+      "$serviceReferencePathResource/GetAppointmentsRecord";
+
+  static const String provideInsuranceInfo =
+      "$serviceReferencePathResource/ProvideInsuranceInfo";
+
+  static const String addNewItemToShoppingCartSimplestComprehensive =
+      "$serviceReferencePathResource/AddNewItemToShoppingCartSimplestComprehensive";
+
+  static const String placeOrderDetailedComprehensive =
+      "$serviceReferencePathResource/PlaceOrderDetailedComprehensive";
 }
