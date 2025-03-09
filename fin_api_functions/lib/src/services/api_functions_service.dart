@@ -1049,6 +1049,6 @@ class ApiFunctionsService {
     final String url =
         '${ApiEndPoints.placeOrderDetailedComprehensive}/$shoppingCartId/$pickupAddressId/$shippingAddressId/$status/$orderFrequency/$currency/$methodOfPayment/$bankAccountId/$bankCardId';
     var response = await apiService.get(endPoint: url);
-    return response.data['PlaceOrderDetailedComprehensiveResult'];
+    return response.data;
   }
 }
