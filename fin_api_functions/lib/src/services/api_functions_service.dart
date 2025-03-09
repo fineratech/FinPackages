@@ -1015,7 +1015,7 @@ class ApiFunctionsService {
     return response.data['ProvideInsuranceInfoResult'] ?? false;
   }
 
-  Future<String> getIDForNewShoppingCart(String userId) async {
+  Future<int> getIDForNewShoppingCart(String userId) async {
     final String url = '${ApiEndPoints.getIDForNewShoppingCart}/$userId';
     var response = await apiService.get(endPoint: url);
     return response.data['GetIDForNewShoppingCartResult'];
