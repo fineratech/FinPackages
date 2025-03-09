@@ -1032,7 +1032,7 @@ class ApiFunctionsService {
     final String url =
         '${ApiEndPoints.addNewItemToShoppingCartSimplestComprehensive}/$title/$resourceId/$count/$serviceId/$price/$cardId/$isVAS';
     var response = await apiService.get(endPoint: url);
-    return response.data['AddNewItemToShoppingCartSimplestComprehensiveResult'];
+    return response.data;
   }
 
   Future<int> placeOrderDetailedComprehensive(
