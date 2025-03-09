@@ -1051,4 +1051,12 @@ class ApiFunctionsService {
     var response = await apiService.get(endPoint: url);
     return response.data;
   }
+
+  Future<String> getOrderNumber(
+    String orderId,
+  ) async {
+    final String url = '${ApiEndPoints.getOrderNumber}/$orderId';
+    var response = await apiService.get(endPoint: url);
+    return response.data;
+  }
 }
