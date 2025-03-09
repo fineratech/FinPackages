@@ -565,7 +565,7 @@ class ApiFunctionsService {
     final String url =
         '${ApiEndPoints.registerTransaction}/$orderNumber/$transactionType/$transactionRefId/$processor/$environment/$gatewayResponse';
     var response = await apiService.get(endPoint: url);
-    return response.data['RegisterTransactionResult'] ?? "";
+    return response.data;
   }
 
   Future<List<Map<String, dynamic>>> getTransactionByTransactionRefIDProcessor(
