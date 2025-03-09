@@ -992,8 +992,7 @@ class ApiFunctionsService {
     return response.data['AddAppointmentRecordResult'] ?? false;
   }
 
-  Future<List<Map<String, dynamic>>> getAppointmentsRecord(
-      String resourceId) async {
+  Future<List<dynamic>> getAppointmentsRecord(String resourceId) async {
     final String url = '${ApiEndPoints.getAppointmentsRecord}/$resourceId';
     var response = await apiService.get(endPoint: url);
     return response.data['GetAppointmentsRecordResult'] ?? [];
