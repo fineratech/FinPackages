@@ -1057,6 +1057,6 @@ class ApiFunctionsService {
   ) async {
     final String url = '${ApiEndPoints.getOrderNumber}/$orderId';
     var response = await apiService.get(endPoint: url);
-    return response.data;
+    return response.data["GetOrderNumberResult"];
   }
 }
