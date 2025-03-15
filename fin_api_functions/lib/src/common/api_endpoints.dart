@@ -216,4 +216,7 @@ class ApiEndPoints {
 
   static const String placeOrderDetailedComprehensive =
       "$serviceReferencePathResource/PlaceOrderDetailedComprehensive";
+
+  static const String getNotificationForLastNDaysAndHours =
+      "$serviceReferencePathResource/GetNotificationForLastNDaysAndHours";
 }

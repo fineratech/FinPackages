@@ -1059,4 +1059,15 @@ class ApiFunctionsService {
     var response = await apiService.get(endPoint: url);
     return response.data["GetOrderNumberResult"];
   }
+
+  Future<List<dynamic>> getNotificationForLastNDaysAndHours(
+    String customerId,
+    String days,
+    String hours,
+  ) async {
+    final String url =
+        '${ApiEndPoints.getNotificationForLastNDaysAndHours}/$customerId/$days/$hours';
+    var response = await apiService.get(endPoint: url);
+    return response.data['GetNotificationForLastNDaysAndHoursResult'] ?? [];
+  }
 }
