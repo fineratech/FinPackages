@@ -1,4 +1,6 @@
 import 'package:csc_picker_plus/csc_picker_plus.dart';
+import 'package:entity_registration/src/Screens/patient/insurance_info/insurance_info_screen.dart';
+import 'package:entity_registration/src/Screens/patient/medical_history/medical_history_screen.dart';
 import 'package:entity_registration/src/Screens/patient/patient_registration_view_model.dart';
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
@@ -260,7 +262,30 @@ class PatientRegistrationScreen extends StatelessWidget {
                                     patient: patientModel,
                                   );
                                   if (patientId != -1 && patientId != null) {
-                                    onDone(patientModel);
+                                    if (context.mounted) {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              InsuranceInfoScreen(
+                                            patientId: patientId.toString(),
+                                            onDone: (_) {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MedicalHistoryScreen(
+                                                    patientId:
+                                                        patientId.toString(),
+                                                    onDone: (_) {
+                                                      patientId.toString();
+                                                    },
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    }
                                   }
                                 }
                               },

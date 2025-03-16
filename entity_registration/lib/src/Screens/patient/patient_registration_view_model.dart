@@ -141,7 +141,7 @@ class PatientRegistrationViewModel extends ChangeNotifier {
       locationId,
     );
     isLoading = false;
-    if (patientId case -1 || null) {
+    if (patientId case -1 || null || -2) {
       if (context.mounted) {
         Utils.showErrorToast(
           context: context,
