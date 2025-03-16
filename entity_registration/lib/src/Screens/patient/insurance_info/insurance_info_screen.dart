@@ -138,7 +138,9 @@ class InsuranceInfoScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: CustomButton(
-                      child: const Text('Submit'),
+                      child: viewModel.isLoading
+                          ? const CircularProgressIndicator.adaptive()
+                          : const Text('Submit'),
                       onPressed: () => viewModel.submitForm(
                         context: context,
                         onDone: onDone,
