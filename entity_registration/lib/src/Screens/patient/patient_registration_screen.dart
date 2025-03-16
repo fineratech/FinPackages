@@ -276,7 +276,7 @@ class PatientRegistrationScreen extends StatelessWidget {
                                                     patientId:
                                                         patientId.toString(),
                                                     onDone: (_) {
-                                                      patientId.toString();
+                                                      onDone(patientModel);
                                                     },
                                                   ),
                                                 ),

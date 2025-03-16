@@ -16,13 +16,13 @@ class MedicalHistoryViewModel extends ChangeNotifier {
   }
 
   List<String> allAllergies = [
-    "None/Known Allergies",
+    "No Known Allergies",
     "Adhesive Tape",
     "Anesthesia",
     "Aspirin",
     "Codeine",
     "Dairy Products",
-    "Iodine/Shellfish/Contrast",
+    "Iodine",
     "Latex",
     "Morphine",
     "Penicillin"
@@ -55,7 +55,7 @@ class MedicalHistoryViewModel extends ChangeNotifier {
     "Cancer",
     "Cardiac arrest",
     "Celiac disease",
-    "Drug/alcohol abuse",
+    "Drug or alcohol abuse",
     "Erectile dysfunction",
     "Fibromyalgia",
     "Gerd",
@@ -65,7 +65,7 @@ class MedicalHistoryViewModel extends ChangeNotifier {
     "Irritable bowel syndrome",
     "Kidney problems",
     "Menopause",
-    "Migraines/headaches",
+    "Migraines",
     "Neuropathy",
     "Onychomycosis",
     "Organ injury",
