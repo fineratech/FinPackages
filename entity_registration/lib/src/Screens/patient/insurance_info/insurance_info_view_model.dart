@@ -2,6 +2,7 @@ import 'package:fin_api_functions/fin_api_functions.dart';
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:logger/logger.dart';
 
 class InsuranceInfoViewModel extends ChangeNotifier {
   InsuranceInfoViewModel(
@@ -71,6 +72,7 @@ class InsuranceInfoViewModel extends ChangeNotifier {
         isLoading = false;
         onDone(null);
       } catch (e) {
+        Logger().e("Error providing insurance info: $e");
         isLoading = false;
         if (context.mounted) {
           Utils.showErrorToast(
