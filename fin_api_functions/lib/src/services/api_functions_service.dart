@@ -1011,7 +1011,7 @@ class ApiFunctionsService {
     final String url =
         '${ApiEndPoints.provideInsuranceInfo}/$primaryOrSecondary/$patientId/$isInsured/$insuranceHolder/$policyHolderName/$insuranceCompany/$idNumber/$groupNumber';
     var response = await apiService.get(endPoint: url);
-    return response.data['ProvideInsuranceInfoResult'] ?? false;
+    return bool.tryParse(response.data.toString()) ?? false;
   }
 
   Future<int> getIDForNewShoppingCart(String userId) async {
