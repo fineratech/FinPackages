@@ -127,6 +127,12 @@ class MedicalHistoryViewModel extends ChangeNotifier {
       ));
       await Future.wait(futures);
       isLoading = false;
+      if (context.mounted) {
+        Utils.showSuccessToast(
+          context: context,
+          message: "Medical History updated successfully",
+        );
+      }
       onDone(null);
     } catch (e) {
       isLoading = false;
