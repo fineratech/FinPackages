@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   
-  syncfusion_flutter_signaturepad: ^29.1.38
+  syncfusion_flutter_signaturepad: ^25.2.4
   fin_api_functions:
     git:
       url: https://github.com/fineratech/FinPackages.git
