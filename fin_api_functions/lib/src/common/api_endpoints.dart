@@ -219,4 +219,7 @@ class ApiEndPoints {
 
   static const String getNotificationForLastNDaysAndHours =
       "$serviceReferencePathResource/GetNotificationForLastNDaysAndHours";
+
+  static const String getAgreementTemplate =
+      "$serviceReferencePathResource/GetAgreementTemplate";
 }

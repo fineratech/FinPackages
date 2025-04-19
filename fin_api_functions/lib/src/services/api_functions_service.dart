@@ -1070,4 +1070,14 @@ class ApiFunctionsService {
     var response = await apiService.get(endPoint: url);
     return response.data['GetNotificationForLastNDaysAndHoursResult'] ?? [];
   }
+
+  Future<String> getAgreementTemplate(
+    String
+        type, //GeneralLiabilityWaiver,VehicleAccidentLiabilityWaiver,ActivityParticipationLiabilityWaiver,PropertyDamageLiabilityWaiver,PersonalInjuryLiabilityWaiver
+  ) async {
+    final String url = '${ApiEndPoints.getAgreementTemplate}/$type';
+    var response = await apiService.get(endPoint: url);
+
+    return response.data['GetAgreementTemplateResult'];
+  }
 }
