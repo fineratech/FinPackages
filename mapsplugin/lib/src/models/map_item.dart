@@ -16,6 +16,7 @@ class MapItem with ClusterItem {
   final String logo;
   final ItemType type;
   final bool isSelected;
+  final String? description;
   MapItem({
     required this.id,
     required this.name,
@@ -26,6 +27,7 @@ class MapItem with ClusterItem {
     required this.logo,
     required this.type,
     required this.isSelected,
+    this.description,
   });
 
   MapItem copyWith({
@@ -38,6 +40,7 @@ class MapItem with ClusterItem {
     String? logo,
     bool? isSelected,
     ItemType? type,
+    String? description,
   }) {
     return MapItem(
       id: id ?? this.id,
@@ -49,6 +52,7 @@ class MapItem with ClusterItem {
       logo: logo ?? this.logo,
       isSelected: isSelected ?? this.isSelected,
       type: type ?? this.type,
+      description: description ?? this.description,
     );
   }
 
@@ -63,6 +67,7 @@ class MapItem with ClusterItem {
       'logo': logo,
       'isSelected': isSelected,
       'type': type.index,
+      'description': description,
     };
   }
 
@@ -77,6 +82,7 @@ class MapItem with ClusterItem {
       logo: map['logo'] as String,
       isSelected: map['isSelected'] as bool,
       type: ItemType.values[map['type'] as int],
+      description: map['description'] as String?,
     );
   }
 

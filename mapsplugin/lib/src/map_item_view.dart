@@ -71,24 +71,24 @@ class MapItemView extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                const Text(
-                  "4.6",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Icon(
-                  Icons.star,
-                  color: Colors.yellow,
-                ),
+                // const Text(
+                //   "4.6",
+                //   style: TextStyle(
+                //     fontSize: 16,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
+                // const Icon(
+                //   Icons.star,
+                //   color: Colors.yellow,
+                // ),
               ],
             ),
             const SizedBox(
               height: 14,
             ),
             Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " * 2,
+              item.description ?? '',
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

@@ -166,11 +166,7 @@ class _MapsViewState extends State<MapsView> {
           iconColor = Colors.red;
         }
 
-        var imageUrl = firstLocation.type == ItemType.car
-            ? AppConstants.car
-            : firstLocation.type == ItemType.bike
-                ? AppConstants.bike
-                : AppConstants.truck;
+        var imageUrl = firstLocation.logo;
 
         var iconBytes = await createMarkerIcon(
           firstLocation.name,

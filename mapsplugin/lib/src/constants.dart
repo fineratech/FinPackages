@@ -178,12 +178,12 @@ class AppConstants {
 ]
   ''';
 
-  static String car =
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlai-BtBmZ9BLTdxmyvWuu0buI9K6oRzX6YTAk8Ax0SEk0GjHWflWaYy0XalEwE9-hsOk&usqp=CAU';
+  // static String car =
+  //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlai-BtBmZ9BLTdxmyvWuu0buI9K6oRzX6YTAk8Ax0SEk0GjHWflWaYy0XalEwE9-hsOk&usqp=CAU';
 
-  static const String truck =
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8NxNsMMZHzSyFzgBwLL0LHVgJmPwnPtwOBRBr792MQIS7A996gKlWuLw2ALL8iTTPWYo&usqp=CAU';
+  // static const String truck =
+  //     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8NxNsMMZHzSyFzgBwLL0LHVgJmPwnPtwOBRBr792MQIS7A996gKlWuLw2ALL8iTTPWYo&usqp=CAU';
 
-  static const String bike =
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWhZqBudMZD0I3rfVk8T8Q13PxUK5Bm2xeqUAhSMK-Nw&s";
+  // static const String bike =
+  //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWhZqBudMZD0I3rfVk8T8Q13PxUK5Bm2xeqUAhSMK-Nw&s";
 }
