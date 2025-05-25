@@ -11,8 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   
-  google_maps_flutter: ^2.2.8
-  google_maps_cluster_manager: ^3.1.0
+  google_maps_flutter: 2.6.0
+  google_maps_cluster_manager: 3.1.0
   flutter_svg: ^2.0.10+1
   cached_network_image: ^3.3.1
   flutter_cache_manager: ^3.3.1
@@ -20,6 +20,12 @@ dependencies:
     git:
       url: https://github.com/fineratech/FinPackages.git
       path: fin_commons
+
+
+dependency_overrides:
+  google_maps_flutter_platform_interface: 2.5.0
+  google_maps_flutter_ios: 2.5.0
+  google_maps_flutter_android: 2.7.0
 
 dev_dependencies:
   flutter_test:

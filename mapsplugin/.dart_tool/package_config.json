@@ -3,9 +3,9 @@
   "packages": [
     {
       "name": "args",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/args-2.4.2",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/args-2.7.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.3"
     },
     {
       "name": "async",
@@ -21,19 +21,19 @@
     },
     {
       "name": "cached_network_image",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/cached_network_image-3.3.1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/cached_network_image-3.4.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "cached_network_image_platform_interface",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/cached_network_image_platform_interface-4.0.0",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/cached_network_image_platform_interface-4.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "cached_network_image_web",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/cached_network_image_web-1.1.1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/cached_network_image_web-1.3.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -69,15 +69,15 @@
     },
     {
       "name": "crypto",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/crypto-3.0.3",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/crypto-3.0.6",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.4"
     },
     {
       "name": "csslib",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/csslib-1.0.0",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/csslib-1.0.2",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.1"
     },
     {
       "name": "equatable",
@@ -93,21 +93,21 @@
     },
     {
       "name": "ffi",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/ffi-2.1.2",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/ffi-2.1.3",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
     {
       "name": "file",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/file-7.0.0",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/file-7.0.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "file_picker",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/file_picker-8.0.5",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/file_picker-8.3.7",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.4"
     },
     {
       "name": "file_selector_linux",
@@ -135,15 +135,15 @@
     },
     {
       "name": "fin_commons",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/git/FinPackages-04e20fa7e20bac8c78683b9f1250a8886fec25b4/fin_commons",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/git/FinPackages-e84fd3e881e6e97dc93e3ddee34086427dc44647/fin_commons",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
     {
       "name": "fixnum",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/fixnum-1.1.0",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/fixnum-1.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.1"
     },
     {
       "name": "flutter",
@@ -153,9 +153,9 @@
     },
     {
       "name": "flutter_cache_manager",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/flutter_cache_manager-3.3.1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/flutter_cache_manager-3.4.1",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_form_builder",
@@ -177,15 +177,15 @@
     },
     {
       "name": "flutter_plugin_android_lifecycle",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.28",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.6"
     },
     {
       "name": "flutter_svg",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/flutter_svg-2.0.10+1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/flutter_svg-2.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.4"
     },
     {
       "name": "flutter_test",
@@ -207,9 +207,9 @@
     },
     {
       "name": "google_maps",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/google_maps-7.1.0",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/google_maps-8.1.1",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.4"
     },
     {
       "name": "google_maps_cluster_manager",
@@ -231,7 +231,7 @@
     },
     {
       "name": "google_maps_flutter_ios",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/google_maps_flutter_ios-2.5.2",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/google_maps_flutter_ios-2.5.0",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -243,27 +243,27 @@
     },
     {
       "name": "google_maps_flutter_web",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/google_maps_flutter_web-0.5.6+2",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/google_maps_flutter_web-0.5.12",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.4"
     },
     {
       "name": "html",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/html-0.15.4",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/html-0.15.6",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.2"
     },
     {
       "name": "http",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/http-1.2.1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/http-1.4.0",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.4"
     },
     {
       "name": "http_parser",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/http_parser-4.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.4"
     },
     {
       "name": "iconsax_flutter",
@@ -344,18 +344,6 @@
       "languageVersion": "3.0"
     },
     {
-      "name": "js",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/js-0.6.7",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
-    },
-    {
-      "name": "js_wrapping",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/js_wrapping-0.7.4",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "leak_tracker",
       "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/leak_tracker-10.0.7",
       "packageUri": "lib/",
@@ -405,9 +393,9 @@
     },
     {
       "name": "octo_image",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/octo_image-2.0.0",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/octo_image-2.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "path",
@@ -417,9 +405,9 @@
     },
     {
       "name": "path_parsing",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/path_parsing-1.0.1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/path_parsing-1.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.3"
     },
     {
       "name": "path_provider",
@@ -435,9 +423,9 @@
     },
     {
       "name": "path_provider_foundation",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.2",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.3"
     },
     {
       "name": "path_provider_linux",
@@ -453,9 +441,9 @@
     },
     {
       "name": "path_provider_windows",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/path_provider_windows-2.2.1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.2"
     },
     {
       "name": "pausable_timer",
@@ -471,9 +459,9 @@
     },
     {
       "name": "platform",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/platform-3.1.4",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/platform-3.1.6",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "plugin_platform_interface",
@@ -483,7 +471,7 @@
     },
     {
       "name": "rxdart",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/rxdart-0.27.7",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/rxdart-0.28.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -513,15 +501,33 @@
     },
     {
       "name": "sqflite",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/sqflite-2.3.3",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/sqflite-2.4.1",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "sqflite_android",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/sqflite_android-2.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
     },
     {
       "name": "sqflite_common",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/sqflite_common-2.5.4",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/sqflite_common-2.5.4+6",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "sqflite_darwin",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/sqflite_darwin-2.4.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "sqflite_platform_interface",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/sqflite_platform_interface-2.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
     },
     {
       "name": "stack_trace",
@@ -537,9 +543,9 @@
     },
     {
       "name": "stream_transform",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/stream_transform-2.1.0",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/stream_transform-2.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.1"
     },
     {
       "name": "string_scanner",
@@ -549,9 +555,9 @@
     },
     {
       "name": "synchronized",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/synchronized-3.1.0+1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/synchronized-3.3.0+3",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.5"
     },
     {
       "name": "term_glyph",
@@ -573,9 +579,9 @@
     },
     {
       "name": "typed_data",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/typed_data-1.3.2",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/typed_data-1.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.5"
     },
     {
       "name": "uuid",
@@ -585,21 +591,21 @@
     },
     {
       "name": "vector_graphics",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/vector_graphics-1.1.11+1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/vector_graphics-1.1.18",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.4"
     },
     {
       "name": "vector_graphics_codec",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/vector_graphics_codec-1.1.11+1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/vector_graphics_codec-1.1.13",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.4"
     },
     {
       "name": "vector_graphics_compiler",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.11+1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/vector_graphics_compiler-1.1.17",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.6"
     },
     {
       "name": "vector_math",
@@ -615,21 +621,21 @@
     },
     {
       "name": "web",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/web-0.5.1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/web-1.1.1",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.4"
     },
     {
       "name": "win32",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/win32-5.4.0",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/win32-5.10.1",
       "packageUri": "lib/",
-      "languageVersion": "3.3"
+      "languageVersion": "3.5"
     },
     {
       "name": "xdg_directories",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/xdg_directories-1.0.4",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/xdg_directories-1.1.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.3"
     },
     {
       "name": "xml",
@@ -644,7 +650,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2025-04-27T12:07:02.208741Z",
+  "generated": "2025-05-25T13:28:53.695486Z",
   "generator": "pub",
   "generatorVersion": "3.6.0",
   "flutterRoot": "file:///Users/tentwenty/fvm/versions/3.27.0",
