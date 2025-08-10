@@ -6,7 +6,8 @@ enum MerchantType {
   grocery,
   restaurant,
   trucking,
-  realEstate,
+  // ignore: constant_identifier_names
+  PropertyManagement,
 
   other;
 
@@ -22,8 +23,8 @@ enum MerchantType {
         return 'Food_and_beverages';
       case MerchantType.trucking:
         return 'Transportation_and_logistics';
-      case MerchantType.realEstate:
-        return 'Real_estate';
+      case MerchantType.PropertyManagement:
+        return 'SubMerchant';
       case MerchantType.other:
         return 'Other';
     }
@@ -41,7 +42,7 @@ enum MerchantType {
         return EntityType.foodMenu;
       case MerchantType.trucking:
         return EntityType.vehicle;
-      case MerchantType.realEstate:
+      case MerchantType.PropertyManagement:
         return EntityType.realEstate;
       case MerchantType.other:
         return EntityType.other;
