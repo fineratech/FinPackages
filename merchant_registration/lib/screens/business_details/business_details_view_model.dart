@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:bank_details/bank_details.dart';
+import 'package:beneficiary_owner/beneficiary_owner.dart';
 import 'package:fin_api_functions/fin_api_functions.dart';
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
@@ -131,18 +133,43 @@ class BusinessDetailsViewModel extends ChangeNotifier {
         isLoading = false;
 
         if (context.mounted) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => AddServicesView(
-                type: type,
-                payFacMerchId: payFacMerchId,
-                merchantId: merchantId,
-                userId: userId,
-                locationId: locationId,
-                onDone: onDone,
+          if (merchant.type == MerchantType.PropertyManagement) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AddBankAccount(
+                  onDone: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => AddBeneficiaryOwnerView(
+                          merchantPayFacDbId: payFacMerchId.toString(),
+                          merchantId: merchantId.toString(),
+                          onDone: () {
+                            onDone();
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  userId: userId,
+                  mID: merchantId,
+                  locationId: locationId.toString(),
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => AddServicesView(
+                  type: type,
+                  payFacMerchId: payFacMerchId,
+                  merchantId: merchantId,
+                  userId: userId,
+                  locationId: locationId,
+                  onDone: onDone,
+                ),
+              ),
+            );
+          }
         }
       } else {
         if (context.mounted) {
