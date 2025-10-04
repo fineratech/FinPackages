@@ -1,0 +1,25 @@
+name: ai_chat_assistant
+description: A Flutter package for AI-powered chat functionality with OpenAI integration
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dio: ^5.4.0
+  logger: ^2.6.0
+  fin_api_functions:
+    git:
+      url: https://github.com/fineratech/FinPackages.git
+      path: fin_api_functions
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
