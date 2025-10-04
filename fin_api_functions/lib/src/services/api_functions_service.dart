@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 import '../common/api_endpoints.dart';
+import '../models/real_estate_model.dart';
 
 class ApiFunctionsService {
   ApiFunctionsService({
@@ -1079,5 +1080,31 @@ class ApiFunctionsService {
     var response = await apiService.get(endPoint: url);
 
     return response.data['GetAgreementTemplateResult'];
+  }
+
+  // Real Estate APIs
+  /// Get total outstanding balance for a user
+  Future<String> getTotalOutstandingBalance(String userId) async {
+    final String url = '${ApiEndPoints.totalOutstandingBalance}/$userId';
+    var response = await apiService.get(endPoint: url);
+
+    if (response.success) {
+      return response.data['TotalOutstandingBalanceResult']?.toString() ?? '0';
+    }
+    throw Exception('Failed to get total outstanding balance');
+  }
+
+  /// Get all real estate properties for a sub-merchant
+  Future<List<RealEstateProperty>> getAllRealEstate(String subMerchantId) async {
+    final String url = '${ApiEndPoints.getAllRealEstate}/$subMerchantId';
+    var response = await apiService.get(endPoint: url);
+
+    if (response.success) {
+      final List<dynamic> rawData = response.data['GetAllRealEstateResult'] ?? [];
+      return rawData
+          .map((item) => RealEstateProperty.fromJson(item as Map<String, dynamic>))
+          .toList();
+    }
+    throw Exception('Failed to get all real estate');
   }
 }
