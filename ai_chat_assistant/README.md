@@ -23,105 +23,106 @@ dependencies:
 
 ## Usage
 
-### 1. Initialize with API Key and Project Type
+### Simple Integration
 
-In your main app initialization, configure the chat assistant with your OpenAI API key and project type:
-
-```dart
-import 'package:ai_chat_assistant/ai_chat_assistant.dart';
-import 'package:fin_api_functions/fin_api_functions.dart';
-import 'package:get/get.dart';
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize ApiFunctionsService first
-  Get.put(ApiFunctionsService(logger: Logger()));
-
-  // Initialize AI Chat Assistant with project type
-  ChatConfig.initialize(
-    apiKey: 'your-openai-api-key-here',
-    projectType: ProjectType.realEstate,
-  );
-
-  runApp(MyApp());
-}
-```
-
-### 2. Create a Chat Config Helper
-
-Create a configuration helper in your app:
+The package exports a single `FloatingChatButton` widget that handles all configuration internally. Simply add it to your widget tree with all required configuration:
 
 ```dart
 import 'package:ai_chat_assistant/ai_chat_assistant.dart';
 import 'package:fin_api_functions/fin_api_functions.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ChatConfig {
-  static bool _initialized = false;
-  static ChatAgentService? _chatService;
-
-  static void initialize({
-    required String apiKey,
-    required ProjectType projectType,
-  }) {
-    if (_initialized) return;
-
-    OpenAIConfig.setApiKey(apiKey);
-    final apiFunctionsService = Get.find<ApiFunctionsService>();
-
-    _chatService = ChatAgentService(
-      projectType: projectType,
-      apiFunctionsService: apiFunctionsService,
-    );
-
-    _initialized = true;
-  }
-
-  static ChatAgentService getChatService() {
-    if (!_initialized || _chatService == null) {
-      throw Exception('ChatConfig not initialized');
-    }
-    return _chatService!;
-  }
-}
-```
-
-### 3. Add the Floating Chat Button
-
-Create a wrapper widget for the floating chat button:
-
-```dart
-import 'package:ai_chat_assistant/ai_chat_assistant.dart';
-
-class AppFloatingChatButton extends StatelessWidget {
-  const AppFloatingChatButton({super.key});
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FloatingChatButton(
-      chatService: ChatConfig.getChatService(),
-      primaryColor: Colors.black,
-      secondaryColor: Colors.grey,
-      iconColor: Colors.white,
-      backgroundColor: Colors.white,
-      appBarColor: Colors.white,
-      bottom: 100,
-      right: 20,
+    // Get your API functions service instance
+    final apiFunctionsService = Get.find<ApiFunctionsService>();
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('My App')),
+      body: Stack(
+        children: [
+          // Your main content here
+          Center(child: Text('Welcome to my app')),
+          
+          // Add the floating chat button
+          FloatingChatButton(
+            apiKey: 'your-openai-api-key-here',
+            projectType: ProjectType.realEstate,
+            apiFunctionsService: apiFunctionsService,
+            // Optional customizations
+            primaryColor: Colors.blue,
+            secondaryColor: Colors.blueAccent,
+            iconColor: Colors.white,
+            bottom: 100,
+            right: 20,
+            backgroundColor: Colors.white,
+            appBarColor: Colors.blue,
+          ),
+        ],
+      ),
     );
   }
 }
 ```
 
-Use it in your screens:
+### Configuration Options
+
+#### Required Parameters
+
+- **`apiKey`** (String): Your OpenAI API key
+- **`projectType`** (ProjectType): The type of project (e.g., `ProjectType.realEstate`)
+- **`apiFunctionsService`** (ApiFunctionsService): Service for backend API operations
+
+#### Optional Parameters
+
+- **`config`** (ChatAgentConfig): Advanced configuration options:
+  - `getCurrentUser`: Function to get current user information
+  - `customSystemPrompt`: Override the default system prompt
+  - `customWelcomeMessage`: Override the default welcome message
+  - `customChatTitle`: Override the default chat title
+
+- **Visual Customization**:
+  - `primaryColor`: Primary color for the button gradient
+  - `secondaryColor`: Secondary color for the button gradient
+  - `iconColor`: Color of the chat icon
+  - `bottom`: Bottom position of the button (default: 100)
+  - `right`: Right position of the button (default: 20)
+  - `backgroundColor`: Background color of the chat screen
+  - `appBarColor`: App bar color of the chat screen
+
+### Advanced Configuration Example
 
 ```dart
-Stack(
-  children: [
-    // Your existing content
-    const AppFloatingChatButton(),
-  ],
-)
+FloatingChatButton(
+  apiKey: 'your-openai-api-key-here',
+  projectType: ProjectType.realEstate,
+  apiFunctionsService: apiFunctionsService,
+  config: ChatAgentConfig(
+    getCurrentUser: () async {
+      // Return current user data
+      return {
+        'id': '123',
+        'name': 'John Doe',
+        'email': 'john@example.com',
+      };
+    },
+    customSystemPrompt: 'You are a helpful assistant specialized in...',
+    customWelcomeMessage: 'Welcome! How can I help you today?',
+    customChatTitle: 'My Custom Chat',
+  ),
+  primaryColor: const Color(0xFF1976D2),
+  secondaryColor: const Color(0xFF42A5F5),
+  iconColor: Colors.white,
+  bottom: 80,
+  right: 16,
+  backgroundColor: const Color(0xFFF5F5F5),
+  appBarColor: const Color(0xFF1976D2),
+);
+
 ```
 
 ## Project Types
@@ -140,53 +141,92 @@ Each project type automatically configures:
 - Chat title
 - Function definitions from `fin_api_functions`
 
-## Customization
-
-### Chat Screen Colors
+## Complete Example
 
 ```dart
-ChatScreen(
-  chatService: ChatConfig.getChatService(),
-  backgroundColor: Colors.grey[100],
-  appBarColor: Colors.white,
-  primaryColor: Colors.black,
-  secondaryColor: Colors.grey,
-  onlineStatus: 'Online',
-)
-```
+import 'package:flutter/material.dart';
+import 'package:ai_chat_assistant/ai_chat_assistant.dart';
+import 'package:fin_api_functions/fin_api_functions.dart';
+import 'package:get/get.dart';
 
-### Adding New Project Types
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize your API functions service
+  Get.put(ApiFunctionsService(logger: Logger()));
+  
+  runApp(const MyApp());
+}
 
-To add a new project type:
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-1. Add to the `ProjectType` enum in `project_type.dart`
-2. Add cases to the extension methods for:
-   - `systemPrompt`
-   - `welcomeMessage`
-   - `chatTitle`
-3. Add function definitions in `ProjectFunctionProvider`
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'AI Chat Demo',
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final apiFunctionsService = Get.find<ApiFunctionsService>();
+    
+    return Scaffold(
+      appBar: AppBar(title: const Text('My App')),
+      body: Stack(
+        children: [
+          // Your app content
+          const Center(child: Text('Hello World')),
+          
+          // AI Chat Assistant
+          FloatingChatButton(
+            apiKey: 'your-openai-api-key-here',
+            projectType: ProjectType.realEstate,
+            apiFunctionsService: apiFunctionsService,
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 ## Architecture
+
+The package is designed with a simple, self-contained architecture:
 
 ```
 ai_chat_assistant/
 ├── lib/
 │   ├── src/
 │   │   ├── config/
-│   │   │   ├── openai_config.dart       # OpenAI settings
-│   │   │   └── project_type.dart        # Project configurations
+│   │   │   ├── openai_config.dart       # OpenAI settings (internal)
+│   │   │   ├── project_type.dart        # Project configurations (exported)
+│   │   │   └── chat_agent_config.dart   # Chat config options (exported)
 │   │   ├── models/
-│   │   │   └── chat_message.dart        # Message data model
+│   │   │   └── chat_message.dart        # Message data model (internal)
 │   │   ├── services/
-│   │   │   ├── chat_agent_service.dart  # Main service
-│   │   │   ├── openai_service.dart      # OpenAI API integration
-│   │   │   └── project_function_provider.dart  # Project functions
+│   │   │   ├── chat_agent_service.dart  # Main service (internal)
+│   │   │   ├── openai_service.dart      # OpenAI API integration (internal)
+│   │   │   └── project_function_provider.dart  # Project functions (internal)
 │   │   └── ui/
-│   │       ├── chat_screen.dart         # Chat interface
-│   │       └── floating_chat_button.dart # FAB widget
-│   └── ai_chat_assistant.dart           # Public exports
+│   │       ├── chat_screen.dart         # Chat interface (internal)
+│   │       └── floating_chat_button.dart # Main widget (exported)
+│   └── ai_chat_assistant.dart           # Public API - exports only FloatingChatButton
 └── pubspec.yaml
 ```
+
+### Key Design Principles
+
+1. **Single Entry Point**: The package exports only `FloatingChatButton` widget - all functionality is accessed through this single component
+2. **Self-Contained**: All initialization and configuration happens within the widget - no separate initialization step required
+3. **Type-Safe Configuration**: Uses strongly-typed enums and configuration objects
+4. **Internal Implementation**: All services, models, and internal screens are kept private to the package
 
 ## License
 

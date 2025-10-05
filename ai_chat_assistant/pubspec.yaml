@@ -1,6 +1,6 @@
 name: ai_chat_assistant
-description: A Flutter package for AI-powered chat functionality with OpenAI integration
-version: 1.0.0
+description: A Flutter package for AI-powered chat functionality with OpenAI integration. Simple integration with a single FloatingChatButton widget.
+version: 2.0.0
 publish_to: 'none'
 
 environment:

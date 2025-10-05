@@ -1,5 +1,7 @@
-import 'package:ai_chat_assistant/ai_chat_assistant.dart';
 import 'package:fin_api_functions/fin_api_functions.dart';
+import '../config/project_type.dart';
+import '../config/chat_agent_config.dart';
+import 'openai_service.dart';
 
 /// Project-specific function provider that integrates with fin_api_functions
 class ProjectFunctionProvider implements FunctionDefinitionsProvider {
