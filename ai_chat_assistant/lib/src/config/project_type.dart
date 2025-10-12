@@ -1,6 +1,7 @@
 /// Project types supported by the AI chat assistant
 enum ProjectType {
   realEstate,
+  shifa,
   // Add more project types as needed
   // lumber,
   // parking,
@@ -14,6 +15,8 @@ extension ProjectTypeExtension on ProjectType {
     switch (this) {
       case ProjectType.realEstate:
         return 'Real Estate Management';
+      case ProjectType.shifa:
+        return 'Shifa Healthcare';
     }
   }
 
@@ -33,6 +36,14 @@ extension ProjectTypeExtension on ProjectType {
 Always be polite, professional, and provide accurate information. When users ask about their data, use the appropriate functions to retrieve real-time information. If you need to schedule maintenance or perform actions that require specific details, ask the user for the necessary information.
 
 Current context: You are assisting a logged-in user with their real estate portfolio management.''';
+      case ProjectType.shifa:
+        return '''You are a helpful healthcare assistant for a medical app. You can help users with:
+1. Scheduling appointments with doctors
+2. Viewing and managing their medical records
+3. Checking current schedules and upcoming appointments
+4. Providing information about doctors and specialties
+5. Offering general health advice
+Always be polite, professional, and provide accurate information. When users ask about their data, use the appropriate functions to retrieve real-time information. If you need to schedule appointments or perform actions that require specific details, ask the user for the necessary information.''';
     }
   }
 
@@ -41,6 +52,8 @@ Current context: You are assisting a logged-in user with their real estate portf
     switch (this) {
       case ProjectType.realEstate:
         return 'Hello! I\'m your Real Estate Assistant. I can help you manage your properties, check balances, and answer questions about your real estate portfolio. How can I assist you today?';
+      case ProjectType.shifa:
+        return 'Hello! I\'m your Healthcare Assistant. I can help you schedule appointments, manage your medical records, and answer health-related questions. How can I assist you today?';
     }
   }
 
@@ -49,6 +62,8 @@ Current context: You are assisting a logged-in user with their real estate portf
     switch (this) {
       case ProjectType.realEstate:
         return 'Real Estate Assistant';
+      case ProjectType.shifa:
+        return 'Healthcare Assistant';
     }
   }
 }

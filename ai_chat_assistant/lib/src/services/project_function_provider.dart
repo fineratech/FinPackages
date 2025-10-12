@@ -20,6 +20,8 @@ class ProjectFunctionProvider implements FunctionDefinitionsProvider {
     switch (projectType) {
       case ProjectType.realEstate:
         return _getRealEstateFunctionDefinitions();
+      case ProjectType.shifa:
+        return _getShifaFunctionDefinitions();
     }
   }
 
@@ -31,6 +33,8 @@ class ProjectFunctionProvider implements FunctionDefinitionsProvider {
     switch (projectType) {
       case ProjectType.realEstate:
         return await _executeRealEstateFunction(functionName, args);
+      case ProjectType.shifa:
+        return await _executeShifaFunction(functionName, args);
     }
   }
 
@@ -81,6 +85,58 @@ class ProjectFunctionProvider implements FunctionDefinitionsProvider {
             "Get the total outstanding balance for the current logged-in user",
         "parameters": {"type": "object", "properties": {}, "required": []}
       }
+    ];
+  }
+
+  /// Shifa function definitions
+  List<Map<String, dynamic>> _getShifaFunctionDefinitions() {
+    return [
+      {
+        "name": "get_all_services",
+        "description": "Get all healthcare services available in the system",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+        }
+      },
+      {
+        "name": "get_appointments",
+        "description": "Get appointments of the currently logged-in user",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "user_id": {
+              "type": "string",
+              "description":
+                  "The unique identifier of the currently logged-in user"
+            }
+          },
+          "required": ["user_id"]
+        }
+      },
+      {
+        "name": "get_current_user_id",
+        "description":
+            "Get the current logged-in user's ID and basic information",
+        "parameters": {"type": "object", "properties": {}, "required": []}
+      },
+      {
+        "name": "get_appointment_records",
+        "description":
+            "Get the current logged-in user's previous appointment records",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "user_id": {
+              "type": "string",
+              "description":
+                  "The unique identifier of the currently logged-in user"
+            }
+          },
+          "required": ["user_id"],
+        }
+      },
     ];
   }
 
@@ -175,6 +231,82 @@ class ProjectFunctionProvider implements FunctionDefinitionsProvider {
             'userId': userId,
             'message':
                 'Outstanding balance retrieved successfully for current user'
+          };
+
+        default:
+          return {'error': 'Unknown function: $functionName'};
+      }
+    } catch (e) {
+      return {
+        'success': false,
+        'error': 'Failed to execute function: ${_getErrorMessage(e)}'
+      };
+    }
+  }
+
+  /// Execute Shifa specific functions
+  Future<Map<String, dynamic>> _executeShifaFunction(
+    String functionName,
+    Map<String, dynamic> args,
+  ) async {
+    try {
+      switch (functionName) {
+        case 'get_all_services':
+          final services = await apiFunctionsService
+              .getAllAvailableServicesByCategory('healthcare');
+          if (services != null) {
+            final servicesData =
+                services.map((service) => service.toMap()).toList();
+            return {
+              'success': true,
+              'services': servicesData,
+              'count': services.length,
+              'message': 'Healthcare services retrieved successfully'
+            };
+          }
+          return {
+            'success': false,
+            'services': [],
+            'count': 0,
+            'message': 'No healthcare services found'
+          };
+
+        case 'get_appointments':
+          final userId = args['user_id'];
+          final appointments =
+              await apiFunctionsService.getAppointments(userId);
+
+          return {
+            'success': true,
+            'appointments': appointments,
+            'count': appointments.length,
+            'message': 'Appointments retrieved successfully'
+          };
+
+        case 'get_current_user_id':
+          // Use config's getCurrentUser if provided
+          final currentUserData = config?.getCurrentUser != null
+              ? await config!.getCurrentUser!()
+              : null;
+
+          if (currentUserData == null) {
+            return {'success': false, 'error': 'User is not logged in'};
+          }
+
+          return {
+            'success': true,
+            ...currentUserData,
+            'message': 'Current user information retrieved successfully'
+          };
+        case 'get_appointment_records':
+          final userId = args['user_id'];
+          final records =
+              await apiFunctionsService.getAppointmentsRecord(userId);
+          return {
+            'success': true,
+            'records': records,
+            'count': records.length,
+            'message': 'Appointment records retrieved successfully'
           };
 
         default:
