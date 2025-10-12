@@ -71,8 +71,7 @@ class ChatButtonExample extends StatelessWidget {
             primaryColor: const Color(0xFF1976D2),
             secondaryColor: const Color(0xFF42A5F5),
             iconColor: Colors.white,
-            bottom: 100,
-            right: 20,
+
             backgroundColor: Colors.white,
             appBarColor: const Color(0xFF1976D2),
           ),
@@ -138,10 +137,6 @@ class StyledChatButtonExample extends StatelessWidget {
             iconColor: Colors.white,
             backgroundColor: const Color(0xFFF5F5F5),
             appBarColor: Colors.purple,
-
-            // Custom position
-            bottom: 80,
-            right: 16,
           ),
         ],
       ),

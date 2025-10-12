@@ -28,12 +28,6 @@ class FloatingChatButton extends StatefulWidget {
   /// Icon color for the chat icon
   final Color? iconColor;
 
-  /// Bottom position of the floating button
-  final double? bottom;
-
-  /// Right position of the floating button
-  final double? right;
-
   /// Background color for the chat screen
   final Color? backgroundColor;
 
@@ -49,8 +43,6 @@ class FloatingChatButton extends StatefulWidget {
     this.primaryColor,
     this.secondaryColor,
     this.iconColor,
-    this.bottom,
-    this.right,
     this.backgroundColor,
     this.appBarColor,
   });
@@ -160,64 +152,60 @@ class _FloatingChatButtonState extends State<FloatingChatButton>
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: widget.bottom ?? 100,
-      right: widget.right ?? 20,
-      child: AnimatedBuilder(
-        animation: Listenable.merge([_pulseAnimation, _scaleAnimation]),
-        builder: (context, child) {
-          return Transform.scale(
-            scale: _scaleAnimation.value,
-            child: Container(
-              width: 60,
-              height: 60,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    _primaryColor,
-                    _secondaryColor,
-                  ],
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: _primaryColor.withOpacity(0.3),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                  BoxShadow(
-                    color: _primaryColor.withOpacity(0.1),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                  ),
+    return AnimatedBuilder(
+      animation: Listenable.merge([_pulseAnimation, _scaleAnimation]),
+      builder: (context, child) {
+        return Transform.scale(
+          scale: _scaleAnimation.value,
+          child: Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  _primaryColor,
+                  _secondaryColor,
                 ],
               ),
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(30),
-                  onTap: _onTap,
-                  child: Transform.scale(
-                    scale: _pulseAnimation.value,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.chat_bubble_outline,
-                        color: _iconColor,
-                        size: 28,
-                      ),
+              boxShadow: [
+                BoxShadow(
+                  color: _primaryColor.withOpacity(0.3),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+                BoxShadow(
+                  color: _primaryColor.withOpacity(0.1),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(30),
+                onTap: _onTap,
+                child: Transform.scale(
+                  scale: _pulseAnimation.value,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.chat_bubble_outline,
+                      color: _iconColor,
+                      size: 28,
                     ),
                   ),
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
