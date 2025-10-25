@@ -137,6 +137,164 @@ class ProjectFunctionProvider implements FunctionDefinitionsProvider {
           "required": ["user_id"],
         }
       },
+      {
+        "name": "find_resource_availability_in_a_month",
+        "description":
+            "Get the availability of medical resources (e.g., doctors, equipment) for re-scheduling appointments in a specific month",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "resource_id": {
+              "type": "string",
+              "description":
+                  "The unique identifier of the medical resource (e.g., doctor ID)"
+            },
+            "month": {
+              "type": "string",
+              "description":
+                  "The month for which to check availability in MM format"
+            },
+            "year": {
+              "type": "string",
+              "description":
+                  "The year for which to check availability in YYYY format"
+            },
+          },
+          "required": ["resource_id", "month", "year"],
+        }
+      },
+      {
+        "name": "reshedule_appointment",
+        "description":
+            "Reschedule an existing appointment for the user, Ask user for rescheduling date and time and check availability first using find_resource_availability_in_a_month function before calling this function",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "appointment_id": {
+              "type": "string",
+              "description":
+                  "The unique identifier of the appointment to be rescheduled"
+            },
+            "year_start": {
+              "type": "string",
+              "description":
+                  "The start year for the new appointment date in YYYY format"
+            },
+            "month_start": {
+              "type": "string",
+              "description":
+                  "The start month for the new appointment date in MM format"
+            },
+            "day_start": {
+              "type": "string",
+              "description":
+                  "The start day for the new appointment date in DD format"
+            },
+            "hour_start": {
+              "type": "string",
+              "description":
+                  "The start hour for the new appointment time in HH format (24-hour clock)"
+            },
+            "minute_start": {
+              "type": "string",
+              "description":
+                  "The start minute for the new appointment time in MM format"
+            },
+            "second_start": {
+              "type": "string",
+              "description":
+                  "The start second for the new appointment time in SS format"
+            },
+            "millisecond_start": {
+              "type": "string",
+              "description":
+                  "The start millisecond for the new appointment time in SSS format"
+            },
+            "year_end": {
+              "type": "string",
+              "description":
+                  "The end year for the new appointment date in YYYY format"
+            },
+            "month_end": {
+              "type": "string",
+              "description":
+                  "The end month for the new appointment date in MM format"
+            },
+            "day_end": {
+              "type": "string",
+              "description":
+                  "The end day for the new appointment date in DD format"
+            },
+            "hour_end": {
+              "type": "string",
+              "description":
+                  "The end hour for the new appointment time in HH format (24-hour clock)"
+            },
+            "minute_end": {
+              "type": "string",
+              "description":
+                  "The end minute for the new appointment time in MM format"
+            },
+            "second_end": {
+              "type": "string",
+              "description":
+                  "The end second for the new appointment time in SS format"
+            },
+            "millisecond_end": {
+              "type": "string",
+              "description":
+                  "The end millisecond for the new appointment time in SSS format"
+            },
+          },
+          "required": [
+            "appointment_id",
+            "year_start",
+            "month_start",
+            "day_start",
+            "hour_start",
+            "minute_start",
+            "second_start",
+            "millisecond_start",
+            "year_end",
+            "month_end",
+            "day_end",
+            "hour_end",
+            "minute_end",
+            "second_end",
+            "millisecond_end"
+          ],
+        }
+      },
+      {
+        "name": "cancel_appointment",
+        "description": "Cancel an existing appointment for the user",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "appointment_id": {
+              "type": "string",
+              "description":
+                  "The unique identifier of the appointment to be canceled"
+            }
+          },
+          "required": ["appointment_id"],
+        }
+      },
+      {
+        "name": "delete_appointment",
+        "description": "Delete an existing appointment for the user",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "appointment_id": {
+              "type": "string",
+              "description":
+                  "The unique identifier of the appointment to be deleted"
+            }
+          },
+          "required": ["appointment_id"],
+        }
+      }
     ];
   }
 
@@ -307,6 +465,78 @@ class ProjectFunctionProvider implements FunctionDefinitionsProvider {
             'records': records,
             'count': records.length,
             'message': 'Appointment records retrieved successfully'
+          };
+
+        case 'find_resource_availability_in_a_month':
+          final resourceId = args['resource_id'];
+          final month = args['month'];
+          final year = args['year'];
+          final availability = await apiFunctionsService
+              .findResourceAvailabilityInAMonth(resourceId, month, year);
+          return {
+            'success': true,
+            'availability': availability.map((e) => e.toMap()).toList(),
+            'count': availability.length,
+            'message': 'Resource availability retrieved successfully'
+          };
+        case 'reshedule_appointment':
+          final appointmentId = args['appointment_id'];
+          final yearStart = args['year_start'];
+          final monthStart = args['month_start'];
+          final dayStart = args['day_start'];
+          final hourStart = args['hour_start'];
+          final minuteStart = args['minute_start'];
+          final secondStart = args['second_start'];
+          final millisecondStart = args['millisecond_start'];
+          final yearEnd = args['year_end'];
+          final monthEnd = args['month_end'];
+          final dayEnd = args['day_end'];
+          final hourEnd = args['hour_end'];
+          final minuteEnd = args['minute_end'];
+          final secondEnd = args['second_end'];
+          final millisecondEnd = args['millisecond_end'];
+          final result = await apiFunctionsService.rescheduleAppointment(
+            appointmentId,
+            yearStart,
+            monthStart,
+            dayStart,
+            hourStart,
+            minuteStart,
+            secondStart,
+            millisecondStart,
+            yearEnd,
+            monthEnd,
+            dayEnd,
+            hourEnd,
+            minuteEnd,
+            secondEnd,
+            millisecondEnd,
+          );
+          return {
+            'success': result,
+            'message': result
+                ? 'Appointment rescheduled successfully'
+                : 'Failed to reschedule appointment'
+          };
+        case 'cancel_appointment':
+          final appointmentId = args['appointment_id'];
+          final result =
+              await apiFunctionsService.cancelAppointment(appointmentId);
+          return {
+            'success': result,
+            'message': result
+                ? 'Appointment canceled successfully'
+                : 'Failed to cancel appointment'
+          };
+        case 'delete_appointment':
+          final appointmentId = args['appointment_id'];
+          final result =
+              await apiFunctionsService.deleteAppointment(appointmentId);
+          return {
+            'success': result,
+            'message': result
+                ? 'Appointment deleted successfully'
+                : 'Failed to delete appointment'
           };
 
         default:
