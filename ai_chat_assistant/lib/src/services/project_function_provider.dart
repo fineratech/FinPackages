@@ -173,7 +173,7 @@ class ProjectFunctionProvider implements FunctionDefinitionsProvider {
             "appointment_id": {
               "type": "string",
               "description":
-                  "The unique identifier of the appointment to be rescheduled"
+                  "The unique identifier of the appointment to be rescheduled, which was provided earlier in the conversation using get_appointments function, don't use dummy ids like 0 etc. Only use valid appointment ids."
             },
             "year_start": {
               "type": "string",
