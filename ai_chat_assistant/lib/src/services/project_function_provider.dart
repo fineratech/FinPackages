@@ -294,6 +294,11 @@ class ProjectFunctionProvider implements FunctionDefinitionsProvider {
           },
           "required": ["appointment_id"],
         }
+      },
+      {
+        "name": "get_current_date",
+        "description": "Get the current date to compare with appointment dates",
+        "parameters": {"type": "object", "properties": {}, "required": []}
       }
     ];
   }
@@ -537,6 +542,13 @@ class ProjectFunctionProvider implements FunctionDefinitionsProvider {
             'message': result
                 ? 'Appointment deleted successfully'
                 : 'Failed to delete appointment'
+          };
+        case 'get_current_date':
+          final currentDate = DateTime.now().toIso8601String();
+          return {
+            'success': true,
+            'current_date': currentDate,
+            'message': 'Current date retrieved successfully'
           };
 
         default:
