@@ -1095,16 +1095,58 @@ class ApiFunctionsService {
   }
 
   /// Get all real estate properties for a sub-merchant
-  Future<List<RealEstateProperty>> getAllRealEstate(String subMerchantId) async {
+  Future<List<RealEstateProperty>> getAllRealEstate(
+      String subMerchantId) async {
     final String url = '${ApiEndPoints.getAllRealEstate}/$subMerchantId';
     var response = await apiService.get(endPoint: url);
 
     if (response.success) {
-      final List<dynamic> rawData = response.data['GetAllRealEstateResult'] ?? [];
+      final List<dynamic> rawData =
+          response.data['GetAllRealEstateResult'] ?? [];
       return rawData
-          .map((item) => RealEstateProperty.fromJson(item as Map<String, dynamic>))
+          .map((item) =>
+              RealEstateProperty.fromJson(item as Map<String, dynamic>))
           .toList();
     }
     throw Exception('Failed to get all real estate');
+  }
+
+  Future<bool> rescheduleAppointment(
+    String strAppointmentId,
+    String yearStart,
+    String monthStart,
+    String dayStart,
+    String hourStart,
+    String minuteStart,
+    String secondStart,
+    String millisecondStart,
+    String yearEnd,
+    String monthEnd,
+    String dayEnd,
+    String hourEnd,
+    String minuteEnd,
+    String secondEnd,
+    String millisecondEnd,
+  ) async {
+    final String url =
+        '${ApiEndPoints.rescheduleAppointment}/$strAppointmentId/$yearStart/$monthStart/$dayStart/$hourStart/$minuteStart/$secondStart/$millisecondStart/$yearEnd/$monthEnd/$dayEnd/$hourEnd/$minuteEnd/$secondEnd/$millisecondEnd';
+    var response = await apiService.get(endPoint: url);
+    return response.data['RescheduleAppointmentResult'] ?? false;
+  }
+
+  Future<bool> cancelAppointment(
+    String strAppointmentId,
+  ) async {
+    final String url = '${ApiEndPoints.cancelAppointment}/$strAppointmentId';
+    var response = await apiService.get(endPoint: url);
+    return response.data['CancelAppointmentResult'] ?? false;
+  }
+
+  Future<bool> deleteAppointment(
+    String strAppointmentId,
+  ) async {
+    final String url = '${ApiEndPoints.deleteAppointment}/$strAppointmentId';
+    var response = await apiService.get(endPoint: url);
+    return response.data['DeleteAppointmentResult'] ?? false;
   }
 }

@@ -222,4 +222,13 @@ class ApiEndPoints {
 
   static const String getAgreementTemplate =
       "$serviceReferencePathResource/GetAgreementTemplate";
+
+  static const String rescheduleAppointment =
+      "$serviceReferencePathResource/RescheduleAppointment";
+
+  static const String cancelAppointment =
+      "$serviceReferencePathResource/CancelAppointment";
+
+  static const String deleteAppointment =
+      "$serviceReferencePathResource/DeleteAppointment";
 }
