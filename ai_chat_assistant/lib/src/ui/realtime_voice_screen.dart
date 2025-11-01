@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:logger/logger.dart';
-import '../services/openai_realtime_service.dart';
-import '../services/audio_service.dart';
+import '../services/openai_realtime_webrtc_service.dart';
 import '../services/realtime_function_provider.dart';
 import '../services/project_function_provider.dart';
 
@@ -34,8 +33,7 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
     with TickerProviderStateMixin {
   final Logger _logger = Logger();
 
-  late OpenAIRealtimeService _realtimeService;
-  late AudioService _audioService;
+  late OpenAIRealtimeWebRTCService _realtimeService;
   late AnimationController _pulseController;
   late AnimationController _waveController;
   late Animation<double> _pulseAnimation;
@@ -45,7 +43,6 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
   final ScrollController _scrollController = ScrollController();
 
   bool _isConnected = false;
-  bool _isRecording = false;
   String _statusMessage = 'Ready to connect';
   bool _permissionGranted = false;
 
@@ -73,18 +70,15 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
       projectFunctionProvider: widget.functionProvider,
     );
 
-    _realtimeService = OpenAIRealtimeService(
+    _realtimeService = OpenAIRealtimeWebRTCService(
       apiKey: widget.apiKey,
       functionProvider: realtimeFunctionProvider,
       systemPrompt: widget.systemPrompt,
     );
 
-    _audioService = AudioService();
-
     // Listen to service streams
     _realtimeService.connectionStream.listen(_onConnectionChanged);
     _realtimeService.transcriptStream.listen(_onTranscriptReceived);
-    _realtimeService.audioStream.listen(_onAudioReceived);
     _realtimeService.errorStream.listen(_onError);
     _realtimeService.statusStream.listen(_onStatusChanged);
     _realtimeService.functionCallStream.listen(_onFunctionCall);
@@ -107,23 +101,15 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
   }
 
   Future<void> _requestPermissions() async {
-    final granted = await _audioService.requestPermission();
+    // WebRTC will request microphone permission automatically
     setState(() {
-      _permissionGranted = granted;
-      if (!granted) {
-        _statusMessage = 'Microphone permission required';
-      }
+      _permissionGranted = true;
     });
   }
 
   void _onConnectionChanged(bool connected) {
     setState(() {
       _isConnected = connected;
-      if (connected) {
-        _startRecording();
-      } else {
-        _stopRecording();
-      }
     });
   }
 
@@ -147,10 +133,6 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
     }
   }
 
-  void _onAudioReceived(dynamic audioData) {
-    // Play received audio
-    _audioService.playAudio(audioData);
-  }
 
   void _onError(String error) {
     _logger.e('Realtime API error: $error');
@@ -246,36 +228,9 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
   }
 
   Future<void> _disconnect() async {
-    await _stopRecording();
     await _realtimeService.disconnect();
     setState(() {
       _statusMessage = 'Disconnected';
-    });
-  }
-
-  Future<void> _startRecording() async {
-    if (_isRecording) return;
-
-    try {
-      await _audioService.startRecording((audioData) {
-        _realtimeService.sendAudioData(audioData);
-      });
-
-      setState(() {
-        _isRecording = true;
-      });
-    } catch (e) {
-      _logger.e('Recording error', error: e);
-      _onError('Failed to start recording: $e');
-    }
-  }
-
-  Future<void> _stopRecording() async {
-    if (!_isRecording) return;
-
-    await _audioService.stopRecording();
-    setState(() {
-      _isRecording = false;
     });
   }
 
@@ -283,7 +238,6 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
   void dispose() {
     _disconnect();
     _realtimeService.dispose();
-    _audioService.dispose();
     _pulseController.dispose();
     _waveController.dispose();
     _scrollController.dispose();

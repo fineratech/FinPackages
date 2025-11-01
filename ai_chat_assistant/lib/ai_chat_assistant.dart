@@ -10,5 +10,5 @@ export 'src/config/chat_agent_config.dart';
 
 // Export services for advanced usage
 export 'src/services/openai_realtime_service.dart';
-export 'src/services/audio_service.dart';
+export 'src/services/openai_realtime_webrtc_service.dart';
 export 'src/services/realtime_function_provider.dart';
