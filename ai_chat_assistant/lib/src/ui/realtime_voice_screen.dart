@@ -133,7 +133,6 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
     }
   }
 
-
   void _onError(String error) {
     _logger.e('Realtime API error: $error');
     ScaffoldMessenger.of(context).showSnackBar(
@@ -252,13 +251,13 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: widget.primaryColor),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
           _title,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: widget.primaryColor,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -268,7 +267,7 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
           IconButton(
             icon: Icon(
               Icons.delete_outline,
-              color: _secondaryColor.withValues(alpha: 0.8),
+              color: _secondaryColor,
             ),
             onPressed: () {
               setState(() {

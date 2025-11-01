@@ -16,6 +16,8 @@ class OpenAIRealtimeWebRTCService {
   RTCPeerConnection? _peerConnection;
   RTCDataChannel? _dataChannel;
   MediaStream? _localStream;
+  MediaStream? _remoteStream;
+  RTCVideoRenderer? _remoteRenderer;
 
   bool _isConnected = false;
   String? _sessionId;
@@ -51,6 +53,11 @@ class OpenAIRealtimeWebRTCService {
     try {
       _statusController.add('Connecting to OpenAI Realtime API...');
       _logger.i('Starting WebRTC connection');
+
+      // Initialize remote renderer for audio playback
+      _remoteRenderer = RTCVideoRenderer();
+      await _remoteRenderer!.initialize();
+      _logger.i('Remote renderer initialized');
 
       // Initialize peer connection with STUN server
       _peerConnection = await createPeerConnection({
@@ -280,12 +287,27 @@ class OpenAIRealtimeWebRTCService {
     // Remote stream handler (AI audio output)
     _peerConnection?.onAddStream = (MediaStream stream) {
       _logger.i('Received remote audio stream');
-      final audioTracks = stream.getAudioTracks();
+      _remoteStream = stream;
 
+      // Set up the stream for playback
+      if (_remoteRenderer != null) {
+        _remoteRenderer!.srcObject = stream;
+        _logger.i('Remote stream attached to renderer');
+      }
+
+      final audioTracks = stream.getAudioTracks();
       if (audioTracks.isNotEmpty) {
-        _logger.i('Remote audio track available');
+        _logger.i('Remote audio track available: ${audioTracks.length} track(s)');
+
+        // Enable all audio tracks and set volume to maximum
+        for (var track in audioTracks) {
+          track.enabled = true;
+          // Set volume to maximum (range is typically 0.0 to 1.0)
+          Helper.setVolume(1.0, track);
+          _logger.i('Audio track enabled with maximum volume');
+        }
+
         _statusController.add('Audio stream ready');
-        // Audio is played automatically by WebRTC
       }
     };
 
@@ -426,6 +448,19 @@ class OpenAIRealtimeWebRTCService {
     _logger.i('Microphone ${enabled ? 'enabled' : 'disabled'}');
   }
 
+  /// Set speaker volume (0.0 to 1.0)
+  void setSpeakerVolume(double volume) {
+    if (volume < 0.0 || volume > 1.0) {
+      _logger.w('Volume must be between 0.0 and 1.0, got $volume');
+      return;
+    }
+
+    _remoteStream?.getAudioTracks().forEach((track) {
+      Helper.setVolume(volume, track);
+    });
+    _logger.i('Speaker volume set to $volume');
+  }
+
   /// Clean up connection
   void _cleanupConnection() {
     _dataChannel?.close();
@@ -436,6 +471,12 @@ class OpenAIRealtimeWebRTCService {
 
     _localStream?.dispose();
     _localStream = null;
+
+    _remoteStream?.dispose();
+    _remoteStream = null;
+
+    _remoteRenderer?.dispose();
+    _remoteRenderer = null;
 
     _isConnected = false;
     _logger.i('WebRTC connection cleaned up');
