@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import '../services/chat_agent_service.dart';
 import '../models/chat_message.dart';
+import 'realtime_voice_screen.dart';
+import '../config/openai_config.dart';
 
 class ChatScreen extends StatefulWidget {
   final ChatAgentService chatService;
@@ -38,13 +40,15 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   late Animation<double> _fadeAnimation;
   final Logger _logger = Logger();
 
-  Color get _backgroundColor => widget.backgroundColor ?? const Color(0xFFF5F5F5);
+  Color get _backgroundColor =>
+      widget.backgroundColor ?? const Color(0xFFF5F5F5);
   Color get _appBarColor => widget.appBarColor ?? const Color(0xFFFFFFFF);
   Color get _primaryColor => widget.primaryColor ?? const Color(0xFF000000);
   Color get _secondaryColor => widget.secondaryColor ?? const Color(0xFF808080);
   String get _title => widget.title ?? widget.chatService.chatTitle;
   String get _onlineStatus => widget.onlineStatus ?? 'Online';
-  String get _welcomeMessage => widget.welcomeMessage ?? widget.chatService.welcomeMessage;
+  String get _welcomeMessage =>
+      widget.welcomeMessage ?? widget.chatService.welcomeMessage;
 
   @override
   void initState() {
@@ -121,6 +125,146 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     }
   }
 
+  void _navigateToVoiceMode() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            RealtimeVoiceScreen(
+          functionProvider: widget.chatService.functionProvider,
+          systemPrompt: widget.chatService.systemPrompt,
+          apiKey: OpenAIConfig.getApiKey(),
+          backgroundColor: widget.backgroundColor,
+          primaryColor: widget.primaryColor,
+          secondaryColor: widget.secondaryColor,
+          title: 'Voice Assistant',
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0); // Slide from bottom
+          const end = Offset.zero;
+          const curve = Curves.easeInOut;
+          var tween = Tween(begin: begin, end: end).chain(
+            CurveTween(curve: curve),
+          );
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: child,
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 400),
+      ),
+    );
+  }
+
+  void _showVoiceModeInfo() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: _appBarColor,
+        title: Row(
+          children: [
+            Icon(Icons.mic, color: _primaryColor),
+            const SizedBox(width: 12),
+            Text(
+              'Voice Mode',
+              style: TextStyle(color: _primaryColor),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Experience real-time voice conversations powered by OpenAI\'s Realtime API!',
+              style: TextStyle(
+                color: _primaryColor,
+                fontSize: 15,
+              ),
+            ),
+            const SizedBox(height: 16),
+            _buildInfoItem(
+              Icons.bolt,
+              'Lightning Fast',
+              'Ultra-low latency voice responses',
+            ),
+            _buildInfoItem(
+              Icons.psychology,
+              'Natural Conversations',
+              'Interruptions and natural turn-taking',
+            ),
+            _buildInfoItem(
+              Icons.functions,
+              'Smart Functions',
+              'All your current functions work seamlessly',
+            ),
+            _buildInfoItem(
+              Icons.mic_external_on,
+              'High Quality Audio',
+              'Crystal clear 24kHz audio streaming',
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Got it!',
+              style: TextStyle(color: _primaryColor, fontSize: 16),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _navigateToVoiceMode();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: _primaryColor,
+              foregroundColor: const Color(0xFFFFFFFF),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            ),
+            child: const Text('Try it now!'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoItem(IconData icon, String title, String description) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: _secondaryColor, size: 20),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: _primaryColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  description,
+                  style: TextStyle(
+                    color: _secondaryColor,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,6 +314,64 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           icon: Icon(Icons.arrow_back, color: _primaryColor),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        actions: [
+          // Voice mode button with gradient
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [_primaryColor, _secondaryColor],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: _primaryColor.withValues(alpha: 0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: _navigateToVoiceMode,
+                borderRadius: BorderRadius.circular(12),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(
+                        Icons.mic,
+                        color: Color(0xFFFFFFFF),
+                        size: 20,
+                      ),
+                      SizedBox(width: 6),
+                      Text(
+                        'Voice Mode',
+                        style: TextStyle(
+                          color: Color(0xFFFFFFFF),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.info_outline, color: _primaryColor),
+            onPressed: _showVoiceModeInfo,
+            tooltip: 'About Voice Mode',
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -229,7 +431,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),
@@ -238,9 +440,8 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               child: Text(
                 message.content,
                 style: TextStyle(
-                  color: message.isUser
-                      ? const Color(0xFFFFFFFF)
-                      : _primaryColor,
+                  color:
+                      message.isUser ? const Color(0xFFFFFFFF) : _primaryColor,
                   fontSize: 16,
                 ),
               ),
@@ -285,7 +486,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               borderRadius: BorderRadius.circular(18),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 4,
                   offset: const Offset(0, 2),
                 ),
@@ -318,7 +519,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
             width: 8,
             height: 8,
             decoration: BoxDecoration(
-              color: _secondaryColor.withOpacity(0.5 + (0.5 * value)),
+              color: _secondaryColor.withValues(alpha: 0.5 + (0.5 * value)),
               shape: BoxShape.circle,
             ),
           ),

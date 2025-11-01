@@ -10,6 +10,8 @@ import '../models/chat_message.dart';
 class ChatAgentService {
   static final Logger _logger = Logger();
   late final OpenAIService _openAIService;
+  late final ProjectFunctionProvider _functionProvider;
+  late final String _systemPrompt;
   final ProjectType projectType;
   final ChatAgentConfig? config;
 
@@ -24,21 +26,27 @@ class ChatAgentService {
     }
 
     // Create project-specific function provider
-    final functionProvider = ProjectFunctionProvider(
+    _functionProvider = ProjectFunctionProvider(
       projectType: projectType,
       apiFunctionsService: apiFunctionsService,
       config: config,
     );
 
     // Use custom system prompt or project-specific default
-    final systemPrompt = config?.customSystemPrompt ?? projectType.systemPrompt;
+    _systemPrompt = config?.customSystemPrompt ?? projectType.systemPrompt;
 
     _openAIService = OpenAIService(
       apiKey: OpenAIConfig.getApiKey(),
-      functionProvider: functionProvider,
-      systemPrompt: systemPrompt,
+      functionProvider: _functionProvider,
+      systemPrompt: _systemPrompt,
     );
   }
+
+  /// Get the function provider for this service
+  ProjectFunctionProvider get functionProvider => _functionProvider;
+
+  /// Get the system prompt for this service
+  String get systemPrompt => _systemPrompt;
 
   /// Send a message to the chat agent and get a response
   Future<String> sendMessage(

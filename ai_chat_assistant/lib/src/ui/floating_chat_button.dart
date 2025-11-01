@@ -172,12 +172,12 @@ class _FloatingChatButtonState extends State<FloatingChatButton>
               ),
               boxShadow: [
                 BoxShadow(
-                  color: _primaryColor.withOpacity(0.3),
+                  color: _primaryColor.withValues(alpha: 0.3),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
                 BoxShadow(
-                  color: _primaryColor.withOpacity(0.1),
+                  color: _primaryColor.withValues(alpha: 0.1),
                   blurRadius: 20,
                   offset: const Offset(0, 8),
                 ),

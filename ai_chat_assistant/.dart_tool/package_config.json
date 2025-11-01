@@ -20,6 +20,48 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "audioplayers",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/audioplayers-5.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_android",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/audioplayers_android-4.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_darwin",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/audioplayers_darwin-5.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_linux",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/audioplayers_linux-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_platform_interface",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/audioplayers_platform_interface-6.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_web",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/audioplayers_web-4.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "audioplayers_windows",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/audioplayers_windows-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/boolean_selector-2.1.2",
       "packageUri": "lib/",
@@ -171,9 +213,9 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///Users/tentwenty/fvm/versions/3.32.5/packages/flutter",
+      "rootUri": "file:///Users/tentwenty/fvm/versions/3.35.2/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.8"
     },
     {
       "name": "flutter_form_builder",
@@ -189,9 +231,9 @@
     },
     {
       "name": "flutter_localizations",
-      "rootUri": "file:///Users/tentwenty/fvm/versions/3.32.5/packages/flutter_localizations",
+      "rootUri": "file:///Users/tentwenty/fvm/versions/3.35.2/packages/flutter_localizations",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.8"
     },
     {
       "name": "flutter_plugin_android_lifecycle",
@@ -207,15 +249,15 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///Users/tentwenty/fvm/versions/3.32.5/packages/flutter_test",
+      "rootUri": "file:///Users/tentwenty/fvm/versions/3.35.2/packages/flutter_test",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.8"
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///Users/tentwenty/fvm/versions/3.32.5/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/tentwenty/fvm/versions/3.35.2/packages/flutter_web_plugins",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.8"
     },
     {
       "name": "form_builder_validators",
@@ -320,20 +362,26 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "js",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/js-0.6.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "leak_tracker",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/leak_tracker-10.0.9",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/leak_tracker-11.0.2",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "leak_tracker_flutter_testing",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-3.0.9",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-3.0.10",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "leak_tracker_testing",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/leak_tracker_testing-3.0.1",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/leak_tracker_testing-3.0.2",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -434,6 +482,42 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "permission_handler",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/permission_handler-11.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "permission_handler_android",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/permission_handler_android-12.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "permission_handler_apple",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/permission_handler_apple-9.4.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "permission_handler_html",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/permission_handler_html-0.1.3+5",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "permission_handler_platform_interface",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/permission_handler_platform_interface-4.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "permission_handler_windows",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/permission_handler_windows-0.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "petitparser",
       "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/petitparser-7.0.1",
       "packageUri": "lib/",
@@ -450,6 +534,48 @@
       "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.8",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "record",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/record-5.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "record_android",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/record_android-1.4.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "record_darwin",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/record_darwin-1.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "record_linux",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/record_linux-0.7.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "record_platform_interface",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/record_platform_interface-1.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "record_web",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/record_web-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "record_windows",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/record_windows-1.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
     },
     {
       "name": "share_plus",
@@ -507,9 +633,9 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///Users/tentwenty/fvm/versions/3.32.5/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/tentwenty/fvm/versions/3.35.2/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.8"
     },
     {
       "name": "source_span",
@@ -540,6 +666,12 @@
       "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/string_scanner-1.4.1",
       "packageUri": "lib/",
       "languageVersion": "3.1"
+    },
+    {
+      "name": "synchronized",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/synchronized-3.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.8"
     },
     {
       "name": "talker",
@@ -573,7 +705,7 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/test_api-0.7.4",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/test_api-0.7.6",
       "packageUri": "lib/",
       "languageVersion": "3.5"
     },
@@ -639,9 +771,9 @@
     },
     {
       "name": "vector_math",
-      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/vector_math-2.1.4",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/vector_math-2.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.1"
     },
     {
       "name": "vm_service",
@@ -654,6 +786,12 @@
       "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/web-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "web_socket_channel",
+      "rootUri": "file:///Users/tentwenty/.pub-cache/hosted/pub.dev/web_socket_channel-2.4.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
     },
     {
       "name": "win32",
@@ -681,8 +819,8 @@
     }
   ],
   "generator": "pub",
-  "generatorVersion": "3.8.1",
-  "flutterRoot": "file:///Users/tentwenty/fvm/versions/3.32.5",
-  "flutterVersion": "3.32.5",
+  "generatorVersion": "3.9.0",
+  "flutterRoot": "file:///Users/tentwenty/fvm/versions/3.35.2",
+  "flutterVersion": "3.35.2",
   "pubCache": "file:///Users/tentwenty/.pub-cache"
 }

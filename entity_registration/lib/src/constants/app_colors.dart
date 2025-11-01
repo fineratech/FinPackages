@@ -20,7 +20,8 @@ class AppColors {
 
   static const Color shimmerHighlightColor = Color(0xFFE1E3E4);
   static const Color shimmerBgColorDark = Color(0xFF282929);
-  static Color shimmerBgColorLight = const Color(0xff797981).withOpacity(0.1);
+  static Color shimmerBgColorLight =
+      const Color(0xff797981).withValues(alpha: 0.1);
   static const Color cardBgLightColor = Color(0xff999999);
 
   static const Color notificationIconColor = Color.fromRGBO(242, 191, 66, 1);
