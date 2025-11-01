@@ -126,7 +126,7 @@ class OpenAIRealtimeWebRTCService {
 
   /// Send SDP offer to OpenAI and get answer
   Future<String> _sendSDPToServer(String sdp) async {
-    final url = Uri.parse('https://api.openai.com/v1/realtime');
+    final url = Uri.parse('https://api.openai.com/v1/realtime?model=gpt-realtime');
 
     try {
       final client = HttpClient();
@@ -303,7 +303,10 @@ class OpenAIRealtimeWebRTCService {
     // Data channel state handler
     _dataChannel?.onDataChannelState = (RTCDataChannelState state) {
       _logger.d('Data channel state: $state');
-      if (state == RTCDataChannelState.RTCDataChannelClosed ||
+      if (state == RTCDataChannelState.RTCDataChannelOpen) {
+        _logger.i('Data channel is now open - ready to send messages');
+        // The session.created event will trigger configuration
+      } else if (state == RTCDataChannelState.RTCDataChannelClosed ||
           state == RTCDataChannelState.RTCDataChannelClosing) {
         _errorController.add('Data channel closed');
         _isConnected = false;
