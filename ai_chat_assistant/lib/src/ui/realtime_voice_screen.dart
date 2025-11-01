@@ -312,7 +312,10 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.delete_outline, color: Colors.white70),
+            icon: Icon(
+              Icons.delete_outline,
+              color: _secondaryColor.withValues(alpha: 0.8),
+            ),
             onPressed: () {
               setState(() {
                 _transcripts.clear();
@@ -353,10 +356,10 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.05),
+        color: Colors.black.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Colors.white.withValues(alpha: 0.1),
+          color: _secondaryColor.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -367,10 +370,10 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
             children: [
               Icon(Icons.chat_bubble_outline, color: _secondaryColor, size: 20),
               const SizedBox(width: 8),
-              const Text(
+              Text(
                 'Conversation',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: _secondaryColor,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -384,8 +387,9 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
                     child: Text(
                       'Start talking to begin...',
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.5),
+                        color: Colors.white.withValues(alpha: 0.4),
                         fontSize: 14,
+                        fontStyle: FontStyle.italic,
                       ),
                     ),
                   )
@@ -403,14 +407,16 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
                           transcript,
                           style: TextStyle(
                             color: isFunction
-                                ? _secondaryColor.withValues(alpha: 0.8)
+                                ? _secondaryColor
                                 : isUser
                                     ? Colors.white
-                                    : Colors.white.withValues(alpha: 0.7),
+                                    : Colors.white.withValues(alpha: 0.85),
                             fontSize: 13,
                             fontWeight: isFunction
-                                ? FontWeight.w500
-                                : FontWeight.normal,
+                                ? FontWeight.w600
+                                : isUser
+                                    ? FontWeight.w500
+                                    : FontWeight.normal,
                           ),
                         ),
                       );
@@ -525,8 +531,14 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.05),
+            color: Colors.black.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: _isConnected
+                  ? Colors.green.withValues(alpha: 0.3)
+                  : Colors.red.withValues(alpha: 0.3),
+              width: 1,
+            ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -536,14 +548,23 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
                 height: 8,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: _isConnected ? Colors.green : Colors.red,
+                  color: _isConnected ? Colors.greenAccent : Colors.redAccent,
+                  boxShadow: [
+                    BoxShadow(
+                      color: _isConnected
+                          ? Colors.greenAccent.withValues(alpha: 0.5)
+                          : Colors.redAccent.withValues(alpha: 0.5),
+                      blurRadius: 4,
+                      spreadRadius: 1,
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(width: 12),
               Text(
                 _statusMessage,
                 style: const TextStyle(
-                  color: Colors.white70,
+                  color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),

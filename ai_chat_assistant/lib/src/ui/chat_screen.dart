@@ -155,116 +155,6 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     );
   }
 
-  void _showVoiceModeInfo() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: _appBarColor,
-        title: Row(
-          children: [
-            Icon(Icons.mic, color: _primaryColor),
-            const SizedBox(width: 12),
-            Text(
-              'Voice Mode',
-              style: TextStyle(color: _primaryColor),
-            ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Experience real-time voice conversations powered by OpenAI\'s Realtime API!',
-              style: TextStyle(
-                color: _primaryColor,
-                fontSize: 15,
-              ),
-            ),
-            const SizedBox(height: 16),
-            _buildInfoItem(
-              Icons.bolt,
-              'Lightning Fast',
-              'Ultra-low latency voice responses',
-            ),
-            _buildInfoItem(
-              Icons.psychology,
-              'Natural Conversations',
-              'Interruptions and natural turn-taking',
-            ),
-            _buildInfoItem(
-              Icons.functions,
-              'Smart Functions',
-              'All your current functions work seamlessly',
-            ),
-            _buildInfoItem(
-              Icons.mic_external_on,
-              'High Quality Audio',
-              'Crystal clear 24kHz audio streaming',
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              'Got it!',
-              style: TextStyle(color: _primaryColor, fontSize: 16),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              _navigateToVoiceMode();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: _primaryColor,
-              foregroundColor: const Color(0xFFFFFFFF),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            ),
-            child: const Text('Try it now!'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInfoItem(IconData icon, String title, String description) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: _secondaryColor, size: 20),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: _primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  description,
-                  style: TextStyle(
-                    color: _secondaryColor,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -314,64 +204,6 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           icon: Icon(Icons.arrow_back, color: _primaryColor),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        actions: [
-          // Voice mode button with gradient
-          Container(
-            margin: const EdgeInsets.only(right: 8),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [_primaryColor, _secondaryColor],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: _primaryColor.withValues(alpha: 0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: _navigateToVoiceMode,
-                borderRadius: BorderRadius.circular(12),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Icon(
-                        Icons.mic,
-                        color: Color(0xFFFFFFFF),
-                        size: 20,
-                      ),
-                      SizedBox(width: 6),
-                      Text(
-                        'Voice Mode',
-                        style: TextStyle(
-                          color: Color(0xFFFFFFFF),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.info_outline, color: _primaryColor),
-            onPressed: _showVoiceModeInfo,
-            tooltip: 'About Voice Mode',
-          ),
-        ],
       ),
       body: Column(
         children: [
@@ -559,6 +391,42 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     ),
                   ),
                   onSubmitted: (_) => _sendMessage(),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            // Voice mode button
+            Tooltip(
+              message: 'Voice Mode - Talk to AI',
+              child: Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [_primaryColor, _secondaryColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: _primaryColor.withValues(alpha: 0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: _navigateToVoiceMode,
+                    customBorder: const CircleBorder(),
+                    child: const Icon(
+                      Icons.mic,
+                      color: Color(0xFFFFFFFF),
+                      size: 22,
+                    ),
+                  ),
                 ),
               ),
             ),

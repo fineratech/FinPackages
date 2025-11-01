@@ -6,6 +6,13 @@ import 'package:logger/logger.dart';
 import 'realtime_function_provider.dart';
 
 /// Service for managing OpenAI Realtime API WebSocket connection
+///
+/// Uses the latest GA model: gpt-realtime
+/// Documentation: https://platform.openai.com/docs/guides/realtime
+///
+/// Pricing (as of 2025):
+/// - Audio Input: $0.032 per 1M tokens ($0.0004 cached)
+/// - Audio Output: $0.064 per 1M tokens
 class OpenAIRealtimeService {
   final String apiKey;
   final RealtimeFunctionProvider functionProvider;
@@ -50,13 +57,27 @@ class OpenAIRealtimeService {
       _statusController.add('Connecting to OpenAI Realtime API...');
       _logger.i('Connecting to OpenAI Realtime API');
 
+      // Use the latest GA model: gpt-realtime
+      // OpenAI released gpt-realtime as the production model (replaces preview version)
       final uri = Uri.parse(
-        'wss://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2024-10-01',
+        'wss://api.openai.com/v1/realtime?model=gpt-realtime',
       );
 
-      _channel = WebSocketChannel.connect(uri);
+      // Create WebSocket connection with API key via Sec-WebSocket-Protocol header
+      // This is the official authentication method for WebSocket connections
+      _channel = WebSocketChannel.connect(
+        uri,
+        protocols: [
+          'realtime',
+          'openai-insecure-api-key.$apiKey',
+          'openai-beta.realtime-v1',
+        ],
+      );
 
-      // Add authorization header
+      // Wait a moment for connection to establish
+      await Future.delayed(const Duration(milliseconds: 200));
+
+      // Send session configuration
       _channel!.sink.add(jsonEncode({
         'type': 'session.update',
         'session': {
@@ -80,9 +101,6 @@ class OpenAIRealtimeService {
         },
       }));
 
-      // Send authorization as a custom event
-      _sendAuthorizationEvent();
-
       // Listen to messages
       _channel!.stream.listen(
         _handleMessage,
@@ -103,12 +121,6 @@ class OpenAIRealtimeService {
     }
   }
 
-  /// Send authorization event
-  void _sendAuthorizationEvent() {
-    // Note: The actual authorization is done via URL query params in production
-    // For now, we'll use the Bearer token approach if needed
-    _logger.i('Authorization configured with API key');
-  }
 
   /// Handle incoming WebSocket messages
   void _handleMessage(dynamic message) {
