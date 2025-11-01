@@ -17,10 +17,15 @@ class AudioService {
   bool _isPlaying = false;
   StreamSubscription<Uint8List>? _recordingSubscription;
 
-  // Audio buffer for PCM16 data
-  final List<int> _audioBuffer = [];
+  // Audio buffers
+  final List<int> _recordingBuffer = [];
+  final List<int> _playbackBuffer = [];
   final int _sampleRate = 24000; // OpenAI Realtime API uses 24kHz
-  final int _bufferSizeMs = 100; // Send audio every 100ms
+  final int _recordingChunkMs = 50; // Send audio every 50ms (smaller chunks = better responsiveness)
+  final int _playbackBufferMs = 200; // Buffer 200ms before playback (smoother audio)
+
+  Timer? _playbackTimer;
+  bool _isBuffering = false;
 
   bool get isRecording => _isRecording;
   bool get isPlaying => _isPlaying;
@@ -76,20 +81,20 @@ class AudioService {
       final stream = await _recorder.startStream(config);
 
       _isRecording = true;
-      _audioBuffer.clear();
+      _recordingBuffer.clear();
 
       // Listen to the audio stream
       _recordingSubscription = stream.listen(
         (data) {
-          _audioBuffer.addAll(data);
+          _recordingBuffer.addAll(data);
 
-          // Send audio data in chunks (every 100ms worth of audio)
-          final bytesPerChunk = (_sampleRate * 2 * _bufferSizeMs) ~/ 1000;
-          if (_audioBuffer.length >= bytesPerChunk) {
+          // Send audio data in smaller chunks (every 50ms worth of audio for better responsiveness)
+          final bytesPerChunk = (_sampleRate * 2 * _recordingChunkMs) ~/ 1000;
+          if (_recordingBuffer.length >= bytesPerChunk) {
             final chunk = Uint8List.fromList(
-              _audioBuffer.sublist(0, bytesPerChunk),
+              _recordingBuffer.sublist(0, bytesPerChunk),
             );
-            _audioBuffer.removeRange(0, bytesPerChunk);
+            _recordingBuffer.removeRange(0, bytesPerChunk);
             onAudioData(chunk);
           }
         },
@@ -122,18 +127,59 @@ class AudioService {
       await _recordingSubscription?.cancel();
       await _recorder.stop();
       _isRecording = false;
-      _audioBuffer.clear();
+      _recordingBuffer.clear();
       _logger.i('Audio recording stopped');
     } catch (e) {
       _logger.e('Error stopping recording', error: e);
     }
   }
 
-  /// Play audio from PCM16 data
+  /// Play audio from PCM16 data with buffering
   Future<void> playAudio(Uint8List pcm16Data) async {
     try {
+      // Add to playback buffer
+      _playbackBuffer.addAll(pcm16Data);
+
+      // Start buffered playback if not already buffering
+      if (!_isBuffering && !_isPlaying) {
+        _isBuffering = true;
+
+        // Wait to accumulate enough audio (200ms) before playing
+        final minBufferSize = (_sampleRate * 2 * _playbackBufferMs) ~/ 1000;
+
+        if (_playbackBuffer.length >= minBufferSize) {
+          await _playBufferedAudio();
+        } else {
+          // Start a timer to play once we have enough data
+          _playbackTimer?.cancel();
+          _playbackTimer = Timer(Duration(milliseconds: _playbackBufferMs), () {
+            if (_playbackBuffer.isNotEmpty) {
+              _playBufferedAudio();
+            }
+          });
+        }
+      }
+    } catch (e) {
+      _logger.e('Error queueing audio', error: e);
+      _isBuffering = false;
+    }
+  }
+
+  /// Play buffered audio data
+  Future<void> _playBufferedAudio() async {
+    try {
+      if (_playbackBuffer.isEmpty) {
+        _isBuffering = false;
+        return;
+      }
+
+      // Get all buffered data
+      final audioData = Uint8List.fromList(_playbackBuffer);
+      _playbackBuffer.clear();
+      _isBuffering = false;
+
       // Convert PCM16 to WAV format for playback
-      final wavData = _convertPCM16ToWAV(pcm16Data);
+      final wavData = _convertPCM16ToWAV(audioData);
 
       // Save to temporary file
       final tempDir = await getTemporaryDirectory();
@@ -141,6 +187,7 @@ class AudioService {
       await tempFile.writeAsBytes(wavData);
 
       // Play the audio
+      await _player.stop(); // Stop any current playback
       await _player.play(DeviceFileSource(tempFile.path));
       _isPlaying = true;
 
@@ -149,11 +196,13 @@ class AudioService {
         _isPlaying = false;
         tempFile.delete().catchError((e) {
           _logger.w('Failed to delete temp audio file', error: e);
+          return tempFile; // Return the file to satisfy the error handler type
         });
       });
     } catch (e) {
-      _logger.e('Error playing audio', error: e);
+      _logger.e('Error playing buffered audio', error: e);
       _isPlaying = false;
+      _isBuffering = false;
     }
   }
 
@@ -257,8 +306,10 @@ class AudioService {
   /// Dispose of resources
   void dispose() {
     _recordingSubscription?.cancel();
+    _playbackTimer?.cancel();
     _recorder.dispose();
     _player.dispose();
-    _audioBuffer.clear();
+    _recordingBuffer.clear();
+    _playbackBuffer.clear();
   }
 }
