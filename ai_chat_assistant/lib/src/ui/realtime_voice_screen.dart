@@ -321,12 +321,12 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
         children: [
           Row(
             children: [
-              Icon(Icons.chat_bubble_outline, color: _secondaryColor, size: 20),
+              Icon(Icons.chat_bubble_outline, color: Colors.white, size: 20),
               const SizedBox(width: 8),
               Text(
                 'Conversation',
                 style: TextStyle(
-                  color: _secondaryColor,
+                  color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -340,7 +340,7 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
                     child: Text(
                       'Start talking to begin...',
                       style: TextStyle(
-                        color: Colors.white.withValues(alpha: 0.4),
+                        color: Colors.white,
                         fontSize: 14,
                         fontStyle: FontStyle.italic,
                       ),

@@ -167,11 +167,23 @@ class OpenAIRealtimeWebRTCService {
     if (_dataChannel == null) return;
 
     try {
+      // Enhanced instructions with greeting and language support
+      final enhancedInstructions = '''$systemPrompt
+
+IMPORTANT CONVERSATION RULES:
+1. ALWAYS start the conversation by greeting the user warmly and introducing yourself
+2. Tell the user how you can help them and what capabilities you have
+3. Your default language is English - always respond in English unless the user explicitly asks you to switch to another language
+4. If the user asks you to speak in another language (e.g., Arabic, Spanish, French, etc.), switch to that language and continue the conversation in that language
+5. Be conversational, friendly, and helpful
+6. Keep your responses concise and clear for voice conversation
+''';
+
       _dataChannel!.send(RTCDataChannelMessage(jsonEncode({
         'type': 'session.update',
         'session': {
           'modalities': ['text', 'audio'],
-          'instructions': systemPrompt,
+          'instructions': enhancedInstructions,
           'voice': 'alloy',
           'input_audio_format': 'pcm16',
           'output_audio_format': 'pcm16',
@@ -189,7 +201,7 @@ class OpenAIRealtimeWebRTCService {
           'temperature': 0.8,
         },
       })));
-      _logger.i('Session configuration sent');
+      _logger.i('Session configuration sent with greeting and language instructions');
     } catch (e) {
       _logger.e('Error configuring session', error: e);
     }
@@ -288,6 +300,10 @@ class OpenAIRealtimeWebRTCService {
     _peerConnection?.onAddStream = (MediaStream stream) {
       _logger.i('Received remote audio stream');
       _remoteStream = stream;
+
+      // Enable loudspeaker instead of earpiece for better audio
+      Helper.setSpeakerphoneOn(true);
+      _logger.i('Loudspeaker enabled');
 
       // Set up the stream for playback
       if (_remoteRenderer != null) {
@@ -463,6 +479,10 @@ class OpenAIRealtimeWebRTCService {
 
   /// Clean up connection
   void _cleanupConnection() {
+    // Disable loudspeaker and restore normal audio routing
+    Helper.setSpeakerphoneOn(false);
+    _logger.i('Loudspeaker disabled');
+
     _dataChannel?.close();
     _dataChannel = null;
 
