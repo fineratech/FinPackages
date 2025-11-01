@@ -140,8 +140,10 @@ class OpenAIRealtimeWebRTCService {
       final response = await request.close();
       final responseBody = await response.transform(utf8.decoder).join();
 
-      if (response.statusCode == 200 && responseBody.isNotEmpty) {
-        _logger.i('Received SDP answer from server');
+      // Accept both 200 (OK) and 201 (Created) as success
+      if ((response.statusCode == 200 || response.statusCode == 201) &&
+          responseBody.isNotEmpty) {
+        _logger.i('Received SDP answer from server (${response.statusCode})');
         return responseBody;
       } else {
         throw Exception(
