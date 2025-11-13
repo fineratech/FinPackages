@@ -135,8 +135,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           apiKey: OpenAIConfig.getApiKey(),
           backgroundColor: widget.backgroundColor,
           primaryColor: widget.primaryColor,
-          secondaryColor: widget.secondaryColor,
-          title: 'Voice Assistant',
+          accentColor: widget.secondaryColor,
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(0.0, 1.0); // Slide from bottom

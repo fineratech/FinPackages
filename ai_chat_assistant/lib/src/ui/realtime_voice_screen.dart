@@ -10,9 +10,8 @@ class RealtimeVoiceScreen extends StatefulWidget {
   final String systemPrompt;
   final Color? backgroundColor;
   final Color? primaryColor;
-  final Color? secondaryColor;
+  final Color? accentColor;
   final String apiKey;
-  final String? title;
 
   const RealtimeVoiceScreen({
     super.key,
@@ -21,12 +20,19 @@ class RealtimeVoiceScreen extends StatefulWidget {
     required this.apiKey,
     this.backgroundColor,
     this.primaryColor,
-    this.secondaryColor,
-    this.title,
+    this.accentColor,
   });
 
   @override
   State<RealtimeVoiceScreen> createState() => _RealtimeVoiceScreenState();
+}
+
+enum VoiceState {
+  connecting,
+  listening,
+  processing,
+  speaking,
+  error,
 }
 
 class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
@@ -36,33 +42,25 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
   late OpenAIRealtimeWebRTCService _realtimeService;
   late AnimationController _pulseController;
   late AnimationController _waveController;
-  late Animation<double> _pulseAnimation;
 
-  final List<String> _transcripts = [];
-  final List<Map<String, dynamic>> _functionCalls = [];
-  final ScrollController _scrollController = ScrollController();
-
-  bool _isConnected = false;
-  String _statusMessage = 'Ready to connect';
-  bool _permissionGranted = false;
-
-  // Visual state
-  bool _isListening = false;
-  bool _isProcessing = false;
-  bool _isSpeaking = false;
+  VoiceState _currentState = VoiceState.connecting;
+  String _statusMessage = 'Connecting...';
+  bool _isMuted = false;
 
   Color get _backgroundColor =>
-      widget.backgroundColor ?? const Color(0xFF0A0E27);
-  Color get _primaryColor => widget.primaryColor ?? const Color(0xFF6C5CE7);
-  Color get _secondaryColor => widget.secondaryColor ?? const Color(0xFF00D9FF);
-  String get _title => widget.title ?? 'Voice Assistant';
+      widget.backgroundColor ?? const Color(0xFF000000);
+  Color get _primaryColor => widget.primaryColor ?? const Color(0xFFFFFFFF);
+  Color get _accentColor => widget.accentColor ?? const Color(0xFFCE6918);
 
   @override
   void initState() {
     super.initState();
     _initializeServices();
     _setupAnimations();
-    _requestPermissions();
+    // Auto-start connection
+    Future.delayed(const Duration(milliseconds: 500), () {
+      _connect();
+    });
   }
 
   void _initializeServices() {
@@ -84,6 +82,11 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
     _realtimeService.functionCallStream.listen(_onFunctionCall);
   }
 
+  void _onFunctionCall(Map<String, dynamic> functionCall) {
+    _logger.i('Function call: ${functionCall['name']}');
+    // Function calls are automatically handled by the service
+  }
+
   void _setupAnimations() {
     _pulseController = AnimationController(
       duration: const Duration(milliseconds: 1500),
@@ -94,143 +97,71 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
       duration: const Duration(milliseconds: 2000),
       vsync: this,
     )..repeat();
-
-    _pulseAnimation = Tween<double>(begin: 0.95, end: 1.05).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
-    );
-  }
-
-  Future<void> _requestPermissions() async {
-    // WebRTC will request microphone permission automatically
-    setState(() {
-      _permissionGranted = true;
-    });
   }
 
   void _onConnectionChanged(bool connected) {
     setState(() {
-      _isConnected = connected;
+      if (connected) {
+        _currentState = VoiceState.listening;
+        _statusMessage = 'Listening...';
+      }
     });
   }
 
   void _onTranscriptReceived(String transcript) {
-    setState(() {
-      _transcripts.add(transcript);
-    });
-    _scrollToBottom();
-
-    // Update visual state based on transcript
-    if (transcript.startsWith('You:')) {
-      setState(() {
-        _isListening = false;
-        _isProcessing = true;
-      });
-    } else if (transcript.startsWith('AI:')) {
-      setState(() {
-        _isProcessing = false;
-        _isSpeaking = true;
-      });
-    }
+    _logger.i('Transcript: $transcript');
   }
 
   void _onError(String error) {
-    _logger.e('Realtime API error: $error');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Error: $error'),
-        backgroundColor: Colors.red,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
+    _logger.e('Error: $error');
+    setState(() {
+      _currentState = VoiceState.error;
+      _statusMessage = 'Connection failed';
+    });
   }
 
   void _onStatusChanged(String status) {
     setState(() {
       _statusMessage = status;
-    });
 
-    // Update visual states based on status
-    if (status.contains('Listening')) {
-      setState(() {
-        _isListening = true;
-        _isProcessing = false;
-        _isSpeaking = false;
-      });
-    } else if (status.contains('Processing')) {
-      setState(() {
-        _isListening = false;
-        _isProcessing = true;
-        _isSpeaking = false;
-      });
-    } else if (status.contains('responding')) {
-      setState(() {
-        _isListening = false;
-        _isProcessing = false;
-        _isSpeaking = true;
-      });
-    } else if (status.contains('Ready')) {
-      setState(() {
-        _isListening = true;
-        _isProcessing = false;
-        _isSpeaking = false;
-      });
-    }
-  }
-
-  void _onFunctionCall(Map<String, dynamic> functionCall) {
-    setState(() {
-      _functionCalls.add(functionCall);
-      _transcripts.add(
-        'Function: ${functionCall['name']} with args ${functionCall['arguments']}',
-      );
-    });
-    _scrollToBottom();
-  }
-
-  void _scrollToBottom() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
+      // Update state based on status
+      if (status.toLowerCase().contains('listening')) {
+        _currentState = VoiceState.listening;
+      } else if (status.toLowerCase().contains('processing')) {
+        _currentState = VoiceState.processing;
+      } else if (status.toLowerCase().contains('speaking')) {
+        _currentState = VoiceState.speaking;
+      } else if (status.toLowerCase().contains('ready')) {
+        _currentState = VoiceState.listening;
       }
     });
   }
 
-  Future<void> _toggleConnection() async {
-    if (_isConnected) {
-      await _disconnect();
-    } else {
-      await _connect();
-    }
-  }
-
   Future<void> _connect() async {
-    if (!_permissionGranted) {
-      await _requestPermissions();
-      if (!_permissionGranted) return;
-    }
-
     try {
-      setState(() {
-        _statusMessage = 'Connecting...';
-      });
       await _realtimeService.connect();
     } catch (e) {
       _logger.e('Connection error', error: e);
-      setState(() {
-        _statusMessage = 'Connection failed';
-      });
     }
   }
 
   Future<void> _disconnect() async {
     await _realtimeService.disconnect();
+  }
+
+  void _toggleMute() {
     setState(() {
-      _statusMessage = 'Disconnected';
+      _isMuted = !_isMuted;
     });
+    _realtimeService.toggleMicrophone(!_isMuted);
+  }
+
+  void _retry() {
+    setState(() {
+      _currentState = VoiceState.connecting;
+      _statusMessage = 'Connecting...';
+    });
+    _connect();
   }
 
   @override
@@ -239,343 +170,310 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
     _realtimeService.dispose();
     _pulseController.dispose();
     _waveController.dispose();
-    _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: _backgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: widget.primaryColor),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text(
-          _title,
-          style: TextStyle(
-            color: widget.primaryColor,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.delete_outline,
-              color: _secondaryColor,
-            ),
-            onPressed: () {
-              setState(() {
-                _transcripts.clear();
-                _functionCalls.clear();
-              });
-            },
-            tooltip: 'Clear conversation',
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Transcript section
-            Expanded(
-              flex: 2,
-              child: _buildTranscriptSection(),
-            ),
-
-            // Main visual indicator
-            Expanded(
-              flex: 3,
-              child: _buildVisualIndicator(),
-            ),
-
-            // Status and controls
-            _buildStatusSection(),
-
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTranscriptSection() {
-    return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: _secondaryColor.withValues(alpha: 0.2),
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.chat_bubble_outline, color: Colors.white, size: 20),
-              const SizedBox(width: 8),
-              Text(
-                'Conversation',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Expanded(
-            child: _transcripts.isEmpty
-                ? Center(
-                    child: Text(
-                      'Start talking to begin...',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  )
-                : ListView.builder(
-                    controller: _scrollController,
-                    itemCount: _transcripts.length,
-                    itemBuilder: (context, index) {
-                      final transcript = _transcripts[index];
-                      final isUser = transcript.startsWith('You:');
-                      final isFunction = transcript.startsWith('Function:');
-
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Text(
-                          transcript,
-                          style: TextStyle(
-                            color: isFunction
-                                ? _secondaryColor
-                                : isUser
-                                    ? Colors.white
-                                    : Colors.white.withValues(alpha: 0.85),
-                            fontSize: 13,
-                            fontWeight: isFunction
-                                ? FontWeight.w600
-                                : isUser
-                                    ? FontWeight.w500
-                                    : FontWeight.normal,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildVisualIndicator() {
-    return Center(
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // Animated waves when speaking
-          if (_isSpeaking || _isListening)
-            ...List.generate(3, (index) {
-              return AnimatedBuilder(
-                animation: _waveController,
-                builder: (context, child) {
-                  final delay = index * 0.2;
-                  final scale =
-                      1.0 + (1.5 * (((_waveController.value + delay) % 1.0)));
-                  final opacity =
-                      1.0 - (((_waveController.value + delay) % 1.0));
-
-                  return Container(
-                    width: 150 * scale,
-                    height: 150 * scale,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: (_isSpeaking ? _primaryColor : _secondaryColor)
-                            .withValues(alpha: opacity * 0.3),
-                        width: 2,
-                      ),
-                    ),
-                  );
-                },
-              );
-            }),
-
-          // Main indicator circle
-          AnimatedBuilder(
-            animation: _pulseAnimation,
-            builder: (context, child) {
-              return Transform.scale(
-                scale: _isConnected ? _pulseAnimation.value : 1.0,
-                child: Container(
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: RadialGradient(
-                      colors: _isConnected
-                          ? [
-                              _isSpeaking
-                                  ? _primaryColor
-                                  : _isProcessing
-                                      ? Colors.amber
-                                      : _secondaryColor,
-                              _isSpeaking
-                                  ? _primaryColor.withValues(alpha: 0.3)
-                                  : _isProcessing
-                                      ? Colors.amber.withValues(alpha: 0.3)
-                                      : _secondaryColor.withValues(alpha: 0.3),
-                            ]
-                          : [
-                              Colors.grey.shade700,
-                              Colors.grey.shade800,
-                            ],
-                    ),
-                    boxShadow: _isConnected
-                        ? [
-                            BoxShadow(
-                              color: (_isSpeaking
-                                      ? _primaryColor
-                                      : _secondaryColor)
-                                  .withValues(alpha: 0.5),
-                              blurRadius: 30,
-                              spreadRadius: 10,
-                            ),
-                          ]
-                        : [],
-                  ),
-                  child: Icon(
-                    _isSpeaking
-                        ? Icons.volume_up
-                        : _isProcessing
-                            ? Icons.psychology
-                            : _isListening
-                                ? Icons.mic
-                                : Icons.mic_off,
-                    size: 60,
-                    color: Colors.white,
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStatusSection() {
-    return Column(
-      children: [
-        // Status text
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          await _disconnect();
+          if (context.mounted) {
+            Navigator.of(context).pop();
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: _backgroundColor,
+        body: Container(
           decoration: BoxDecoration(
-            color: Colors.black.withValues(alpha: 0.2),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: _isConnected
-                  ? Colors.green.withValues(alpha: 0.3)
-                  : Colors.red.withValues(alpha: 0.3),
-              width: 1,
-            ),
+            color: _backgroundColor,
+            border: _currentState == VoiceState.listening
+                ? Border.all(
+                    color: _accentColor,
+                    width: 14,
+                    strokeAlign: BorderSide.strokeAlignCenter,
+                  )
+                : null,
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: _isConnected ? Colors.greenAccent : Colors.redAccent,
-                  boxShadow: [
-                    BoxShadow(
-                      color: _isConnected
-                          ? Colors.greenAccent.withValues(alpha: 0.5)
-                          : Colors.redAccent.withValues(alpha: 0.5),
-                      blurRadius: 4,
-                      spreadRadius: 1,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                _statusMessage,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        const SizedBox(height: 24),
-
-        // Connect/Disconnect button
-        GestureDetector(
-          onTap: _permissionGranted ? _toggleConnection : _requestPermissions,
-          child: Container(
-            width: 200,
-            height: 60,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: _isConnected
-                    ? [Colors.red.shade400, Colors.red.shade600]
-                    : [_primaryColor, _secondaryColor],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(30),
-              boxShadow: [
-                BoxShadow(
-                  color: (_isConnected ? Colors.red : _primaryColor)
-                      .withValues(alpha: 0.4),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                ),
-              ],
-            ),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
                 children: [
-                  Icon(
-                    _isConnected ? Icons.stop : Icons.play_arrow,
-                    color: Colors.white,
-                    size: 28,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    _isConnected ? 'Disconnect' : 'Connect',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                  const Spacer(),
+                  // Main animation area
+                  _buildStateAnimation(),
+                  const SizedBox(height: 20),
+                  // Status text
+                  _buildStatusText(),
+                  const Spacer(),
+                  // Error retry button
+                  if (_currentState == VoiceState.error) ...[
+                    GestureDetector(
+                      onTap: _retry,
+                      child: Text(
+                        'Connection failed. Tap to retry',
+                        style: TextStyle(
+                          color: Colors.red.shade400,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
                     ),
+                    const SizedBox(height: 42),
+                  ] else
+                    const SizedBox(height: 42),
+                  // Bottom controls
+                  Row(
+                    children: [
+                      _buildCircularButton(
+                        icon: Icons.close,
+                        backgroundColor: _primaryColor.withValues(alpha: 0.1),
+                        iconColor: _primaryColor,
+                        onTap: () async {
+                          await _disconnect();
+                          if (context.mounted) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      ),
+                      const Spacer(),
+                      _buildCircularButton(
+                        icon: _isMuted ? Icons.mic_off : Icons.mic,
+                        backgroundColor: _primaryColor,
+                        iconColor: _isMuted
+                            ? _primaryColor.withValues(alpha: 0.3)
+                            : Colors.white,
+                        onTap: _toggleMute,
+                      ),
+                    ],
                   ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
           ),
         ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildStateAnimation() {
+    switch (_currentState) {
+      case VoiceState.connecting:
+      case VoiceState.processing:
+        return _buildLoadingAnimation();
+      case VoiceState.listening:
+        return _buildListeningAnimation();
+      case VoiceState.speaking:
+        return _buildSpeakingAnimation();
+      case VoiceState.error:
+        return _buildErrorAnimation();
+    }
+  }
+
+  Widget _buildLoadingAnimation() {
+    return AnimatedBuilder(
+      animation: _pulseController,
+      builder: (context, child) {
+        return Container(
+          width: 200,
+          height: 200,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: _primaryColor.withValues(alpha: 0.1 + (_pulseController.value * 0.2)),
+          ),
+          child: Center(
+            child: Icon(
+              Icons.motion_photos_on,
+              size: 80,
+              color: _primaryColor.withValues(alpha: 0.5 + (_pulseController.value * 0.5)),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildListeningAnimation() {
+    return AnimatedBuilder(
+      animation: _waveController,
+      builder: (context, child) {
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            // Outer ripple
+            Container(
+              width: 200 + (_waveController.value * 40),
+              height: 200 + (_waveController.value * 40),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: _accentColor.withValues(alpha: 1 - _waveController.value),
+                  width: 3,
+                ),
+              ),
+            ),
+            // Middle ripple
+            Container(
+              width: 180 + (_waveController.value * 30),
+              height: 180 + (_waveController.value * 30),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: _accentColor.withValues(alpha: (1 - _waveController.value) * 0.7),
+                  width: 2,
+                ),
+              ),
+            ),
+            // Center circle
+            Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    _accentColor.withValues(alpha: 0.3),
+                    _accentColor.withValues(alpha: 0.1),
+                  ],
+                ),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.mic,
+                  size: 80,
+                  color: _accentColor,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildSpeakingAnimation() {
+    return AnimatedBuilder(
+      animation: _pulseController,
+      builder: (context, child) {
+        final scale = 1.0 + (_pulseController.value * 0.15);
+        return Transform.scale(
+          scale: scale,
+          child: Container(
+            width: 200,
+            height: 200,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: RadialGradient(
+                colors: [
+                  _primaryColor.withValues(alpha: 0.3),
+                  _primaryColor.withValues(alpha: 0.1),
+                ],
+              ),
+            ),
+            child: Center(
+              child: Icon(
+                Icons.graphic_eq,
+                size: 80,
+                color: _primaryColor,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildErrorAnimation() {
+    return Container(
+      width: 200,
+      height: 200,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.red.withValues(alpha: 0.1),
+      ),
+      child: Center(
+        child: Icon(
+          Icons.error_outline,
+          size: 80,
+          color: Colors.red.shade400,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatusText() {
+    if (_currentState == VoiceState.connecting ||
+        _currentState == VoiceState.processing) {
+      return Column(
+        children: [
+          Text(
+            _currentState == VoiceState.connecting ? 'Connecting...' : 'Processing...',
+            style: TextStyle(
+              color: _primaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+          if (_currentState == VoiceState.processing) ...[
+            const SizedBox(height: 20),
+            Text(
+              'Please wait while AI processes your request',
+              style: TextStyle(
+                color: _primaryColor.withValues(alpha: 0.8),
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                height: 1.4,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ],
+      );
+    } else if (_currentState == VoiceState.listening) {
+      return Text(
+        'Listening...',
+        style: TextStyle(
+          color: _primaryColor,
+          fontSize: 20,
+          fontWeight: FontWeight.w400,
+          fontStyle: FontStyle.italic,
+        ),
+      );
+    }
+    return const SizedBox.shrink();
+  }
+
+  Widget _buildCircularButton({
+    required IconData icon,
+    required Color backgroundColor,
+    required Color iconColor,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 62,
+        height: 62,
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.transparent),
+        ),
+        child: Center(
+          child: Icon(
+            icon,
+            color: iconColor,
+            size: 24,
+          ),
+        ),
+      ),
     );
   }
 }
