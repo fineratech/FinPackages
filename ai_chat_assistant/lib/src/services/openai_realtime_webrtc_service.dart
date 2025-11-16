@@ -133,7 +133,8 @@ class OpenAIRealtimeWebRTCService {
 
   /// Send SDP offer to OpenAI and get answer
   Future<String> _sendSDPToServer(String sdp) async {
-    final url = Uri.parse('https://api.openai.com/v1/realtime?model=gpt-realtime');
+    final url =
+        Uri.parse('https://api.openai.com/v1/realtime?model=gpt-realtime');
 
     try {
       final client = HttpClient();
@@ -177,6 +178,7 @@ IMPORTANT CONVERSATION RULES:
 4. If the user asks you to speak in another language (e.g., Arabic, Spanish, French, etc.), switch to that language and continue the conversation in that language
 5. Be conversational, friendly, and helpful
 6. Keep your responses concise and clear for voice conversation
+7. Always wait for the user to finish speaking and complete their sentences before responding
 ''';
 
       _dataChannel!.send(RTCDataChannelMessage(jsonEncode({
@@ -201,7 +203,8 @@ IMPORTANT CONVERSATION RULES:
           'temperature': 0.8,
         },
       })));
-      _logger.i('Session configuration sent with greeting and language instructions');
+      _logger.i(
+          'Session configuration sent with greeting and language instructions');
     } catch (e) {
       _logger.e('Error configuring session', error: e);
     }
@@ -232,8 +235,8 @@ IMPORTANT CONVERSATION RULES:
           case 'session.updated':
             _logger.i('Session configured successfully');
             // Now send initial response create event
-            _dataChannel!.send(RTCDataChannelMessage(
-                jsonEncode({'type': 'response.create'})));
+            _dataChannel!.send(
+                RTCDataChannelMessage(jsonEncode({'type': 'response.create'})));
             _statusController.add('Ready - Start speaking...');
             break;
 
@@ -313,7 +316,8 @@ IMPORTANT CONVERSATION RULES:
 
       final audioTracks = stream.getAudioTracks();
       if (audioTracks.isNotEmpty) {
-        _logger.i('Remote audio track available: ${audioTracks.length} track(s)');
+        _logger
+            .i('Remote audio track available: ${audioTracks.length} track(s)');
 
         // Enable all audio tracks and set volume to maximum
         for (var track in audioTracks) {
@@ -404,8 +408,8 @@ IMPORTANT CONVERSATION RULES:
         })));
 
         // Request new response
-        _dataChannel?.send(RTCDataChannelMessage(
-            jsonEncode({'type': 'response.create'})));
+        _dataChannel?.send(
+            RTCDataChannelMessage(jsonEncode({'type': 'response.create'})));
 
         _logger.i('Function result sent');
       } catch (e) {
@@ -447,8 +451,8 @@ IMPORTANT CONVERSATION RULES:
         },
       })));
 
-      _dataChannel!.send(
-          RTCDataChannelMessage(jsonEncode({'type': 'response.create'})));
+      _dataChannel!
+          .send(RTCDataChannelMessage(jsonEncode({'type': 'response.create'})));
 
       _transcriptController.add('You: $text');
     } catch (e) {
