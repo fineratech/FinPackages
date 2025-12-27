@@ -80,6 +80,14 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
     _realtimeService.errorStream.listen(_onError);
     _realtimeService.statusStream.listen(_onStatusChanged);
     _realtimeService.functionCallStream.listen(_onFunctionCall);
+    _realtimeService.sessionEndStream.listen(_onSessionEnd);
+  }
+
+  void _onSessionEnd(void _) {
+    _logger.i('Session end requested - navigating back');
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   void _onFunctionCall(Map<String, dynamic> functionCall) {
@@ -284,13 +292,15 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
           height: 200,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: _primaryColor.withValues(alpha: 0.1 + (_pulseController.value * 0.2)),
+            color: _primaryColor.withValues(
+                alpha: 0.1 + (_pulseController.value * 0.2)),
           ),
           child: Center(
             child: Icon(
               Icons.motion_photos_on,
               size: 80,
-              color: _primaryColor.withValues(alpha: 0.5 + (_pulseController.value * 0.5)),
+              color: _primaryColor.withValues(
+                  alpha: 0.5 + (_pulseController.value * 0.5)),
             ),
           ),
         );
@@ -312,7 +322,8 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: _accentColor.withValues(alpha: 1 - _waveController.value),
+                  color:
+                      _accentColor.withValues(alpha: 1 - _waveController.value),
                   width: 3,
                 ),
               ),
@@ -324,7 +335,8 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: _accentColor.withValues(alpha: (1 - _waveController.value) * 0.7),
+                  color: _accentColor.withValues(
+                      alpha: (1 - _waveController.value) * 0.7),
                   width: 2,
                 ),
               ),
@@ -412,7 +424,9 @@ class _RealtimeVoiceScreenState extends State<RealtimeVoiceScreen>
       return Column(
         children: [
           Text(
-            _currentState == VoiceState.connecting ? 'Connecting...' : 'Processing...',
+            _currentState == VoiceState.connecting
+                ? 'Connecting...'
+                : 'Processing...',
             style: TextStyle(
               color: _primaryColor,
               fontSize: 20,

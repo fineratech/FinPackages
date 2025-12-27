@@ -21,6 +21,7 @@ class OpenAIRealtimeWebRTCService {
 
   bool _isConnected = false;
   String? _sessionId;
+  bool _endSessionRequested = false;
 
   // Stream controllers for events
   final _connectionController = StreamController<bool>.broadcast();
@@ -29,6 +30,7 @@ class OpenAIRealtimeWebRTCService {
   final _statusController = StreamController<String>.broadcast();
   final _functionCallController =
       StreamController<Map<String, dynamic>>.broadcast();
+  final _sessionEndController = StreamController<void>.broadcast();
 
   // Buffers for function call arguments
   final Map<String, StringBuffer> _functionCallBuffers = {};
@@ -39,6 +41,7 @@ class OpenAIRealtimeWebRTCService {
   Stream<String> get statusStream => _statusController.stream;
   Stream<Map<String, dynamic>> get functionCallStream =>
       _functionCallController.stream;
+  Stream<void> get sessionEndStream => _sessionEndController.stream;
 
   bool get isConnected => _isConnected;
 
@@ -285,6 +288,14 @@ IMPORTANT CONVERSATION RULES:
             if (response?['status'] == 'failed') {
               _errorController.add('Response failed');
             }
+            // If end_session was requested, trigger navigation after AI farewell is complete
+            if (_endSessionRequested) {
+              _logger.i('AI farewell complete, ending session');
+              Future.delayed(const Duration(milliseconds: 500), () {
+                _sessionEndController.add(null);
+              });
+              _endSessionRequested = false;
+            }
             break;
 
           case 'error':
@@ -396,6 +407,13 @@ IMPORTANT CONVERSATION RULES:
         // Execute function
         final result =
             await functionProvider.executeFunction(functionName, argsJson);
+
+        // Check if this is an end_session function
+        if (functionName == 'end_session') {
+          _logger.i('End session function called');
+          _endSessionRequested = true;
+          // Let the AI speak its farewell naturally via response.create
+        }
 
         // Send result back via data channel
         _dataChannel?.send(RTCDataChannelMessage(jsonEncode({
@@ -526,6 +544,7 @@ IMPORTANT CONVERSATION RULES:
     _errorController.close();
     _statusController.close();
     _functionCallController.close();
+    _sessionEndController.close();
     _functionCallBuffers.clear();
   }
 }

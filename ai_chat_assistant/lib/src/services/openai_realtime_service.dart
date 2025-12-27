@@ -22,6 +22,7 @@ class OpenAIRealtimeService {
   WebSocketChannel? _channel;
   bool _isConnected = false;
   String? _sessionId;
+  bool _endSessionRequested = false;
 
   // Stream controllers for events
   final _connectionController = StreamController<bool>.broadcast();
@@ -31,6 +32,7 @@ class OpenAIRealtimeService {
   final _statusController = StreamController<String>.broadcast();
   final _functionCallController =
       StreamController<Map<String, dynamic>>.broadcast();
+  final _sessionEndController = StreamController<void>.broadcast();
 
   // Buffers for function call arguments
   final Map<String, StringBuffer> _functionCallBuffers = {};
@@ -42,6 +44,7 @@ class OpenAIRealtimeService {
   Stream<String> get statusStream => _statusController.stream;
   Stream<Map<String, dynamic>> get functionCallStream =>
       _functionCallController.stream;
+  Stream<void> get sessionEndStream => _sessionEndController.stream;
 
   bool get isConnected => _isConnected;
 
@@ -121,7 +124,6 @@ class OpenAIRealtimeService {
     }
   }
 
-
   /// Handle incoming WebSocket messages
   void _handleMessage(dynamic message) {
     try {
@@ -157,6 +159,14 @@ class OpenAIRealtimeService {
           break;
         case 'response.done':
           _statusController.add('Ready');
+          // If end_session was requested, trigger navigation after AI farewell is complete
+          if (_endSessionRequested) {
+            _logger.i('AI farewell complete, ending session');
+            Future.delayed(const Duration(milliseconds: 500), () {
+              _sessionEndController.add(null);
+            });
+            _endSessionRequested = false;
+          }
           break;
         case 'response.audio.delta':
           _handleAudioDelta(data);
@@ -301,6 +311,13 @@ class OpenAIRealtimeService {
             functionName,
             argsJson,
           );
+
+          // Check if this is an end_session function
+          if (functionName == 'end_session') {
+            _logger.i('End session function called');
+            _endSessionRequested = true;
+            // Let the AI speak its farewell naturally via response.create
+          }
 
           // Send the result back to the API
           _sendFunctionCallOutput(callId, result);
@@ -509,6 +526,7 @@ class OpenAIRealtimeService {
     _errorController.close();
     _statusController.close();
     _functionCallController.close();
+    _sessionEndController.close();
     _functionCallBuffers.clear();
   }
 }
