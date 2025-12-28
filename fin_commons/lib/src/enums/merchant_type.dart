@@ -8,6 +8,7 @@ enum MerchantType {
   trucking,
   // ignore: constant_identifier_names
   PropertyManagement,
+  lawFirm,
 
   other;
 
@@ -25,6 +26,8 @@ enum MerchantType {
         return 'Transportation_and_logistics';
       case MerchantType.PropertyManagement:
         return 'SubMerchant';
+      case MerchantType.lawFirm:
+        return 'Legal_Services';
       case MerchantType.other:
         return 'Other';
     }
@@ -44,6 +47,8 @@ enum MerchantType {
         return EntityType.vehicle;
       case MerchantType.PropertyManagement:
         return EntityType.realEstate;
+      case MerchantType.lawFirm:
+        return EntityType.lawer;
       case MerchantType.other:
         return EntityType.other;
     }

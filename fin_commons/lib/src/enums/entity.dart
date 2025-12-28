@@ -8,8 +8,8 @@ enum EntityType {
   foodMenu,
   driver,
   truck,
+  lawer,
   other;
-
 
   String getPageTitle() {
     switch (this) {
@@ -31,6 +31,8 @@ enum EntityType {
         return 'Register Driver';
       case EntityType.truck:
         return 'Register Truck';
+      case EntityType.lawer:
+        return 'Register Lawer';
       case EntityType.other:
         return 'Register Entity';
     }
