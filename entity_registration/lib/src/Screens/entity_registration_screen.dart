@@ -93,6 +93,8 @@ class EntityRegistrationScreen extends StatelessWidget {
           type: type,
           locationId: locationId,
         );
+      case EntityType.lawer:
+        return Container(); //TODO: Add Lawer Registration Screen
 
       case EntityType.other:
         return Container();

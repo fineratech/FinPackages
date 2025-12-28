@@ -22,6 +22,8 @@ class ProjectFunctionProvider implements FunctionDefinitionsProvider {
         return _getRealEstateFunctionDefinitions();
       case ProjectType.shifa:
         return _getShifaFunctionDefinitions();
+      case ProjectType.law:
+        return []; // TODO: Add law project function definitions
     }
   }
 
@@ -35,6 +37,8 @@ class ProjectFunctionProvider implements FunctionDefinitionsProvider {
         return await _executeRealEstateFunction(functionName, args);
       case ProjectType.shifa:
         return await _executeShifaFunction(functionName, args);
+      case ProjectType.law:
+        return {}; // TODO: Implement law project function execution
     }
   }
 
