@@ -27,7 +27,7 @@ enum MerchantType {
       case MerchantType.PropertyManagement:
         return 'SubMerchant';
       case MerchantType.lawFirm:
-        return 'Legal_Services';
+        return 'Legal';
       case MerchantType.other:
         return 'Other';
     }
