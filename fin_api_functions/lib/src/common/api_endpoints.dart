@@ -231,4 +231,7 @@ class ApiEndPoints {
 
   static const String deleteAppointment =
       "$serviceReferencePathResource/DeleteAppointment";
+
+  static const String registerClient =
+      "$serviceReferencePathResource/RegisterClient";
 }
