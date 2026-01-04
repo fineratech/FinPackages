@@ -94,7 +94,7 @@ class EntityRegistrationScreen extends StatelessWidget {
           type: type,
           locationId: locationId,
         );
-      case EntityType.lawer:
+      case EntityType.lawyer:
         return RegisterLawerScreen(
           onDone: onDone,
           merchantId: merchantId,

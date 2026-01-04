@@ -111,7 +111,7 @@ class RegisterLawerViewModel extends ChangeNotifier {
           MaterialPageRoute(
             builder: (context) => RegistrationSuccessView(
               onDone: onDone,
-              entityType: EntityType.lawer,
+              entityType: EntityType.lawyer,
               merchantId: merchantId,
               userID: userId,
               locationId: locationId,
