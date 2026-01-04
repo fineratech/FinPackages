@@ -9,6 +9,7 @@ enum EntityType {
   driver,
   truck,
   lawer,
+  client,
   other;
 
   String getPageTitle() {
@@ -33,6 +34,8 @@ enum EntityType {
         return 'Register Truck';
       case EntityType.lawer:
         return 'Register Lawer';
+      case EntityType.client:
+        return 'Register Client';
       case EntityType.other:
         return 'Register Entity';
     }
