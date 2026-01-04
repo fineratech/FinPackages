@@ -130,6 +130,7 @@ class ClientRegistrationViewModel extends ChangeNotifier {
       'Legal',
       type.name,
       merchantId,
+      "ClientIDInTheEntity",
       "-1",
       client.idType,
       client.idNumber,
