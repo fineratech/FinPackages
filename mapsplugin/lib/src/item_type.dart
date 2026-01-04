@@ -5,7 +5,7 @@ enum ItemType {
   therapist,
   patient,
   hospital,
-  lawer,
+  lawyer,
   lawFirm,
   other,
 }
