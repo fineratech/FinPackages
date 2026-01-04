@@ -48,7 +48,7 @@ enum MerchantType {
       case MerchantType.PropertyManagement:
         return EntityType.realEstate;
       case MerchantType.lawFirm:
-        return EntityType.lawer;
+        return EntityType.lawyer;
       case MerchantType.other:
         return EntityType.other;
     }
