@@ -1155,7 +1155,8 @@ class ApiFunctionsService {
     String category,
     String type,
     String companyId,
-    String mrn,
+    String recordFriendlyName,
+    String clientRecordNumber,
     String idType,
     String idNumber,
     String idExpiry,
@@ -1168,7 +1169,7 @@ class ApiFunctionsService {
     String formattedIdExpiryDate = DateTimeService.mmddyyyyFormat(idExpiry);
     String formattedDob = DateTimeService.mmddyyyyFormat(dob);
     final String url =
-        '${ApiEndPoints.registerClient}/$ownerId/$category/$type/$companyId/$mrn/$idType/$idNumber/$formattedIdExpiryDate/$idIssuingState/$idIssuingCountry/$gender/$formattedDob/$locationId';
+        '${ApiEndPoints.registerClient}/$ownerId/$category/$type/$companyId/$recordFriendlyName/$clientRecordNumber/$idType/$idNumber/$formattedIdExpiryDate/$idIssuingState/$idIssuingCountry/$gender/$formattedDob/$locationId';
     var response = await apiService.get(endPoint: url);
     if (response.success) {
       final dynamic responseData = response.data;
