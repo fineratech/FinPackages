@@ -1,4 +1,4 @@
-import 'package:entity_registration/src/Screens/therapist/basic_info/basic_info_view_model.dart';
+import 'package:entity_registration/src/Screens/lawer/basic_info/basic_info_view_model.dart';
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';

@@ -1,5 +1,5 @@
 import 'package:csc_picker_plus/csc_picker_plus.dart';
-import 'package:entity_registration/src/Screens/therapist/license_info/license_info_view_model.dart';
+import 'package:entity_registration/src/Screens/lawer/license_info/license_info_view_model.dart';
 import 'package:entity_registration/src/constants/app_colors.dart';
 import 'package:entity_registration/src/widgets/image_with_title.dart';
 import 'package:fin_commons/fin_commons.dart';

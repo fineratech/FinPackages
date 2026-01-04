@@ -65,9 +65,9 @@ class BasicInfoViewModel extends ChangeNotifier {
   }
 
   //TextEditingControllers
-  late TextEditingController therapistNameController;
-  late TextEditingController therapistDescriptionController;
-  late TextEditingController therapistQualificationController;
+  late TextEditingController lawerNameController;
+  late TextEditingController lawerDescriptionController;
+  late TextEditingController lawerQualificationController;
   late TextEditingController certificationController;
   late TextEditingController contactNumberController;
 
@@ -75,9 +75,9 @@ class BasicInfoViewModel extends ChangeNotifier {
     _apiFunctionsService = ApiFunctionsService(
       logger: logger,
     );
-    therapistNameController = TextEditingController();
-    therapistDescriptionController = TextEditingController();
-    therapistQualificationController = TextEditingController();
+    lawerNameController = TextEditingController();
+    lawerDescriptionController = TextEditingController();
+    lawerQualificationController = TextEditingController();
     certificationController = TextEditingController();
     contactNumberController = TextEditingController();
     getServices();
@@ -107,10 +107,10 @@ class BasicInfoViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
-    therapistNameController.dispose();
-    therapistQualificationController.dispose();
+    lawerNameController.dispose();
+    lawerQualificationController.dispose();
     certificationController.dispose();
-    therapistDescriptionController.dispose();
+    lawerDescriptionController.dispose();
     contactNumberController.dispose();
 
     super.dispose();

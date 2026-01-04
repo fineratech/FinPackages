@@ -52,7 +52,7 @@ class BasicInfoView extends StatelessWidget {
                               name: "therapistName",
                               label: "Therapist Name",
                               hintText: "Therapist Name",
-                              controller: viewModel.lawerNameController,
+                              controller: viewModel.therapistNameController,
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(),
                               ]),
@@ -62,7 +62,8 @@ class BasicInfoView extends StatelessWidget {
                               name: "therapistDescription",
                               label: "Therapist Description",
                               hintText: "Therapist Description",
-                              controller: viewModel.lawerDescriptionController,
+                              controller:
+                                  viewModel.therapistDescriptionController,
                               maxLines: 3,
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(),
@@ -74,7 +75,7 @@ class BasicInfoView extends StatelessWidget {
                               label: "Therapist Qualification",
                               hintText: "Therapist Qualification",
                               controller:
-                                  viewModel.lawerQualificationController,
+                                  viewModel.therapistQualificationController,
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(),
                               ]),
@@ -193,10 +194,11 @@ class BasicInfoView extends StatelessWidget {
                                     }
                                     TherapistModel therapistModel =
                                         TherapistModel(
-                                      therapistName:
-                                          viewModel.lawerNameController.text,
+                                      therapistName: viewModel
+                                          .therapistNameController.text,
                                       therapistQualification: viewModel
-                                          .lawerQualificationController.text,
+                                          .therapistQualificationController
+                                          .text,
                                       gender: viewModel.selectedGender!,
                                       dateOfBirth: viewModel.dateOfBirth!,
                                       certification: viewModel
@@ -219,7 +221,7 @@ class BasicInfoView extends StatelessWidget {
                                       licenseIssueDate: DateTime.now(),
                                       licenseType: "",
                                       description: viewModel
-                                          .lawerDescriptionController.text,
+                                          .therapistDescriptionController.text,
                                     );
                                     saveTherapist(therapistModel);
                                   }

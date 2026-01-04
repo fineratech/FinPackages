@@ -1,7 +1,8 @@
-import 'package:entity_registration/src/Screens/therapist/basic_info/basic_info_view.dart';
-import 'package:entity_registration/src/Screens/therapist/id_info/id_info_view.dart';
-import 'package:entity_registration/src/Screens/therapist/license_info/license_info_view.dart';
-import 'package:entity_registration/src/Screens/therapist/register_therapist_view_model.dart';
+import 'package:entity_registration/src/Screens/lawer/basic_info/basic_info_view.dart';
+import 'package:entity_registration/src/Screens/lawer/id_info/id_info_view.dart';
+import 'package:entity_registration/src/Screens/lawer/license_info/license_info_view.dart';
+import 'package:entity_registration/src/Screens/lawer/register_lawer_view_model.dart';
+
 import 'package:fin_commons/fin_commons.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -25,7 +26,7 @@ class RegisterLawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => RegisterTherapistViewModel(
+      create: (context) => RegisterLawerViewModel(
         merchantId: merchantId,
         userId: userId,
         onDone: onDone,
@@ -39,7 +40,7 @@ class RegisterLawerScreen extends StatelessWidget {
         },
       ),
       builder: (context, _) {
-        return Consumer<RegisterTherapistViewModel>(
+        return Consumer<RegisterLawerViewModel>(
           builder: (context, viewModel, _) {
             return ModalProgressHUD(
               inAsyncCall: viewModel.isLoading,
@@ -53,16 +54,16 @@ class RegisterLawerScreen extends StatelessWidget {
                       children: [
                         BasicInfoView(
                           onJumpToPage: viewModel.jumpToPage,
-                          saveTherapist: viewModel.saveTherapist,
+                          saveLawer: viewModel.saveLawer,
                           merchantId: merchantId,
                         ),
                         LicenseInfoView(
                           onJumpToPage: viewModel.jumpToPage,
-                          saveTherapist: viewModel.saveTherapist,
+                          savelawer: viewModel.saveLawer,
                         ),
                         IdInfoView(
                           onJumpToPage: viewModel.jumpToPage,
-                          saveTherapist: viewModel.saveTherapist,
+                          saveLawer: viewModel.saveLawer,
                         ),
                       ],
                     ),
