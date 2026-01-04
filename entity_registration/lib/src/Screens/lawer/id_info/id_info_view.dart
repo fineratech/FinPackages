@@ -14,7 +14,7 @@ class IdInfoView extends StatelessWidget {
     required this.saveLawer,
   });
   final void Function(int) onJumpToPage;
-  final Future<void> Function(TherapistModel) saveLawer;
+  final Future<void> Function(LawyerModel) saveLawer;
 
   @override
   Widget build(BuildContext context) {
@@ -192,13 +192,13 @@ class IdInfoView extends StatelessWidget {
                       onPressed: () {
                         if (viewModel.formKey.currentState?.validate() ??
                             false) {
-                          TherapistModel lawer = TherapistModel(
+                          LawyerModel lawer = LawyerModel(
                             idIssuingCountry: viewModel.country ?? "",
                             idIssuingState: viewModel.state ?? "",
                             idNumber: viewModel.idNumberController.text,
                             idExpiryDate: viewModel.idExpiryDate.toString(),
-                            therapistName: "",
-                            therapistQualification: "",
+                            lawyerName: "",
+                            lawyerQualification: "",
                             gender: Gender.other,
                             dateOfBirth: DateTime.now(),
                             certification: "",

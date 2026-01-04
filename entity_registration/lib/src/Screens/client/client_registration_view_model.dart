@@ -121,7 +121,7 @@ class ClientRegistrationViewModel extends ChangeNotifier {
   }
 
   Future<int?> registerClient({
-    required PatientModel client,
+    required ClientModel client,
     required BuildContext context,
   }) async {
     isLoading = true;

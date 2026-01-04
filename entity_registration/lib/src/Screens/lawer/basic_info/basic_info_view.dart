@@ -14,7 +14,7 @@ class BasicInfoView extends StatelessWidget {
   });
 
   final void Function(int) onJumpToPage;
-  final Future<void> Function(TherapistModel) saveLawer;
+  final Future<void> Function(LawyerModel) saveLawer;
   final String merchantId;
 
   @override
@@ -191,10 +191,10 @@ class BasicInfoView extends StatelessWidget {
                                       );
                                       return;
                                     }
-                                    TherapistModel lawerModel = TherapistModel(
-                                      therapistName:
+                                    LawyerModel lawerModel = LawyerModel(
+                                      lawyerName:
                                           viewModel.lawerNameController.text,
-                                      therapistQualification: viewModel
+                                      lawyerQualification: viewModel
                                           .lawerQualificationController.text,
                                       gender: viewModel.selectedGender!,
                                       dateOfBirth: viewModel.dateOfBirth!,

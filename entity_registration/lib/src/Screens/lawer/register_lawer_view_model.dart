@@ -17,7 +17,7 @@ class RegisterLawerViewModel extends ChangeNotifier {
     initialize();
   }
 
-  TherapistModel? _lawerModel;
+  LawyerModel? _lawerModel;
   int currentPage = 0;
   late PageController pageController;
   late ApiFunctionsService _apiFunctionsService;
@@ -36,7 +36,7 @@ class RegisterLawerViewModel extends ChangeNotifier {
 
   bool _isLoading = false;
 
-  TherapistModel? get lawerModel => _lawerModel;
+  LawyerModel? get lawerModel => _lawerModel;
   bool get isLoading => _isLoading;
 
   set isLoading(bool value) {
@@ -44,7 +44,7 @@ class RegisterLawerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  set lawerModel(TherapistModel? lawer) {
+  set lawerModel(LawyerModel? lawer) {
     _lawerModel = lawer;
     notifyListeners();
   }
@@ -127,7 +127,7 @@ class RegisterLawerViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
-  Future<void> saveLawer(TherapistModel lawer) async {
+  Future<void> saveLawer(LawyerModel lawer) async {
     logger.i("Current Page: $currentPage");
     if (currentPage == 0) {
       lawerModel = lawer;

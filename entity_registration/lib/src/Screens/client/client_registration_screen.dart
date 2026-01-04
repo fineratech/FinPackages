@@ -238,12 +238,12 @@ class ClientRegistrationScreen extends StatelessWidget {
                             ? () {}
                             : () async {
                                 if (viewModel.isFormValid()) {
-                                  final PatientModel patientModel =
-                                      PatientModel(
+                                  final ClientModel clientModel = ClientModel(
                                     name: viewModel.clientNameController.text,
                                     ownerId: userId,
                                     companyId: merchantId,
-                                    mrn: "-1",
+                                    recordFriendlyName: "ClientIDInTheEntity",
+                                    clientRecordNumber: '-1',
                                     idType: viewModel.idType?.name ?? "",
                                     idNumber: viewModel.idNumberController.text,
                                     idExpiry: viewModel.idExpiryDate.toString(),
@@ -257,11 +257,11 @@ class ClientRegistrationScreen extends StatelessWidget {
                                   int? patientId =
                                       await viewModel.registerClient(
                                     context: context,
-                                    client: patientModel,
+                                    client: clientModel,
                                   );
                                   if (patientId != -1 && patientId != null) {
                                     if (context.mounted) {
-                                      onDone(patientModel);
+                                      onDone(clientModel);
                                     }
                                   }
                                 }

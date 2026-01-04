@@ -12,7 +12,7 @@ class LicenseInfoView extends StatelessWidget {
   const LicenseInfoView(
       {super.key, required this.onJumpToPage, required this.savelawer});
   final void Function(int) onJumpToPage;
-  final Future<void> Function(TherapistModel) savelawer;
+  final Future<void> Function(LawyerModel) savelawer;
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +178,7 @@ class LicenseInfoView extends StatelessWidget {
                       onPressed: () {
                         if (viewModel.formKey.currentState?.validate() ??
                             false) {
-                          TherapistModel lawer = TherapistModel(
+                          LawyerModel lawer = LawyerModel(
                             licenseIssuingAuthority:
                                 viewModel.issuingAuthorityController.text,
                             licenseFirstName:
@@ -192,8 +192,8 @@ class LicenseInfoView extends StatelessWidget {
                             licenseExpiryDate: viewModel.licenseExpiryDate!,
                             licenseFrontImage: viewModel.licenseFrontImage,
                             licenseBackImage: viewModel.licenseBackImage,
-                            therapistName: "",
-                            therapistQualification: "",
+                            lawyerName: "",
+                            lawyerQualification: "",
                             gender: Gender.other,
                             dateOfBirth: DateTime.now(),
                             certification: "",
