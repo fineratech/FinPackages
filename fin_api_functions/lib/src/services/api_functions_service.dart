@@ -1178,4 +1178,16 @@ class ApiFunctionsService {
     }
     return null;
   }
+
+  Future<List<ClientModel>> getClients({String lawFirmId = '-1'}) async {
+    final String url = "${ApiEndPoints.getClients}/$lawFirmId";
+    var response = await apiService.get(endPoint: url);
+    if (response.success) {
+      final List<dynamic> data = response.data['GetClientsResult'];
+      List<ClientModel> clients =
+          data.map((e) => ClientModel.fromAppObject(e)).toList();
+      return clients;
+    }
+    return [];
+  }
 }

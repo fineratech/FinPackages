@@ -234,4 +234,7 @@ class ApiEndPoints {
 
   static const String registerClient =
       "$serviceReferencePathResource/RegisterClient";
+
+  static const String getClients =
+      "$serviceReferencePathResource/GetClients/client";
 }
