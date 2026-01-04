@@ -9,12 +9,12 @@ class BasicInfoView extends StatelessWidget {
   const BasicInfoView({
     super.key,
     required this.onJumpToPage,
-    required this.saveTherapist,
+    required this.saveLawer,
     required this.merchantId,
   });
 
   final void Function(int) onJumpToPage;
-  final Future<void> Function(TherapistModel) saveTherapist;
+  final Future<void> Function(TherapistModel) saveLawer;
   final String merchantId;
 
   @override
@@ -49,9 +49,9 @@ class BasicInfoView extends StatelessWidget {
                               height: 20,
                             ),
                             CustomTextField(
-                              name: "therapistName",
-                              label: "Therapist Name",
-                              hintText: "Therapist Name",
+                              name: "lawerName",
+                              label: "Lawer Name",
+                              hintText: "Lawer Name",
                               controller: viewModel.lawerNameController,
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(),
@@ -59,9 +59,9 @@ class BasicInfoView extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             CustomTextField(
-                              name: "therapistDescription",
-                              label: "Therapist Description",
-                              hintText: "Therapist Description",
+                              name: "lawerDescription",
+                              label: "Lawer Description",
+                              hintText: "Lawer Description",
                               controller: viewModel.lawerDescriptionController,
                               maxLines: 3,
                               validator: FormBuilderValidators.compose([
@@ -70,9 +70,9 @@ class BasicInfoView extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             CustomTextField(
-                              name: "therapistQualification",
-                              label: "Therapist Qualification",
-                              hintText: "Therapist Qualification",
+                              name: "lawerQualification",
+                              label: "Lawer Qualification",
+                              hintText: "Lawer Qualification",
                               controller:
                                   viewModel.lawerQualificationController,
                               validator: FormBuilderValidators.compose([
@@ -191,8 +191,7 @@ class BasicInfoView extends StatelessWidget {
                                       );
                                       return;
                                     }
-                                    TherapistModel therapistModel =
-                                        TherapistModel(
+                                    TherapistModel lawerModel = TherapistModel(
                                       therapistName:
                                           viewModel.lawerNameController.text,
                                       therapistQualification: viewModel
@@ -221,7 +220,7 @@ class BasicInfoView extends StatelessWidget {
                                       description: viewModel
                                           .lawerDescriptionController.text,
                                     );
-                                    saveTherapist(therapistModel);
+                                    saveLawer(lawerModel);
                                   }
                                 },
                               ),
