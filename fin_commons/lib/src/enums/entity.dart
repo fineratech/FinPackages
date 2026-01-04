@@ -33,7 +33,7 @@ enum EntityType {
       case EntityType.truck:
         return 'Register Truck';
       case EntityType.lawyer:
-        return 'Register Lawer';
+        return 'Register Lawyer';
       case EntityType.client:
         return 'Register Client';
       case EntityType.other:
