@@ -120,24 +120,24 @@ class ClientRegistrationViewModel extends ChangeNotifier {
     return formKey.currentState?.saveAndValidate() ?? false;
   }
 
-  Future<int?> registerPatient({
-    required PatientModel patient,
+  Future<int?> registerClient({
+    required PatientModel client,
     required BuildContext context,
   }) async {
     isLoading = true;
-    int? patientId = await _apiFunctionsService.registerPatient(
+    int? patientId = await _apiFunctionsService.registerClient(
       userId,
-      'healthcare',
+      'Legal',
       type.name,
       merchantId,
       "-1",
-      patient.idType,
-      patient.idNumber,
-      patient.idExpiry,
-      patient.idIssuingState,
-      patient.idIssuingCountry,
-      patient.gender,
-      patient.dob,
+      client.idType,
+      client.idNumber,
+      client.idExpiry,
+      client.idIssuingState,
+      client.idIssuingCountry,
+      client.gender,
+      client.dob,
       locationId,
     );
     isLoading = false;
@@ -145,7 +145,7 @@ class ClientRegistrationViewModel extends ChangeNotifier {
       if (context.mounted) {
         Utils.showErrorToast(
           context: context,
-          message: "Failed to register patient",
+          message: "Failed to register client",
         );
       }
     }

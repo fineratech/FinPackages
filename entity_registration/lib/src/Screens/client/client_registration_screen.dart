@@ -255,9 +255,9 @@ class ClientRegistrationScreen extends StatelessWidget {
                                     locationId: locationId,
                                   );
                                   int? patientId =
-                                      await viewModel.registerPatient(
+                                      await viewModel.registerClient(
                                     context: context,
-                                    patient: patientModel,
+                                    client: patientModel,
                                   );
                                   if (patientId != -1 && patientId != null) {
                                     if (context.mounted) {
