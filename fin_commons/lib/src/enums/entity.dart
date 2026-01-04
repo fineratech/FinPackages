@@ -8,7 +8,7 @@ enum EntityType {
   foodMenu,
   driver,
   truck,
-  lawer,
+  lawyer,
   client,
   other;
 
@@ -32,7 +32,7 @@ enum EntityType {
         return 'Register Driver';
       case EntityType.truck:
         return 'Register Truck';
-      case EntityType.lawer:
+      case EntityType.lawyer:
         return 'Register Lawer';
       case EntityType.client:
         return 'Register Client';
