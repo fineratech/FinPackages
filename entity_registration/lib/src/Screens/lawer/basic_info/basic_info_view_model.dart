@@ -86,7 +86,7 @@ class BasicInfoViewModel extends ChangeNotifier {
   Future<void> getServices() async {
     isLoading = true;
     final response =
-        await _apiFunctionsService.getServiceObjectsByProviderId(merchantId);
+        await _apiFunctionsService.getAllAvailableServicesByCategory('legal');
     if (response != null) {
       isError = false;
       allServices = response;

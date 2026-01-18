@@ -63,7 +63,7 @@ class RegisterLawerViewModel extends ChangeNotifier {
       userId,
       lawerModel?.description ?? '',
       "Legal",
-      "Lawer",
+      "Lawyer",
       merchantId,
       lawerModel?.idType.name ?? "",
       lawerModel?.idNumber ?? "",

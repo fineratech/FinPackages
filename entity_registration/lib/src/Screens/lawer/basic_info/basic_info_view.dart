@@ -49,9 +49,9 @@ class BasicInfoView extends StatelessWidget {
                               height: 20,
                             ),
                             CustomTextField(
-                              name: "lawerName",
-                              label: "Lawer Name",
-                              hintText: "Lawer Name",
+                              name: "lawyerName",
+                              label: "Lawyer Name",
+                              hintText: "Lawyer Name",
                               controller: viewModel.lawerNameController,
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.required(),
@@ -59,9 +59,9 @@ class BasicInfoView extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             CustomTextField(
-                              name: "lawerDescription",
-                              label: "Lawer Description",
-                              hintText: "Lawer Description",
+                              name: "lawyerDescription",
+                              label: "Lawyer Description",
+                              hintText: "Lawyer Description",
                               controller: viewModel.lawerDescriptionController,
                               maxLines: 3,
                               validator: FormBuilderValidators.compose([
@@ -70,9 +70,9 @@ class BasicInfoView extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             CustomTextField(
-                              name: "lawerQualification",
-                              label: "Lawer Qualification",
-                              hintText: "Lawer Qualification",
+                              name: "lawyerQualification",
+                              label: "Lawyer Qualification",
+                              hintText: "Lawyer Qualification",
                               controller:
                                   viewModel.lawerQualificationController,
                               validator: FormBuilderValidators.compose([
