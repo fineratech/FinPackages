@@ -133,8 +133,7 @@ class BusinessDetailsViewModel extends ChangeNotifier {
         isLoading = false;
 
         if (context.mounted) {
-          if (merchant.type == MerchantType.PropertyManagement ||
-              merchant.type == MerchantType.lawFirm) {
+          if (merchant.type == MerchantType.PropertyManagement) {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => AddBankAccount(
